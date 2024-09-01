@@ -4,5 +4,20 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/01.Scenes/Photon2_HMJ/SampleScene_HMJ.unity
+    guid: 5924732e090d5ff448d6d7fe75686038
+  - enabled: 1
+    path: Assets/01.Scenes/Photon2_HMJ/Room For 1.unity
+    guid: 322599b1930787946818c1ab051704fb
+  - enabled: 1
+    path: Assets/01.Scenes/Photon2_HMJ/Room For 2.unity
+    guid: e274094f6ce5a0e4c8ae1cfcd1318e8f
+  - enabled: 1
+    path: Assets/01.Scenes/Photon2_HMJ/Room For 3.unity
+    guid: 86cda7cd09d841d45bc1f318121d8fd5
+  - enabled: 1
+    path: Assets/01.Scenes/Photon2_HMJ/Room For 4.unity
+    guid: 082eee00208fd8d4994ea30ea7cd26b9
   m_configObjects: {}
