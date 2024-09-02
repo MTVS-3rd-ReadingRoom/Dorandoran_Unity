@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
+using System.Reflection;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
@@ -18,7 +19,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public RoomType RoomTypeData;
     public Text StatusText;
     public InputField roomInput, NickNameInput;
+    public Dropdown filterDropDown;
     public Dropdown mapDropDown;
+    public Dropdown roomInputDropDown;
+
+    int roomInputN = 0;
 
     string roomName;
     void Awake()
@@ -26,6 +31,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         Screen.SetResolution(960, 540, false);
     }
 
+    public void StartLogin()
+    {
+        // 접속을 위한 설정
+
+    }
     void Update()
     {
         StatusText.text = PhotonNetwork.NetworkClientState.ToString();
@@ -38,8 +48,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        print("서버접속완료");
-        PhotonNetwork.LocalPlayer.NickName = NickNameInput.text;
+        base.OnConnectedToMaster();
+
+        //  마스터 서버에 접속 완료
+
+        print(MethodInfo.GetCurrentMethod().Name + "is Call!");
+
+        // 서버의 로비로 접속
+        PhotonNetwork.JoinLobby();
+
+        // PhotonNetwork.LocalPlayer.NickName = NickNameInput.text;
     }
 
 
@@ -56,15 +74,25 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
 
 
-    public void JoinLobby() => PhotonNetwork.JoinLobby();
+    public void JoinLobby()
+    {
+        PhotonNetwork.JoinLobby();
+    }
 
-    public override void OnJoinedLobby() => print("로비접속완료");
+    public override void OnJoinedLobby()
+    {
+        base.OnJoinedLobby();
+
+        // 서버 로비에 들어갔음을 알려준다.
+        print(MethodInfo.GetCurrentMethod().Name + "is Call!");
+        LoginUIController.LoginUI.ShowMakeRoomPanel();
+    }
 
 
 
     public void CreateRoom()
     {
-        PhotonNetwork.CreateRoom(roomInput.text, new RoomOptions { MaxPlayers = 2 });
+        PhotonNetwork.CreateRoom(roomInput.text, new RoomOptions { MaxPlayers = roomInputN });
     }
 
     public override void OnJoinedRoom()
@@ -86,8 +114,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     void CheckDropdownBox()
     {
         RoomTypeData = (RoomType)mapDropDown.value;
+        roomInputN = roomInputDropDown.value;
 
-        switch(RoomTypeData)
+        switch (RoomTypeData)
         {
             case RoomType.Room0:
                 roomName = "Room For 1";
