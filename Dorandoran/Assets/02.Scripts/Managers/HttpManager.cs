@@ -5,6 +5,7 @@ using System.Threading;
 using System.Text;
 using System;
 using UnityEngine.Networking;
+using UnityEditor.PackageManager.Requests;
 
 [System.Serializable]
 public struct Login_Json
@@ -112,6 +113,27 @@ public class HttpManager : MonoBehaviour
         StartCoroutine(Post(httpInfo));
     }
 
+    public void PostVoiceClip_Byte(byte[] bins)
+    {
+        // 서버 URL 설정
+        string url = "http://192.168.0.58:8080/api/send-data";
+
+        // UnityWebRequest 생성
+        UnityWebRequest request = new UnityWebRequest(url, "POST");
+
+        // 업로드할 데이터 설정
+        UploadHandlerRaw uploadHandler = new UploadHandlerRaw(bins);
+        request.uploadHandler = uploadHandler;
+
+        // 헤더 설정 (Content-Type: application/octet-stream)
+        request.SetRequestHeader("Content-Type", "application/octet-stream");
+
+        // 요청 보내기
+        UnityWebRequestAsyncOperation asyncOp = request.SendWebRequest();
+
+    }
+
+
 
     public IEnumerator Post(HttpInfo info)
     {
@@ -124,6 +146,7 @@ public class HttpManager : MonoBehaviour
             DoneRequest(webRequest, info);
         }
     }
+
 
     void DoneRequest(UnityWebRequest webRequest, HttpInfo info)
     {

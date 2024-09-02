@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     public string microphoneName;
     public Dropdown dropdown_MicrophoneName;
     public Button button;
+    public Text theme_UI;
 
     private void Awake()
     {
@@ -41,5 +42,10 @@ public class UIManager : MonoBehaviour
     public void SelectMicrophone()
     {
         DataManager.instance.microphoneIndex = dropdown_MicrophoneName.value;
+    }
+
+    public void SetTheme(string theme)
+    {
+        theme_UI.text = theme;
     }
 }

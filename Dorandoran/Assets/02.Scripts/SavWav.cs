@@ -8,7 +8,7 @@ public static class SavWav
 
     const int HEADER_SIZE = 44;
 
-    public static bool Save(string filename, AudioClip clip)
+    public static string Save(string filename, AudioClip clip)
     {
         if (!filename.ToLower().EndsWith(".wav"))
         {
@@ -30,7 +30,7 @@ public static class SavWav
             WriteHeader(fileStream, clip);
         }
 
-        return true; // TODO: return false if there's a failure saving the file
+        return filepath;
     }
 
     public static AudioClip TrimSilence(AudioClip clip, float min)
