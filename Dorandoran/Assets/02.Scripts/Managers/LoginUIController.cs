@@ -13,6 +13,7 @@ public class LoginUIController : MonoBehaviour
     public Button btn_login;
     public TMP_InputField input_nickName;
     public static LoginUIController LoginUI;
+    public TMP_Text text_logText;
 
     string log;
 
@@ -45,5 +46,11 @@ public class LoginUIController : MonoBehaviour
         btn_login.interactable = false;
         panel_login.SetActive(false);
         panel_makeRoom.SetActive(true);
+    }
+
+    public void PrintLog(string message)
+    {
+        log += message + '\n';
+        text_logText.text = log;
     }
 }

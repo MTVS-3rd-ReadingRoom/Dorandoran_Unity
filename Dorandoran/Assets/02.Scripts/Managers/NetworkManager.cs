@@ -24,7 +24,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public Dropdown roomInputDropDown;
 
     int roomInputN = 0;
-
+    int roomIndex = 0;
     string roomName;
     void Awake()
     {
@@ -34,8 +34,18 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void StartLogin()
     {
         // 접속을 위한 설정
+        if (LoginUIController.LoginUI.input_nickName.text.Length > 0)
+        {
+            PhotonNetwork.GameVersion = "1.0.0";
+            PhotonNetwork.NickName = LoginUIController.LoginUI.input_nickName.text;
+            PhotonNetwork.AutomaticallySyncScene = true;
 
+            // 접속을 서버에 요청하기
+            PhotonNetwork.ConnectUsingSettings();
+            LoginUIController.LoginUI.btn_login.interactable = false;
+        }
     }
+
     void Update()
     {
         StatusText.text = PhotonNetwork.NetworkClientState.ToString();
@@ -60,8 +70,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         // PhotonNetwork.LocalPlayer.NickName = NickNameInput.text;
     }
 
-
-
     public void Disconnect()
     {
         PhotonNetwork.Disconnect();
@@ -71,8 +79,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         print("연결끊김");
     }
-
-
 
     public void JoinLobby()
     {
@@ -86,9 +92,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         // 서버 로비에 들어갔음을 알려준다.
         print(MethodInfo.GetCurrentMethod().Name + "is Call!");
         // LoginUIController.LoginUI.ShowMakeRoomPanel();
-    }
-
-
+    } 
 
     public void CreateRoom()
     {
@@ -99,36 +103,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
 
-        // 첫 번째 플레이어일 경우에만 실행
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
-        {
-            Debug.Log("We load the 'Room for 1' ");
-
-            CheckDropdownBox();
-            // PhotonNetwork.LoadLevel(roomName);
-        }
+        CheckDropdownBox();
 
         print("방참가완료");
     }
 
+
     void CheckDropdownBox()
     {
         RoomTypeData = (RoomType)mapDropDown.value;
-        roomInputN = roomInputDropDown.value;
 
-        switch (RoomTypeData)
-        {
-            case RoomType.Room0:
-                roomName = "Room For 1";
-                break;
-            case RoomType.Room1:
-                roomName = "Room For 2";
-                break;
-            case RoomType.Room2:
-                roomName = "Room For 3";
-                break;
-
-        }
     }
 
     public void JoinRoom()
@@ -138,19 +122,39 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         OnJoinedRoom();
     }
 
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        base.OnJoinRoomFailed(returnCode, message);
+
+        // 룸에 입장이 실패한 이유를 출력한다.
+        Debug.LogError(message);
+        LoginUIController.LoginUI.PrintLog("입장 실패..." + message);
+    }
+
+    public override void OnCreatedRoom()
+    {
+        base.OnCreatedRoom();
+
+        // 성공적으로 방이 개설되었음을 알려준다.
+        print(MethodInfo.GetCurrentMethod().Name + " is Call!");
+        LoginUIController.LoginUI.PrintLog("방에 입장 성공!");
+
+        // 방에 입장한 친구들은 모두 1번 씬으로 이동하자!
+        PhotonNetwork.LoadLevel(roomInputDropDown.value + 1);
+    }
+
+
     public void JoinOrCreateRoom() => PhotonNetwork.JoinOrCreateRoom(roomInput.text, new RoomOptions { MaxPlayers = 2 }, null);
 
     public void JoinRandomRoom() => PhotonNetwork.JoinRandomRoom();
 
     public void LeaveRoom() => PhotonNetwork.LeaveRoom();
 
-    public override void OnCreatedRoom() => print("방만들기완료");
+   
 
     // public override void OnJoinedRoom() => print("방참가완료");
 
     public override void OnCreateRoomFailed(short returnCode, string message) => print("방만들기실패");
-
-    public override void OnJoinRoomFailed(short returnCode, string message) => print("방참가실패");
 
     public override void OnJoinRandomFailed(short returnCode, string message) => print("방랜덤참가실패");
 
