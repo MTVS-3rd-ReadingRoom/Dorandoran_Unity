@@ -11,7 +11,10 @@ public class UIManager : MonoBehaviour
 
     public string microphoneName;
     public Dropdown dropdown_MicrophoneName;
-    public Button button;
+    public Button button_Signup;
+    public Button button_Login;
+    public Button button_Record;
+    public Button button_GetTopic;
     public Text theme_UI;
 
     private void Awake()
@@ -27,7 +30,10 @@ public class UIManager : MonoBehaviour
     private void InitUI()
     {
         dropdown_MicrophoneName.onValueChanged.AddListener(delegate { SelectMicrophone(); });
-        button.onClick.AddListener(delegate { DataManager.instance.RecordMicrophone(); });
+        button_Record.onClick.AddListener(delegate { DataManager.instance.RecordMicrophone(); });
+        button_Signup.onClick.AddListener(delegate { HttpManager.instance.PostSignUp_FormData("test", "test", "test", "test"); });
+        button_Login.onClick.AddListener(delegate { HttpManager.instance.PostLogIn_FormData("test", "test"); });
+        button_GetTopic.onClick.AddListener(delegate { HttpManager.instance.PostTheme("test"); });
     }
 
     private void ActiveSelectMicrophoneUI()

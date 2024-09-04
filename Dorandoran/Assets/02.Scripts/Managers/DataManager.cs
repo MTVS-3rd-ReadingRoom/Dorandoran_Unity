@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.Networking;
+using UnityEngine.Video;
 using UnityEngine.XR;
 
 [System.Serializable]
@@ -34,6 +36,8 @@ public class DataManager : MonoBehaviour
     public AudioClip audioClip2;
 
     public string theme = "";
+
+    public VideoPlayer videoPlayer;
 
     private void Awake()
     {
@@ -74,7 +78,7 @@ public class DataManager : MonoBehaviour
         return null;
     }
 
-    public static AudioClip LoadWav(byte[] wavFileData, string clipName = "AudioClip")
+    public AudioClip LoadWav(byte[] wavFileData, string clipName = "AudioClip")
     {
         // WAV 파일 헤더 검사 및 파싱
         int channels = BitConverter.ToInt16(wavFileData, 22);
@@ -114,7 +118,6 @@ public class DataManager : MonoBehaviour
 
         return audioClip;
     }
-
 
     #region 안씀
     // 오디오 클립을 바이트 배열로 변환하기
@@ -169,7 +172,36 @@ public class DataManager : MonoBehaviour
     #endregion
 
 
+    public void PlayAudio(AudioClip audioClip)
+    {
+        AudioSource audioSource = GetComponent<AudioSource>();
+        audioSource.clip = audioClip;
+        audioSource.Play();
+    }
 
+    public void PlayVideo(DownloadHandler downloadHandler)
+    {
+        // 비디오 데이터 로드
+        byte[] videoData = downloadHandler.data;
+
+        // 비디오를 임시 파일로 저장
+        string tempPath = System.IO.Path.Combine(Application.persistentDataPath, "tempVideo.mpeg");
+        System.IO.File.WriteAllBytes(tempPath, videoData);
+
+        print(tempPath);
+        // VideoPlayer에 비디오 설정
+        videoPlayer.url = tempPath;
+        videoPlayer.Prepare();
+
+        // 준비가 끝나면 비디오 재생
+        videoPlayer.prepareCompleted += VideoPlayer_prepareCompleted;
+    }
+
+    private void VideoPlayer_prepareCompleted(VideoPlayer source)
+    {
+        // 비디오 준비 완료 후 재생
+        source.Play();
+    }
 
     public void RecordMicrophone()
     {
@@ -183,11 +215,9 @@ public class DataManager : MonoBehaviour
         yield return new WaitForSeconds(recordTime + 1);
         audioClip1 = record;
 
-        //HttpManager.instance.PostVoiceClip_Byte(LoadAudioClip(SaveAudioClip(record)));
+        HttpManager.instance.PostVoiceClip_FormData("test", "test",LoadAudioClip(SaveAudioClip(record)));
         //LoadWav(LoadAudioClip(SaveAudioClip(record)));
         audioClip2 = LoadWav(LoadAudioClip(SaveAudioClip(record)));
-        AudioSource audioSource = GetComponent<AudioSource>();
-        audioSource.clip = audioClip2;
-        audioSource.Play();
+
     }
 }
