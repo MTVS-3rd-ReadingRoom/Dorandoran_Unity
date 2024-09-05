@@ -10,6 +10,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Net;
 using UnityEngine.Video;
+using UnityEngine.UI;
 
 [System.Serializable]
 public struct Login_Json
@@ -132,23 +133,135 @@ public class HttpManager : MonoBehaviour
 
     public void PostTheme(string chat_room_id)
     {
+        //StartCoroutine(GetAudioFile(Application.dataPath, "Test.Wav"));
+        //return;
+        //List<IMultipartFormSection> formData1 = new List<IMultipartFormSection>();
+        //formData1.Add(new MultipartFormDataSection("chat_room_id ", chat_room_id));
+        //StartCoroutine(PostThemeCoroutine("http://125.132.216.190:11225/api/topic_suggest", formData1));
+
+
+
+
+        //string fullPath = Path.Combine(Application.dataPath, "test_1.wav");
+        //string fullPath2 = Path.Combine(Application.dataPath, "response_audio1.wav");
+        //WavConverter.AudioWavConverter(fullPath, fullPath2);
+        //byte[] bins = File.ReadAllBytes(fullPath);
+
+        //using (Stream s = new MemoryStream(bins))
+        //{
+        //    AudioClip audioClip = AudioClip.Create("SongName", bins.Length, 1, 48000, false);
+        //    float[] f = ConvertByteToFloat(bins);
+        //    audioClip.SetData(f, 0);
+
+        //    DataManager.instance.PlayAudio(audioClip);
+        //}
+
+        //AudioClip a = WavUtility.ToAudioClip(bins);
+        //DataManager.instance.PlayAudio(a);
+
+        //return;
+
         print("StartPostTopic");
         HttpInfo info = new HttpInfo();
         // 서버 URL 설정
         info.url = "http://125.132.216.190:11225/api/topic_suggest";
-        info.onComplete = (UnityWebRequest webRequest) =>
+
+        UnityWebRequest webRequest = new UnityWebRequest();
+        webRequest.downloadHandler = new DownloadHandlerAudioClip(info.url, AudioType.WAV);
+
+        info.onComplete = (webRequest) =>
         {
-            AudioClip audioClip = DownloadHandlerAudioClip.GetContent(webRequest); //test
-            DataManager.instance.PlayAudio(audioClip);
+            // save
+            DownloadHandlerBuffer buffer = (DownloadHandlerBuffer)(webRequest.downloadHandler);
+            byte[] bins = buffer.data;
+
+            //string fullPath = Path.Combine(Application.dataPath, "Test.mpeg");
+            //File.WriteAllBytes(fullPath, bins);
+            //bins = File.ReadAllBytes(fullPath);
+
+            AudioClip a = WavUtility.ToAudioClip(bins);
+            DataManager.instance.PlayAudio(a);
+
+            // ** audio clip
+            //DownloadHandlerAudioClip clip = (DownloadHandlerAudioClip)(webRequest.downloadHandler);
+            //DataManager.instance.PlayAudio(clip.audioClip);
+
+            //DataManager.instance.PlayAudio(audioClip);
+
+
+            //byte[] videoData = webRequest.downloadHandler.data;
+            //// 로컬 파일 경로 설정
+            //string path = Path.Combine(Application.persistentDataPath, "downloadedVideo.mpeg");
+            //// 파일로 저장
+            //File.WriteAllBytes(path, videoData);
+            //DataManager.instance.videoPlayer.url = path;
+            //DataManager.instance.videoPlayer.Prepare();
+            //DataManager.instance.videoPlayer.prepareCompleted += (VideoPlayer vp)=> { vp.Play(); };
         };
 
         // data 를 MultipartForm 으로 셋팅
         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
-        formData.Add(new MultipartFormDataSection("chat_room_id ", chat_room_id));
+        formData.Add(new MultipartFormDataSection("chat_room_id ", "test_room"));
 
         StartCoroutine(UploadFileByFormData(info, formData));
+        //StartCoroutine(PostThemeCoroutine(info.url, formData));
 
     }
+
+
+    private float[] ConvertByteToFloat(byte[] array)
+    {
+        float[] floatArr = new float[array.Length / 4];
+        for (int i = 0; i < floatArr.Length; i++)
+        {
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(array, i * 4, 4);
+            }
+            floatArr[i] = BitConverter.ToSingle(array, i * 4) / 0x80000000;
+        }
+        return floatArr;
+    }
+
+
+    IEnumerator GetAudioFile(string path, string fileName)
+    {
+        //yield return new WaitForSeconds(10);
+        string fullPath = Path.Combine(path, fileName);
+        UnityWebRequest req = UnityWebRequestMultimedia.GetAudioClip(fullPath, AudioType.WAV);
+
+        yield return req.SendWebRequest();
+
+        if(req.result == UnityWebRequest.Result.Success)
+        {
+            AudioClip myClip = DownloadHandlerAudioClip.GetContent(req);
+            DataManager.instance.PlayAudio(myClip);
+        }
+    }
+
+
+    IEnumerator PostThemeCoroutine(string url, List<IMultipartFormSection> data)
+    {
+        UnityWebRequest req = UnityWebRequest.Post(url, data);
+
+        //string sendString = "TestString";
+        //byte[] sendBins = Encoding.UTF8.GetBytes(sendString);
+
+        //req.uploadHandler = new UploadHandlerRaw(sendBins);
+        req.downloadHandler = new DownloadHandlerAudioClip(url, AudioType.WAV);
+        yield return req.SendWebRequest();
+
+        if (req.result == UnityWebRequest.Result.Success)
+        {
+            DownloadHandlerAudioClip downHandler = (DownloadHandlerAudioClip)(req.downloadHandler);
+            AudioClip clip = downHandler.audioClip;
+        }
+        else
+        {
+            Debug.LogError($"{req.responseCode} - {req.error}");
+        }
+    }
+
 
     public void PostVoiceClip_FormData(string user_id, string chat_room_id,  byte[] file)
     {

@@ -33,7 +33,7 @@ public class UIManager : MonoBehaviour
         button_Record.onClick.AddListener(delegate { DataManager.instance.RecordMicrophone(); });
         button_Signup.onClick.AddListener(delegate { HttpManager.instance.PostSignUp_FormData("test", "test", "test", "test"); });
         button_Login.onClick.AddListener(delegate { HttpManager.instance.PostLogIn_FormData("test", "test"); });
-        button_GetTopic.onClick.AddListener(delegate { HttpManager.instance.PostTheme("test"); });
+        button_GetTopic.onClick.AddListener(delegate { HttpManager.instance.PostTheme("test_room"); });
     }
 
     private void ActiveSelectMicrophoneUI()

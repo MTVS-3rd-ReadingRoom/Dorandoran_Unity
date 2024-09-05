@@ -51,6 +51,7 @@ public class DataManager : MonoBehaviour
         }
     }
 
+
     public string SaveAudioClip(AudioClip audioClip)
     {
         return SavWav.Save(audioClip.name, audioClip);
@@ -179,23 +180,12 @@ public class DataManager : MonoBehaviour
         audioSource.Play();
     }
 
-    public void PlayVideo(DownloadHandler downloadHandler)
+    public void PlayVideo(string path)
     {
-        // 비디오 데이터 로드
-        byte[] videoData = downloadHandler.data;
-
-        // 비디오를 임시 파일로 저장
-        string tempPath = System.IO.Path.Combine(Application.persistentDataPath, "tempVideo.mpeg");
-        System.IO.File.WriteAllBytes(tempPath, videoData);
-
-        print(tempPath);
-        // VideoPlayer에 비디오 설정
-        videoPlayer.url = tempPath;
-        videoPlayer.Prepare();
-
-        // 준비가 끝나면 비디오 재생
-        videoPlayer.prepareCompleted += VideoPlayer_prepareCompleted;
+        videoPlayer.url = path;
+        videoPlayer.Play();
     }
+
 
     private void VideoPlayer_prepareCompleted(VideoPlayer source)
     {
