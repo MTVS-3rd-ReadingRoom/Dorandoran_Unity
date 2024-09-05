@@ -9,6 +9,7 @@ public class LoginUIController : MonoBehaviour
 {
     public GameObject panel_login;
     public GameObject panel_makeRoom;
+    public GameObject panel_choiceRoom;
 
     public Button btn_login;
     public TMP_InputField input_nickName;
@@ -46,6 +47,15 @@ public class LoginUIController : MonoBehaviour
         btn_login.interactable = false;
         panel_login.SetActive(false);
         panel_makeRoom.SetActive(true);
+        panel_choiceRoom.SetActive(false);
+    }
+
+    public void ShowchoiceRoomPanel()
+    {
+        btn_login.interactable = false;
+        panel_login.SetActive(false);
+        panel_makeRoom.SetActive(false);
+        panel_choiceRoom.SetActive(true);
     }
 
     public void PrintLog(string message)
