@@ -5,7 +5,7 @@ using System.Threading;
 using System.Text;
 using System;
 using UnityEngine.Networking;
-using UnityEditor.PackageManager.Requests;
+//using UnityEditor.PackageManager.Requests;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Net;

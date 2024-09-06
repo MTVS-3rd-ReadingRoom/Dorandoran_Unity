@@ -3,15 +3,31 @@
   "WorkspaceRootPath": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\managers\\networkmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.11\\Runtime\\UniversalRenderPipeline.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.11\\Runtime\\UniversalRenderPipeline.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\player\\cameracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\player\\cameracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\player\\camerafollow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\player\\camerafollow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|c:\\users\\admin\\desktop\\dorandoran_unity\\dorandoran\\assets\\02.scripts\\managers\\loginuicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\managers\\loginuicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|c:\\users\\admin\\desktop\\dorandoran_unity\\dorandoran\\assets\\02.scripts\\managers\\networkmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\managers\\networkmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|c:\\users\\admin\\desktop\\dorandoran_unity\\dorandoran\\assets\\02.scripts\\managers\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\managers\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\managers\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C2FC5DC9-6A70-75F9-EA3B-44268906EEB6}|PhotonUnityNetworking.csproj|c:\\users\\admin\\desktop\\dorandoran_unity\\dorandoran\\assets\\photon\\photonunitynetworking\\code\\photonnetworkpart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C2FC5DC9-6A70-75F9-EA3B-44268906EEB6}|PhotonUnityNetworking.csproj|C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\assets\\photon\\photonunitynetworking\\code\\photonnetworkpart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C2FC5DC9-6A70-75F9-EA3B-44268906EEB6}|PhotonUnityNetworking.csproj|solutionrelative:assets\\photon\\photonunitynetworking\\code\\photonnetworkpart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -21,14 +37,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\player\\playermove.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\player\\playermove.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\player\\camerafollow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\player\\camerafollow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\player\\cameracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\player\\cameracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Admin\\Desktop\\MultiplayProject_MTVS\\Assets\\Scripts\\ConnectionManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -50,6 +58,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "UniversalRenderPipeline.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.11\\Runtime\\UniversalRenderPipeline.cs",
+              "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.11\\Runtime\\UniversalRenderPipeline.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.11\\Runtime\\UniversalRenderPipeline.cs",
+              "RelativeToolTip": "Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.11\\Runtime\\UniversalRenderPipeline.cs",
+              "ViewState": "AQIAALgCAAAAAAAAAAAhwMACAACBAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-06T06:22:11.705Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "LoginUIController.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\LoginUIController.cs",
+              "RelativeDocumentMoniker": "Assets\\02.Scripts\\Managers\\LoginUIController.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\LoginUIController.cs",
+              "RelativeToolTip": "Assets\\02.Scripts\\Managers\\LoginUIController.cs",
+              "ViewState": "AQIAACoAAAAAAAAAAAAAADMAAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-06T06:07:23.1Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "NetworkManager.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\NetworkManager.cs",
               "RelativeDocumentMoniker": "Assets\\02.Scripts\\Managers\\NetworkManager.cs",
@@ -62,7 +96,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "PhotonNetworkPart.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\Photon\\PhotonUnityNetworking\\Code\\PhotonNetworkPart.cs",
               "RelativeDocumentMoniker": "Assets\\Photon\\PhotonUnityNetworking\\Code\\PhotonNetworkPart.cs",
@@ -70,12 +104,11 @@
               "RelativeToolTip": "Assets\\Photon\\PhotonUnityNetworking\\Code\\PhotonNetworkPart.cs",
               "ViewState": "AQIAAOMJAAAAAAAAAAAmwPwJAAAeAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-05T14:01:44.999Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-05T14:01:44.999Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "GameManager.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\GameManager.cs",
               "RelativeDocumentMoniker": "Assets\\02.Scripts\\Managers\\GameManager.cs",
@@ -83,12 +116,11 @@
               "RelativeToolTip": "Assets\\02.Scripts\\Managers\\GameManager.cs",
               "ViewState": "AQIAABUAAAAAAAAAAAAAADAAAAAgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-05T03:57:53.354Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-05T03:57:53.354Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
               "Title": "UIManager.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\UIManager.cs",
               "RelativeDocumentMoniker": "Assets\\02.Scripts\\Managers\\UIManager.cs",
@@ -96,12 +128,11 @@
               "RelativeToolTip": "Assets\\02.Scripts\\Managers\\UIManager.cs",
               "ViewState": "AQIAAAgAAAAAAAAAAABQwBcAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-05T00:37:19.523Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-05T00:37:19.523Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
               "Title": "PlayerMove.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Player\\PlayerMove.cs",
               "RelativeDocumentMoniker": "Assets\\02.Scripts\\Player\\PlayerMove.cs",
@@ -109,38 +140,37 @@
               "RelativeToolTip": "Assets\\02.Scripts\\Player\\PlayerMove.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAmAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-04T21:33:52.573Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-04T21:33:52.573Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "CameraFollow.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Player\\CameraFollow.cs",
               "RelativeDocumentMoniker": "Assets\\02.Scripts\\Player\\CameraFollow.cs",
               "ToolTip": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Player\\CameraFollow.cs",
               "RelativeToolTip": "Assets\\02.Scripts\\Player\\CameraFollow.cs",
-              "ViewState": "AQIAABQAAAAAAAAAAAAgwCIAAAAhAAAA",
+              "ViewState": "AQIAACUAAAAAAAAAAAAWwCsAAAAiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-04T21:33:20.441Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 1,
               "Title": "CameraController.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Player\\CameraController.cs",
               "RelativeDocumentMoniker": "Assets\\02.Scripts\\Player\\CameraController.cs",
               "ToolTip": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Player\\CameraController.cs",
               "RelativeToolTip": "Assets\\02.Scripts\\Player\\CameraController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
+              "ViewState": "AQIAABIAAAAAAAAAAADwvyEAAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-04T21:32:40.217Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "PlayerCamera.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Player\\PlayerCamera.cs",
               "RelativeDocumentMoniker": "Assets\\02.Scripts\\Player\\PlayerCamera.cs",
@@ -152,7 +182,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "ConnectionManager.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\MultiplayProject_MTVS\\Assets\\Scripts\\ConnectionManager.cs",
               "RelativeDocumentMoniker": "..\\..\\MultiplayProject_MTVS\\Assets\\Scripts\\ConnectionManager.cs",
