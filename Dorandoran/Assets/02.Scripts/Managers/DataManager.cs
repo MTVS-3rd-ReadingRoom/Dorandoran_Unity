@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.Networking;
+using UnityEngine.Video;
 using UnityEngine.XR;
 
 [System.Serializable]
@@ -35,6 +37,8 @@ public class DataManager : MonoBehaviour
 
     public string theme = "";
 
+    public VideoPlayer videoPlayer;
+
     private void Awake()
     {
         if (instance == null)
@@ -47,17 +51,83 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    public void SaveAudioClip(AudioClip audioClip)
+
+    public string SaveAudioClip(AudioClip audioClip)
     {
-        SavWav.Save(audioClip.name, audioClip);
+        return SavWav.Save(audioClip.name, audioClip);
     }
 
+    public string SaveAudioClip_Binary(AudioClip audioClip)
+    {
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
+        string saveFileName = "Voice";
+        string savePath = Application.persistentDataPath + "/" + saveFileName;
+        FileStream fileStream = new FileStream(savePath, FileMode.Create);
+        binaryFormatter.Serialize(fileStream, audioClip);
+        fileStream.Close();
+        return saveFileName;
+    }
+
+    public byte[] LoadAudioClip(string filePath)
+    {
+        
+        if (File.Exists(filePath))
+        {
+            byte[] data = File.ReadAllBytes(filePath);
+            return data;
+        }
+        return null;
+    }
+
+    public AudioClip LoadWav(byte[] wavFileData, string clipName = "AudioClip")
+    {
+        // WAV 파일 헤더 검사 및 파싱
+        int channels = BitConverter.ToInt16(wavFileData, 22);
+        int sampleRate = BitConverter.ToInt32(wavFileData, 24);
+        int bitDepth = BitConverter.ToInt16(wavFileData, 34);
+        int dataStartIndex = 44; // 데이터는 WAV 헤더 뒤에서 시작 (44바이트)
+
+        // 오디오 데이터의 샘플 수 계산
+        int bytesPerSample = bitDepth / 8;
+        int sampleCount = (wavFileData.Length - dataStartIndex) / bytesPerSample;
+
+        // 오디오 데이터를 float 배열로 변환
+        float[] audioData = new float[sampleCount];
+        if (bitDepth == 16)
+        {
+            for (int i = 0; i < sampleCount; i++)
+            {
+                audioData[i] = BitConverter.ToInt16(wavFileData, dataStartIndex + i * bytesPerSample) / 32768f;
+            }
+        }
+        else if (bitDepth == 8)
+        {
+            for (int i = 0; i < sampleCount; i++)
+            {
+                audioData[i] = (wavFileData[dataStartIndex + i] - 128) / 128f;
+            }
+        }
+        else
+        {
+            Debug.LogError("지원되지 않는 비트 깊이: " + bitDepth);
+            return null;
+        }
+
+        // AudioClip 생성
+        AudioClip audioClip = AudioClip.Create(clipName, sampleCount, channels, sampleRate, false);
+        audioClip.SetData(audioData, 0);
+
+        return audioClip;
+    }
+
+    #region 안씀
     // 오디오 클립을 바이트 배열로 변환하기
     public void AudioClipToByteArray(AudioClip audioClip)
     {
         float[] data = new float[audioClip.samples * audioClip.channels];
         audioClip.GetData(data, 0);
         byte[] bins = new byte[data.Length * sizeof(short)];
+
         for (int i = 0; i < data.Length; i++)
         {
             float clampedSamples = Mathf.Clamp(data[i], -1.0f, 1.0f);
@@ -100,19 +170,44 @@ public class DataManager : MonoBehaviour
 
         return audioClip;
     }
+    #endregion
+
+
+    public void PlayAudio(AudioClip audioClip)
+    {
+        AudioSource audioSource = GetComponent<AudioSource>();
+        audioSource.clip = audioClip;
+        audioSource.Play();
+    }
+
+    public void PlayVideo(string path)
+    {
+        videoPlayer.url = path;
+        videoPlayer.Play();
+    }
+
+
+    private void VideoPlayer_prepareCompleted(VideoPlayer source)
+    {
+        // 비디오 준비 완료 후 재생
+        source.Play();
+    }
 
     public void RecordMicrophone()
     {
         print("Start Record");
-        StartCoroutine(Corr_Record());
+        StartCoroutine(Corr_RecordAndPost());
     }
 
-    private IEnumerator Corr_Record()
+    private IEnumerator Corr_RecordAndPost()
     {
         AudioClip record = Microphone.Start(Microphone.devices[microphoneIndex].ToString(), false, recordTime, 44100);
         yield return new WaitForSeconds(recordTime + 1);
         audioClip1 = record;
-        SaveAudioClip(record);
-        //AudioClipToByteArray(record);
+
+        HttpManager.instance.PostVoiceClip_FormData("test", "test",LoadAudioClip(SaveAudioClip(record)));
+        //LoadWav(LoadAudioClip(SaveAudioClip(record)));
+        audioClip2 = LoadWav(LoadAudioClip(SaveAudioClip(record)));
+
     }
 }
