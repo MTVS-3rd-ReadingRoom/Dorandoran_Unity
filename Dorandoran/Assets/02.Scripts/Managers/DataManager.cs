@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Video;
@@ -27,6 +28,7 @@ public class DataManager : MonoBehaviour
 {
     public static DataManager instance;
 
+    public int serial_Room;
     public int recordTime = 30;
     public bool myTurn = false;
     public int count = 5;
@@ -36,9 +38,8 @@ public class DataManager : MonoBehaviour
     public AudioClip audioClip2;
 
     public string theme = "";
-
-    public VideoPlayer videoPlayer;
-
+    public Topic topic;
+    
     private void Awake()
     {
         if (instance == null)
@@ -172,6 +173,11 @@ public class DataManager : MonoBehaviour
     }
     #endregion
 
+    public void SetTopic(Topic topic)
+    {
+        this.topic = topic;
+        UIManager.instance.SetTopic(topic);
+    }
 
     public void PlayAudio(AudioClip audioClip)
     {
@@ -179,13 +185,6 @@ public class DataManager : MonoBehaviour
         audioSource.clip = audioClip;
         audioSource.Play();
     }
-
-    public void PlayVideo(string path)
-    {
-        videoPlayer.url = path;
-        videoPlayer.Play();
-    }
-
 
     private void VideoPlayer_prepareCompleted(VideoPlayer source)
     {
@@ -205,9 +204,9 @@ public class DataManager : MonoBehaviour
         yield return new WaitForSeconds(recordTime + 1);
         audioClip1 = record;
 
-        HttpManager.instance.PostVoiceClip_FormData("test", "test",LoadAudioClip(SaveAudioClip(record)));
+        HttpManager.instance.PostVoiceClip_FormData("test", "test_room",LoadAudioClip(SaveAudioClip(record)));
         //LoadWav(LoadAudioClip(SaveAudioClip(record)));
-        audioClip2 = LoadWav(LoadAudioClip(SaveAudioClip(record)));
+        //audioClip2 = LoadWav(LoadAudioClip(SaveAudioClip(record)));
 
     }
 }
