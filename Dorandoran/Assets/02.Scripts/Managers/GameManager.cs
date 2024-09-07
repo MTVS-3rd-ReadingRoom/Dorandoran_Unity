@@ -8,6 +8,7 @@ using Photon.Pun.Demo.PunBasics;
 using NumSystem = System.Numerics;
 using UnityEngine.UIElements;
 using Photon.Voice;
+using static UnityEditor.PlayerSettings;
 
 public class GameManager : MonoBehaviourPun
 {
@@ -26,6 +27,10 @@ public class GameManager : MonoBehaviourPun
 
     [SerializeField]
     public Vector3[] PlayerRotations;
+
+    List<int> playerId;
+
+    int playerSpeak = 0;
 
     private void Awake()
     {
@@ -66,11 +71,17 @@ public class GameManager : MonoBehaviourPun
         Quaternion rotationQuaternion = Quaternion.Euler(PlayerRotations[playerCount - 1]);
 
         GameObject player = PhotonNetwork.Instantiate("Player", initPosition, rotationQuaternion);
-
+        PlayerMove playerMove = player.GetComponentInChildren<PlayerMove>();
+        //playerId.Add(playerMove.GetplayerID());
         Debug.Log("현재 플레이어 생성");
     }
 
     void Update()
+    {
+        PrintPlayerList();
+    }
+
+    void PrintPlayerList()
     {
         Dictionary<int, Player> playerDict = PhotonNetwork.CurrentRoom.Players;
 
@@ -88,6 +99,18 @@ public class GameManager : MonoBehaviourPun
             text_playerList.text += name + "\n";
         }
     }
+
+    //void ChangeSpeakerPlayer()
+    //{
+    //    Dictionary<int, Player> playerDict = PhotonNetwork.CurrentRoom.Players;
+
+    //    foreach (KeyValuePair<int, Player> player in playerDict)
+    //    {
+    //        player.Value.
+    //    }
+
+    //    playerId[playerSpeak];
+    //}
 
     private void OnDestroy()
     {
