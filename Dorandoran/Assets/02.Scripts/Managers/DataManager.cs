@@ -31,13 +31,12 @@ public class DataManager : MonoBehaviour
     public int serial_Room;
     public int recordTime = 30;
     public bool myTurn = false;
-    public int count = 5;
+
+    public string nickName;
 
     public int microphoneIndex = 0;
-    public AudioClip audioClip1;
-    public AudioClip audioClip2;
+    public AudioClip topicClip;
 
-    public string theme = "";
     public Topic topic;
     
     private void Awake()
@@ -45,6 +44,7 @@ public class DataManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -202,7 +202,6 @@ public class DataManager : MonoBehaviour
     {
         AudioClip record = Microphone.Start(Microphone.devices[microphoneIndex].ToString(), false, recordTime, 44100);
         yield return new WaitForSeconds(recordTime + 1);
-        audioClip1 = record;
 
         HttpManager.instance.PostVoiceClip_FormData("test", "test_room",LoadAudioClip(SaveAudioClip(record)));
         //LoadWav(LoadAudioClip(SaveAudioClip(record)));

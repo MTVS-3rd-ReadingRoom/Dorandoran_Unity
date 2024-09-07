@@ -18,6 +18,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         RoomType_End
     };
 
+    public static NetworkManager instance;
+
     public RoomType RoomTypeData;
     public Text StatusText;
     public InputField roomInput, NickNameInput;
@@ -37,21 +39,28 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     void Awake()
     {
-        Screen.SetResolution(1920, 1080, false);
+        if(instance == null)
+        {
+            instance = this;
+            Screen.SetResolution(1920, 1080, false);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void StartLogin()
     {
         // 접속을 위한 설정
-        if (LoginUIController.LoginUI.input_nickName.text.Length > 0)
+        if (DataManager.instance.nickName.Length > 0)
         {
             PhotonNetwork.GameVersion = "1.0.0";
-            PhotonNetwork.NickName = LoginUIController.LoginUI.input_nickName.text;
+            PhotonNetwork.NickName = DataManager.instance.nickName;
             PhotonNetwork.AutomaticallySyncScene = true;
 
             // 접속을 서버에 요청하기
             PhotonNetwork.ConnectUsingSettings();
-            LoginUIController.LoginUI.btn_login.interactable = false;
         }
     }
 
@@ -69,7 +78,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         // 실패 원인을 출력한다.
         Debug.LogError("Disconnected from Server - " + cause);
-        LoginUIController.LoginUI.btn_login.interactable = true;
     }
 
     void Update()
@@ -165,7 +173,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         // 룸에 입장이 실패한 이유를 출력한다.
         Debug.LogError(message);
-        LoginUIController.LoginUI.PrintLog("입장 실패..." + message);
 
         switch(message)
         {
@@ -179,7 +186,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         // 성공적으로 방이 개설되었음을 알려준다.
         print(MethodInfo.GetCurrentMethod().Name + " is Call!");
-        LoginUIController.LoginUI.PrintLog("방에 입장 성공!");
     }
 
     // 현재 로비에서 룸의 변경사항을 알려주는 콜백 함수

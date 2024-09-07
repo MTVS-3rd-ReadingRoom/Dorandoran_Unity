@@ -52,6 +52,10 @@ public class GameManager : MonoBehaviourPun
     void Start()
     {
         StartCoroutine(SpawnPlayer());
+        if (PhotonNetwork.IsMasterClient)
+        {
+            StartCoroutine(SpawnTopicSpeeker());
+        }
 
         // OnPhotonSerializeView 에서 데이터 전송 빈도 수 설정하기(per seconds)
         PhotonNetwork.SerializationRate = 30;
@@ -76,6 +80,13 @@ public class GameManager : MonoBehaviourPun
         Debug.Log("현재 플레이어 생성");
     }
 
+
+    IEnumerator SpawnTopicSpeeker()
+    {
+        // 룸에 입장이 완료될 때까지 기다린다.
+        yield return new WaitUntil(() => { return PhotonNetwork.InRoom; });
+
+    }
     void Update()
     {
         PrintPlayerList();
