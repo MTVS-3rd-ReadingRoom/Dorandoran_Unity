@@ -26,8 +26,8 @@ public class PlayerMove : PlayerStateBase, IPunObservable
 
     void Update()
     {
-        Move();
-        Rotate();
+        //Move();
+        //Rotate();
     }
 
     void Move()
