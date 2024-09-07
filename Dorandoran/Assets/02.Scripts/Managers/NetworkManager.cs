@@ -37,7 +37,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     void Awake()
     {
-        Screen.SetResolution(960, 540, false);
+        Screen.SetResolution(1920, 1080, false);
     }
 
     public void StartLogin()
@@ -148,7 +148,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         CheckDropdownBox();
 
-        PhotonNetwork.LoadLevel(mapDropDown.value + 1);
+        PhotonNetwork.LoadLevel(1); // 1번 빌드 셋팅으로 고정 이동
         print("방 참가완료");
     }
 

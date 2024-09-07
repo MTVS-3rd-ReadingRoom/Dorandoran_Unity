@@ -1,7 +1,10 @@
 using Photon.Pun;
+using PhotonVoice = Photon.Voice.Unity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Profiling;
+using Photon.Voice.PUN;
 
 public class PlayerMove : PlayerStateBase, IPunObservable
 {
@@ -14,7 +17,10 @@ public class PlayerMove : PlayerStateBase, IPunObservable
     Vector3 myPos;
     Quaternion myRot;
 
+    PhotonVoice.Recorder recorder;
+
     float mx = 0;
+
 
     void Start()
     {
@@ -22,12 +28,14 @@ public class PlayerMove : PlayerStateBase, IPunObservable
         cc = GetComponent<CharacterController>();
         myAnim = GetComponentInChildren<Animator>();
         pv = GetComponent<PhotonView>();
+        recorder = GetComponentInChildren<PhotonVoice.Recorder>();
+        //playerID = pv.ViewID;
     }
 
     void Update()
     {
-        Move();
-        Rotate();
+        //Move();
+        //Rotate();
     }
 
     void Move()
@@ -82,11 +90,32 @@ public class PlayerMove : PlayerStateBase, IPunObservable
             stream.SendNext(transform.position);
             stream.SendNext(transform.rotation);
         }
-        // 그렇지 않고, 만일 데이터를 서버로부터 읽어어는 상태라면...
+        // 그렇지 않고, 만일 데이터를 서버로부터 읽어야하는 상태라면...
         else if (stream.IsReading)
         {
             myPos = (Vector3)stream.ReceiveNext();
             myRot = (Quaternion)stream.ReceiveNext();
         }
     }
+
+    // RPC 함수
+    [PunRPC]
+    void UpdateSound(int SoundPlayerid)
+    {
+        if (SoundPlayerid == pv.ViewID) // 끌 플레이어 id
+        {
+            recorder.TransmitEnabled = true; // 말한 내용 전달
+        }
+        else // 킬 플레이어 id
+        {
+            recorder.TransmitEnabled = false; // 말한 내용 전달x
+        }
+    }
+
+    public int GetplayerID()
+    {
+        return pv.ViewID;
+    }
 }
+
+// 

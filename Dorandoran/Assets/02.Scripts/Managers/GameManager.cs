@@ -5,12 +5,32 @@ using Photon.Pun;
 using TMPro;
 using Photon.Realtime;
 using Photon.Pun.Demo.PunBasics;
+using NumSystem = System.Numerics;
+using UnityEngine.UIElements;
+using Photon.Voice;
+using static UnityEditor.PlayerSettings;
 
 public class GameManager : MonoBehaviourPun
 {
     public TMP_Text text_playerList;
 
     static GameManager gameManager = null;
+
+    struct TransformData
+    {
+        public Vector3 pos;
+        public Vector3 rot;
+    }
+
+    [SerializeField]
+    public Vector3[] PlayerPositions;
+
+    [SerializeField]
+    public Vector3[] PlayerRotations;
+
+    List<int> playerId;
+
+    int playerSpeak = 0;
 
     private void Awake()
     {
@@ -25,10 +45,12 @@ public class GameManager : MonoBehaviourPun
             Destroy(this.gameObject);
         }
     }
+
+    public void PlayerDataSetting()
+    {
+    }
     void Start()
     {
-        //if(gameManager != this)
-        //        return;
         StartCoroutine(SpawnPlayer());
 
         // OnPhotonSerializeView 에서 데이터 전송 빈도 수 설정하기(per seconds)
@@ -43,15 +65,23 @@ public class GameManager : MonoBehaviourPun
         // 룸에 입장이 완료될 때까지 기다린다.
         yield return new WaitUntil(() => { return PhotonNetwork.InRoom; });
 
-        Vector2 randomPos = Random.insideUnitCircle * 5.0f;
-        Vector3 initPosition = new Vector3(randomPos.x, 1.0f, randomPos.y);
+        int playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
 
-        GameObject player = PhotonNetwork.Instantiate("Player", initPosition, Quaternion.identity);
+        Vector3 initPosition = PlayerPositions[playerCount - 1];
+        Quaternion rotationQuaternion = Quaternion.Euler(PlayerRotations[playerCount - 1]);
 
+        GameObject player = PhotonNetwork.Instantiate("Player", initPosition, rotationQuaternion);
+        PlayerMove playerMove = player.GetComponentInChildren<PlayerMove>();
+        //playerId.Add(playerMove.GetplayerID());
         Debug.Log("현재 플레이어 생성");
     }
 
     void Update()
+    {
+        PrintPlayerList();
+    }
+
+    void PrintPlayerList()
     {
         Dictionary<int, Player> playerDict = PhotonNetwork.CurrentRoom.Players;
 
@@ -69,6 +99,18 @@ public class GameManager : MonoBehaviourPun
             text_playerList.text += name + "\n";
         }
     }
+
+    //void ChangeSpeakerPlayer()
+    //{
+    //    Dictionary<int, Player> playerDict = PhotonNetwork.CurrentRoom.Players;
+
+    //    foreach (KeyValuePair<int, Player> player in playerDict)
+    //    {
+    //        player.Value.
+    //    }
+
+    //    playerId[playerSpeak];
+    //}
 
     private void OnDestroy()
     {

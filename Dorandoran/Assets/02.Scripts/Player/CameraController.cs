@@ -28,7 +28,7 @@ public class CameraController : MonoBehaviour
 
         // 만일, 이 캐릭터가 캐릭터의 소유권자라면...
         // 메인 카메라의 CameraFollow 컴포넌트에서 follow Target과 LookAt Target을 모두 farPos로 지정한다.
-        if (GetComponent<PhotonView>().IsMine)
+        if (GetComponent<PhotonView>().IsMine && Camera.main.transform.GetComponent<CameraFollow>())
         {
             followCam = Camera.main.transform.GetComponent<CameraFollow>();
             followCam.SetCameraFollowTarget(basePositions[1]);
