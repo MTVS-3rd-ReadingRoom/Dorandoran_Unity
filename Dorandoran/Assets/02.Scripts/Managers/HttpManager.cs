@@ -73,6 +73,7 @@ public class HttpManager : MonoBehaviour
         if(instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -89,7 +90,9 @@ public class HttpManager : MonoBehaviour
         info.url = url + "/signup";
         info.onComplete = (UnityWebRequest webRequest) =>
         {
+            print($"Success : {MethodInfo.GetCurrentMethod()}");
             print(webRequest.downloadHandler.text);
+            LobbyUIManager.instance.ShowLogInPanel();
         };
 
         // data 를 MultipartForm 으로 셋팅
@@ -115,6 +118,12 @@ public class HttpManager : MonoBehaviour
             string v = webRequest.GetResponseHeaders()[key].Split(" ")[1];
             print(v);
             value = v;
+            DataManager.instance.nickName = userId;
+            NetworkManager.instance.StartLogin();
+            if(LobbyUIManager.instance != null)
+            {
+                LobbyUIManager.instance.ShowSelectChannelPanel();
+            }
         };
 
         // data 를 MultipartForm 으로 셋팅
