@@ -83,6 +83,11 @@ public class GameManager : MonoBehaviourPun
         // 룸에 입장이 완료될 때까지 기다린다.
         yield return new WaitUntil(() => { return PhotonNetwork.InRoom; });
 
+        Vector3 initPosition = new Vector3(534.0f, 4.5f, 204.88f);
+        Quaternion rotationQuaternion = Quaternion.Euler(new Vector3(0.0f, 266.157f, 0.0f));
+
+        GameObject Moderator = PhotonNetwork.Instantiate("Moderator", initPosition, rotationQuaternion);
+        Debug.Log("현재 사회자 생성");
     }
     void Update()
     {
