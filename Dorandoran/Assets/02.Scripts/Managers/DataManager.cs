@@ -38,7 +38,10 @@ public class DataManager : MonoBehaviour
     public AudioClip topicClip;
 
     public Topic topic;
-    
+
+    public Coroutine coroutine_Record;
+    private AudioSource voiceRecord;
+
     private void Awake()
     {
         if (instance == null)
@@ -195,17 +198,27 @@ public class DataManager : MonoBehaviour
     public void RecordMicrophone()
     {
         print("Start Record");
-        StartCoroutine(Corr_RecordAndPost());
+        coroutine_Record = StartCoroutine(Corr_RecordAndPost());
     }
 
     private IEnumerator Corr_RecordAndPost()
     {
-        AudioClip record = Microphone.Start(Microphone.devices[microphoneIndex].ToString(), false, recordTime, 44100);
+        voiceRecord.clip = Microphone.Start(Microphone.devices[microphoneIndex].ToString(), false, recordTime, 44100);
         yield return new WaitForSeconds(recordTime + 1);
 
-        HttpManager.instance.PostVoiceClip_FormData("test", "test_room",LoadAudioClip(SaveAudioClip(record)));
+        HttpManager.instance.PostVoiceClip_FormData("test", "test_room",LoadAudioClip(SaveAudioClip(voiceRecord.clip)));
         //LoadWav(LoadAudioClip(SaveAudioClip(record)));
         //audioClip2 = LoadWav(LoadAudioClip(SaveAudioClip(record)));
+        coroutine_Record = null;
+    }
 
+    public void StopRecord()
+    {
+        if(coroutine_Record != null)
+        {
+            StopCoroutine(coroutine_Record);
+            voiceRecord.Stop();
+            HttpManager.instance.PostVoiceClip_FormData("test", "test_room", LoadAudioClip(SaveAudioClip(voiceRecord.clip)));
+        }
     }
 }
