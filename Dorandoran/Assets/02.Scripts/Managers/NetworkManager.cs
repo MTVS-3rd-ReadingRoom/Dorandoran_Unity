@@ -35,6 +35,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     List<RoomInfo> cashedRoomList = new List<RoomInfo>();
 
+    int playerID = -1;
+
     void Awake()
     {
         Screen.SetResolution(1920, 1080, false);
@@ -146,12 +148,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         base.OnJoinedRoom();
         Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
 
-        CheckDropdownBox();
-
         PhotonNetwork.LoadLevel(1); // 1번 빌드 셋팅으로 고정 이동
         print("방 참가완료");
     }
 
+    public void SetPlayerID()
+    {
+
+    }
 
     void CheckDropdownBox()
     {

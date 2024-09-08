@@ -98,7 +98,7 @@ public class PlayerMove : PlayerStateBase, IPunObservable
         }
     }
 
-    // RPC 함수
+    //// RPC 함수
     [PunRPC]
     void UpdateSound(int SoundPlayerid)
     {
@@ -112,10 +112,6 @@ public class PlayerMove : PlayerStateBase, IPunObservable
         }
     }
 
-    public int GetplayerID()
-    {
-        return pv.ViewID;
-    }
 }
 
 // 
