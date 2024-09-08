@@ -1,68 +1,42 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\",
+  "WorkspaceRootPath": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\managers\\lobbyuimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\managers\\lobbyuimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|c:\\users\\admin\\desktop\\dorandoran_unity\\dorandoran\\assets\\02.scripts\\managers\\sceneuimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\managers\\sceneuimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\managers\\stageuimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\managers\\stageuimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|c:\\users\\admin\\dorandoran_unity\\dorandoran\\assets\\02.scripts\\managers\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\managers\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\managers\\uimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\managers\\uimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\managers\\networkmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\managers\\networkmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\managers\\datamanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\managers\\datamanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\managers\\httpmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\managers\\httpmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\panel_indexuserinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\panel_indexuserinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\savwav.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\savwav.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C2FC5DC9-6A70-75F9-EA3B-44268906EEB6}|PhotonUnityNetworking.csproj|C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\assets\\photon\\photonunitynetworking\\code\\photonnetworkpart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C2FC5DC9-6A70-75F9-EA3B-44268906EEB6}|PhotonUnityNetworking.csproj|C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\assets\\photon\\photonunitynetworking\\code\\photonnetworkpart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C2FC5DC9-6A70-75F9-EA3B-44268906EEB6}|PhotonUnityNetworking.csproj|solutionrelative:assets\\photon\\photonunitynetworking\\code\\photonnetworkpart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\player\\playermove.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\player\\playermove.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\managers\\voicemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\managers\\voicemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\player\\camerafollow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\player\\camerafollow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\managers\\lobbyuimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\managers\\lobbyuimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\player\\cameracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\player\\cameracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\managers\\networkmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\managers\\networkmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Admin\\Desktop\\MultiplayProject_MTVS\\Assets\\Scripts\\ConnectionManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{71189753-5E4D-6195-A816-9104B9C50C55}|PhotonVoice.csproj|C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\assets\\photon\\photonvoice\\code\\voicecomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{71189753-5E4D-6195-A816-9104B9C50C55}|PhotonVoice.csproj|solutionrelative:assets\\photon\\photonvoice\\code\\voicecomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\player\\playercamera.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\managers\\httpmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\managers\\httpmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\LoginUIController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\02.Scripts\\Managers\\LoginUIController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\managers\\uimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\managers\\uimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\managers\\datamanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\managers\\datamanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -72,203 +46,119 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "UIManager.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\UIManager.cs",
-              "RelativeDocumentMoniker": "Assets\\02.Scripts\\Managers\\UIManager.cs",
-              "ToolTip": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\UIManager.cs",
-              "RelativeToolTip": "Assets\\02.Scripts\\Managers\\UIManager.cs",
-              "ViewState": "AQIAACsAAAAAAAAAAAAAwC8AAAAFAAAA",
+              "DocumentIndex": 2,
+              "Title": "VoiceManager.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\VoiceManager.cs",
+              "RelativeDocumentMoniker": "Assets\\02.Scripts\\Managers\\VoiceManager.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\VoiceManager.cs",
+              "RelativeToolTip": "Assets\\02.Scripts\\Managers\\VoiceManager.cs",
+              "ViewState": "AQIAAC0AAAAAAAAAAAAkwFIAAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-05T00:37:19.523Z",
-              "IsPinned": true
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "StageUIManager.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\StageUIManager.cs",
-              "RelativeDocumentMoniker": "Assets\\02.Scripts\\Managers\\StageUIManager.cs",
-              "ToolTip": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\StageUIManager.cs",
-              "RelativeToolTip": "Assets\\02.Scripts\\Managers\\StageUIManager.cs",
-              "ViewState": "AQIAADcAAAAAAAAAAAAuwEQAAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-08T06:20:47.083Z",
+              "WhenOpened": "2024-09-08T08:30:52.048Z",
               "IsPinned": true,
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "HttpManager.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\HttpManager.cs",
-              "RelativeDocumentMoniker": "Assets\\02.Scripts\\Managers\\HttpManager.cs",
-              "ToolTip": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\HttpManager.cs",
-              "RelativeToolTip": "Assets\\02.Scripts\\Managers\\HttpManager.cs",
-              "ViewState": "AQIAAFMAAAAAAAAAAAAswHQAAAA/AAAA",
+              "DocumentIndex": 1,
+              "Title": "PhotonNetworkPart.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\Photon\\PhotonUnityNetworking\\Code\\PhotonNetworkPart.cs",
+              "RelativeDocumentMoniker": "Assets\\Photon\\PhotonUnityNetworking\\Code\\PhotonNetworkPart.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\Photon\\PhotonUnityNetworking\\Code\\PhotonNetworkPart.cs",
+              "RelativeToolTip": "Assets\\Photon\\PhotonUnityNetworking\\Code\\PhotonNetworkPart.cs",
+              "ViewState": "AQIAAHcCAAAAAAAAAAAiwIcCAACOAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-07T05:06:13.286Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Panel_IndexUserInfo.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Panel_IndexUserInfo.cs",
-              "RelativeDocumentMoniker": "Assets\\02.Scripts\\Panel_IndexUserInfo.cs",
-              "ToolTip": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Panel_IndexUserInfo.cs",
-              "RelativeToolTip": "Assets\\02.Scripts\\Panel_IndexUserInfo.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAADwvwUAAAAcAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-08T11:33:19.006Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "LoginUIController.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\LoginUIController.cs",
-              "RelativeDocumentMoniker": "Assets\\02.Scripts\\Managers\\LoginUIController.cs",
-              "ToolTip": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\LoginUIController.cs",
-              "RelativeToolTip": "Assets\\02.Scripts\\Managers\\LoginUIController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACgAAAAeAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-07T11:35:49.205Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "LobbyUIManager.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\LobbyUIManager.cs",
-              "RelativeDocumentMoniker": "Assets\\02.Scripts\\Managers\\LobbyUIManager.cs",
-              "ToolTip": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\LobbyUIManager.cs",
-              "RelativeToolTip": "Assets\\02.Scripts\\Managers\\LobbyUIManager.cs",
-              "ViewState": "AQIAADYAAAAAAAAAAAAuwFgAAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-07T09:24:53.181Z",
+              "WhenOpened": "2024-09-08T13:15:40.599Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "SavWav.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\SavWav.cs",
-              "RelativeDocumentMoniker": "Assets\\02.Scripts\\SavWav.cs",
-              "ToolTip": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\SavWav.cs",
-              "RelativeToolTip": "Assets\\02.Scripts\\SavWav.cs",
-              "ViewState": "AQIAAAQAAAAAAAAAAAAgwBMAAAAcAAAA",
+              "DocumentIndex": 0,
+              "Title": "SceneUIManager.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\SceneUIManager.cs",
+              "RelativeDocumentMoniker": "Assets\\02.Scripts\\Managers\\SceneUIManager.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\SceneUIManager.cs",
+              "RelativeToolTip": "Assets\\02.Scripts\\Managers\\SceneUIManager.cs",
+              "ViewState": "AQIAAFcAAAAAAAAAAAAAAHEAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-07T07:15:29.155Z"
+              "WhenOpened": "2024-09-08T11:52:35.513Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "LobbyUIManager.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\LobbyUIManager.cs",
+              "RelativeDocumentMoniker": "Assets\\02.Scripts\\Managers\\LobbyUIManager.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\LobbyUIManager.cs",
+              "RelativeToolTip": "Assets\\02.Scripts\\Managers\\LobbyUIManager.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAfAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-08T10:22:50.101Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "UIManager.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\UIManager.cs",
+              "RelativeDocumentMoniker": "Assets\\02.Scripts\\Managers\\UIManager.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\UIManager.cs",
+              "RelativeToolTip": "Assets\\02.Scripts\\Managers\\UIManager.cs",
+              "ViewState": "AQIAACsAAAAAAAAAAAAawD0AAABSAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-08T09:02:20.486Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "HttpManager.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\HttpManager.cs",
+              "RelativeDocumentMoniker": "Assets\\02.Scripts\\Managers\\HttpManager.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\HttpManager.cs",
+              "RelativeToolTip": "Assets\\02.Scripts\\Managers\\HttpManager.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-08T09:02:02.843Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "DataManager.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\DataManager.cs",
-              "RelativeDocumentMoniker": "Assets\\02.Scripts\\Managers\\DataManager.cs",
-              "ToolTip": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\DataManager.cs",
-              "RelativeToolTip": "Assets\\02.Scripts\\Managers\\DataManager.cs",
-              "ViewState": "AQIAACwAAAAAAAAAAAAxwCQAAAAPAAAA",
+              "Title": "VoiceComponent.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\Photon\\PhotonVoice\\Code\\VoiceComponent.cs",
+              "RelativeDocumentMoniker": "Assets\\Photon\\PhotonVoice\\Code\\VoiceComponent.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\Photon\\PhotonVoice\\Code\\VoiceComponent.cs",
+              "RelativeToolTip": "Assets\\Photon\\PhotonVoice\\Code\\VoiceComponent.cs",
+              "ViewState": "AQIAADcAAAAAAAAAAAAawEkAAABNAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-07T07:11:06.264Z"
+              "WhenOpened": "2024-09-08T08:55:32.784Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
               "Title": "NetworkManager.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\NetworkManager.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\NetworkManager.cs",
               "RelativeDocumentMoniker": "Assets\\02.Scripts\\Managers\\NetworkManager.cs",
-              "ToolTip": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\NetworkManager.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\NetworkManager.cs",
               "RelativeToolTip": "Assets\\02.Scripts\\Managers\\NetworkManager.cs",
-              "ViewState": "AQIAACUAAAAAAAAAAAAqwDUAAAAFAAAA",
+              "ViewState": "AQIAAKAAAAAAAAAAAABAwPsAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-05T13:15:20.086Z"
+              "WhenOpened": "2024-09-08T08:39:44.864Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "PhotonNetworkPart.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\Photon\\PhotonUnityNetworking\\Code\\PhotonNetworkPart.cs",
-              "RelativeDocumentMoniker": "Assets\\Photon\\PhotonUnityNetworking\\Code\\PhotonNetworkPart.cs",
-              "ToolTip": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\Photon\\PhotonUnityNetworking\\Code\\PhotonNetworkPart.cs",
-              "RelativeToolTip": "Assets\\Photon\\PhotonUnityNetworking\\Code\\PhotonNetworkPart.cs",
-              "ViewState": "AQIAAOMJAAAAAAAAAAAmwPwJAAAeAAAA",
+              "DocumentIndex": 8,
+              "Title": "DataManager.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\DataManager.cs",
+              "RelativeDocumentMoniker": "Assets\\02.Scripts\\Managers\\DataManager.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\DataManager.cs",
+              "RelativeToolTip": "Assets\\02.Scripts\\Managers\\DataManager.cs",
+              "ViewState": "AQIAAEUAAAAAAAAAAAAAALsAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-05T14:01:44.999Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "GameManager.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\GameManager.cs",
-              "RelativeDocumentMoniker": "Assets\\02.Scripts\\Managers\\GameManager.cs",
-              "ToolTip": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\GameManager.cs",
-              "RelativeToolTip": "Assets\\02.Scripts\\Managers\\GameManager.cs",
-              "ViewState": "AQIAAEwAAAAAAAAAAAAuwGAAAABPAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-05T03:57:53.354Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "PlayerMove.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Player\\PlayerMove.cs",
-              "RelativeDocumentMoniker": "Assets\\02.Scripts\\Player\\PlayerMove.cs",
-              "ToolTip": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Player\\PlayerMove.cs",
-              "RelativeToolTip": "Assets\\02.Scripts\\Player\\PlayerMove.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAmAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-04T21:33:52.573Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "CameraFollow.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Player\\CameraFollow.cs",
-              "RelativeDocumentMoniker": "Assets\\02.Scripts\\Player\\CameraFollow.cs",
-              "ToolTip": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Player\\CameraFollow.cs",
-              "RelativeToolTip": "Assets\\02.Scripts\\Player\\CameraFollow.cs",
-              "ViewState": "AQIAABQAAAAAAAAAAAAgwCIAAAAhAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-04T21:33:20.441Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "CameraController.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Player\\CameraController.cs",
-              "RelativeDocumentMoniker": "Assets\\02.Scripts\\Player\\CameraController.cs",
-              "ToolTip": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Player\\CameraController.cs",
-              "RelativeToolTip": "Assets\\02.Scripts\\Player\\CameraController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-04T21:32:40.217Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "PlayerCamera.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Player\\PlayerCamera.cs",
-              "RelativeDocumentMoniker": "..\\..\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Player\\PlayerCamera.cs",
-              "ToolTip": "C:\\Users\\Admin\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Player\\PlayerCamera.cs",
-              "RelativeToolTip": "..\\..\\Desktop\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Player\\PlayerCamera.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-04T09:09:09.185Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "ConnectionManager.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\MultiplayProject_MTVS\\Assets\\Scripts\\ConnectionManager.cs",
-              "RelativeDocumentMoniker": "..\\..\\Desktop\\MultiplayProject_MTVS\\Assets\\Scripts\\ConnectionManager.cs",
-              "ToolTip": "C:\\Users\\Admin\\Desktop\\MultiplayProject_MTVS\\Assets\\Scripts\\ConnectionManager.cs",
-              "RelativeToolTip": "..\\..\\Desktop\\MultiplayProject_MTVS\\Assets\\Scripts\\ConnectionManager.cs",
-              "ViewState": "AQIAAB4AAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|"
+              "WhenOpened": "2024-09-08T08:04:20.44Z"
             }
           ]
         }
