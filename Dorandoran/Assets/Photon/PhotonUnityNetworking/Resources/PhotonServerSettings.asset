@@ -48,6 +48,10 @@ MonoBehaviour:
   - TogglePlayerVoice
   - NextPlayerSpeak
   - ChangeSpeak
+  - NextOrder
+  - NextOrderMessage
+  - StartTimer
+  - ResetTimer
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

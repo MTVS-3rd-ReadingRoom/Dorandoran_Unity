@@ -12,10 +12,11 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.Rendering.UI;
 using UnityEngine.Profiling;
+using Photon.Voice.PUN;
 
 public class VoiceManager : MonoBehaviourPunCallbacks
 {
-    public TextMeshProUGUI logText; // Inspector에서 Text 컴포넌트를 할당
+    public TextMeshProUGUI logText;
     public Button button;
 
     //Dictionary<int, string> playerInfo = new Dictionary<int, string>();
@@ -101,8 +102,11 @@ public class VoiceManager : MonoBehaviourPunCallbacks
     void Start()
     {
         logText = GameObject.Find("Canvas/LogData").GetComponentInChildren<TextMeshProUGUI>();
-        button = GameObject.Find("Canvas/Button").GetComponentInChildren<Button>();
-        button.onClick.AddListener(ChangeSpeaker);
+        //button = GameObject.Find("Canvas/Button").GetComponentInChildren<Button>();
+        //button.onClick.AddListener(ChangeSpeaker);
+
+        Photon.Voice.Unity.Recorder recorder = GetComponent<Photon.Voice.Unity.Recorder>();
+        recorder.VoiceDetectionThreshold = 0.00001f;
     }
 
     // Update is called once per frame
