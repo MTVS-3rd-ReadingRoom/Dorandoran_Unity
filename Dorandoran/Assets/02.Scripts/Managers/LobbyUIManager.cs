@@ -21,19 +21,21 @@ public class LobbyUIManager : MonoBehaviour
     [Header("로그인")]
     public TMP_InputField[] inputFields_LogIn;
     public Button button_LogIn;
+    public Button button_StartSignUp;
     #endregion
 
     #region 회원가입
     [Header("회원가입")]
     public TMP_InputField[] inputFields_SignUp;
     public Button button_SignUp;
+    public Button button_SignUpCancle;
     #endregion
 
 
     #region 회원가입
     [Header("채널 선택")]
-    public Button button_MakeRoomChannel;
-    public Button button_ChoiceRoomChannel;
+    public Button[] buttons_MakeRoomChannel;
+    public Button[] buttons_ChoiceRoomChannel;
     #endregion
 
     private void Awake()
@@ -67,6 +69,7 @@ public class LobbyUIManager : MonoBehaviour
                 print("LogIn_False");
             }
         });
+        button_StartSignUp.onClick.AddListener( () => { ShowSignUpPanel(); });
         button_SignUp.onClick.AddListener(() =>
         {
             if (CheckSignUp())
@@ -79,14 +82,15 @@ public class LobbyUIManager : MonoBehaviour
                 print("SignUp_False");
             }
         });
-        button_MakeRoomChannel.onClick.AddListener(() =>
+        button_SignUpCancle.onClick.AddListener(() => { ShowLogInPanel(); });
+        for (int i = 0; i < buttons_MakeRoomChannel.Length; i++)
         {
-            ShowMakeRoomPanel();
-        });
-        button_ChoiceRoomChannel.onClick.AddListener(() =>
+            buttons_MakeRoomChannel[i].onClick.AddListener(() => { ShowMakeRoomPanel(); });
+        }
+        for (int i = 0; i < buttons_ChoiceRoomChannel.Length; i++)
         {
-            ShowChoiceRoomPanel();
-        });
+            buttons_ChoiceRoomChannel[i].onClick.AddListener(() => { ShowChoiceRoomPanel(); });
+        }
     }
     public bool CheckLogIn()
     {
@@ -132,6 +136,7 @@ public class LobbyUIManager : MonoBehaviour
 
     public void ShowSelectChannelPanel()
     {
+        print(2);
         panel_login.SetActive(true);
         panel_makeRoom.SetActive(false);
         panel_choiceRoom.SetActive(false);
@@ -141,6 +146,7 @@ public class LobbyUIManager : MonoBehaviour
 
     public void ShowMakeRoomPanel()
     {
+        print(1);
         panel_login.SetActive(false);
         panel_makeRoom.SetActive(true);
         panel_choiceRoom.SetActive(false);

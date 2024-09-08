@@ -60,7 +60,6 @@ public class UIManager : MonoBehaviour
     private void ActiveSelectMicrophoneUI()
     {
         microphoneName = Microphone.devices[DataManager.instance.microphoneIndex];
-        int index = Microphone.devices.Length;
         dropdown_MicrophoneName.ClearOptions();
         dropdown_MicrophoneName.AddOptions(Microphone.devices.ToList());
         dropdown_MicrophoneName.value = DataManager.instance.microphoneIndex;
