@@ -11,6 +11,7 @@ using System;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.Rendering.UI;
+using UnityEngine.Profiling;
 
 public class VoiceManager : MonoBehaviourPunCallbacks
 {
@@ -23,81 +24,67 @@ public class VoiceManager : MonoBehaviourPunCallbacks
     int playerIndex = -1;
 
     // 플레이어 목록을 ActorNumber 기준으로 정렬하는 함수
-    private Player[] GetSortedPlayers()
-    {
-        // Players.Values를 배열로 변환
-        Player[] playersArray = PhotonNetwork.CurrentRoom.Players.Values.ToArray();
+    //private Player[] GetSortedPlayers()
+    //{
+    //    // Players.Values를 배열로 변환
+    //    Player[] playersArray = PhotonNetwork.CurrentRoom.Players.Values.ToArray();
 
-        Debug.Log("현재 플레이어 개수(정렬중): " + PhotonNetwork.CurrentRoom.Players.Count);
-        // 배열을 ActorNumber 기준으로 정렬
-        Array.Sort(playersArray, (p1, p2) => p1.ActorNumber.CompareTo(p2.ActorNumber));
+    //    Debug.Log("현재 플레이어 개수(정렬중): " + PhotonNetwork.CurrentRoom.Players.Count);
+    //    // 배열을 ActorNumber 기준으로 정렬
+    //    Array.Sort(playersArray, (p1, p2) => p1.ActorNumber.CompareTo(p2.ActorNumber));
 
-        return playersArray;
-    }
+    //    return playersArray;
+    //}
 
-    public void UpdatePlayerList()
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            playerActorNum.Clear();
-            foreach (Player player in PhotonNetwork.CurrentRoom.Players.Values.ToArray())
-            {
-                playerActorNum.Add(player.ActorNumber);
-            };
+    //public void UpdatePlayerList()
+    //{
+    //    if (PhotonNetwork.IsMasterClient)
+    //    {
+    //        playerActorNum.Clear();
+    //        foreach (Player player in PhotonNetwork.CurrentRoom.Players.Values.ToArray())
+    //        {
+    //            playerActorNum.Add(player.ActorNumber);
+    //        };
 
-            playerActorNum.Sort();
-            //playerInfo.Clear();
-            //playerNameList.Clear();
-            //foreach (Player player in GetSortedPlayers())
-            //{
-            //    string playerId = "Player_" + player.ActorNumber;
-            //    playerInfo[player.ActorNumber] = playerId;
-            //    playerNameList.Add(playerId);
-            //}
-        }
-    }
+    //        playerActorNum.Sort();
+    //    }
+    //}
+
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-
+        // 마스터 클라이언트일 경우
+        if (PhotonNetwork.IsMasterClient) // 마스터 클라이언트만 플레이어 정보를 받도록
+        {
+            playerActorNum.Add(newPlayer.ActorNumber);
+        }
     }
 
-    public void MutePlayerVoice(int actorNum, bool mute)
+    public override void OnJoinedRoom() // 방에 입장했을때
     {
-        photonView.RPC("TogglePlayerVoice", PhotonNetwork.CurrentRoom.GetPlayer(actorNum), mute); // ActorNumber를 기준으로 뮤트
+        // 마스터 클라이언트가 입장했을 때
+        if (PhotonNetwork.IsMasterClient)
+        {
+            playerActorNum.Add(PhotonNetwork.MasterClient.ActorNumber);
+        }
+    }
+ 
 
-        //playerActorNum[playerIndex] == 
-        //foreach (var item in playerInfo)
-        //{
-        //    if (item.Value == userId) // 플레이어 정보 중에 해당 id와 일치하는 것이 있다면
-        //    {
-        //        photonView.RPC("TogglePlayerVoice", PhotonNetwork.CurrentRoom.GetPlayer(item.Key), mute); // ActorNumber를 기준으로 뮤트
-        //    }
-        //}
 
+    // 해당 actorNum의 플레이어 보이스 수정
+    public void RecordPlayerVoice(int actorNum, bool on)
+    {
+        // 해당 actorNum를 가진 오브젝트에게 보이스 설정(on, off)
+        photonView.RPC("TogglePlayerVoice", PhotonNetwork.CurrentRoom.GetPlayer(actorNum), on); // ActorNumber를 기준으로 뮤트
     }
 
+    // 특정 플레이어 보이스 키고 끄기
     [PunRPC]
-    public void TogglePlayerVoice(bool mute)
+    public void TogglePlayerVoice(bool on)
     {
-        Recorder recorder = GetComponent<Recorder>();
+        Photon.Voice.Unity.Recorder recorder = GetComponent< Photon.Voice.Unity.Recorder> ();
 
         if (recorder)
-            recorder.TransmitEnabled = !mute;
-
-        //PhotonView localPhotonView = PhotonView.Get(this);
-
-        //if (!localPhotonView.IsMine)
-        //    return;
-        //GameObject localObject = localPhotonView.gameObject;
-        //Transform childTransform = localObject.transform.Find("SpeakerObject");
-        //if (recorder.TransmitEnabled) // 소리 전송 중
-        //{
-        //    childTransform.gameObject.GetComponentInChildren<MeshRenderer>().enabled = true;
-        //}
-        //else
-        //{
-        //    childTransform.gameObject.GetComponentInChildren<MeshRenderer>().enabled = false;
-        //}
+            recorder.TransmitEnabled = on;
     }
 
     [PunRPC]
@@ -115,34 +102,34 @@ public class VoiceManager : MonoBehaviourPunCallbacks
     {
         logText = GameObject.Find("Canvas/LogData").GetComponentInChildren<TextMeshProUGUI>();
         button = GameObject.Find("Canvas/Button").GetComponentInChildren<Button>();
-        button.onClick.AddListener(ChangeSpeak);
+        button.onClick.AddListener(ChangeSpeaker);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.V) && PhotonNetwork.IsMasterClient) // 방장일 경우에만
-        {
 
-
-        }
     }
 
+    // 발언자를 변경하라는 함수 마스터 클라이언트로 보내기
+    public void ChangeSpeaker()
+    {
+        photonView.RPC("ChangeSpeak", PhotonNetwork.MasterClient); // ActorNumber를 기준으로 뮤트
+    }
+
+    // 마스터 클라이언트에서 발언자 변경
+    [PunRPC]
     public void ChangeSpeak()
     {
-        if (PhotonNetwork.IsMasterClient && photonView.IsMine)
-        {
-            playerIndex = (++playerIndex) % (PhotonNetwork.CurrentRoom.Players.Count);
-            NextPlayerSpeakData(playerIndex);
-            UpdatePlayerList();
-            MutePlayerVoice(playerActorNum[playerIndex], false);
+        playerIndex = (++playerIndex) % (PhotonNetwork.CurrentRoom.Players.Count);
+        NextPlayerSpeakData(playerIndex);
+        RecordPlayerVoice(playerActorNum[playerIndex], true); // 발표자 TransmitEnabled on
 
-            for (int i = 0; i < PhotonNetwork.CurrentRoom.Players.Count; i++)
+        for (int i = 0; i < PhotonNetwork.CurrentRoom.Players.Count; i++)
+        {
+            if (playerIndex != i)
             {
-                if (playerIndex != i)
-                {
-                    MutePlayerVoice(playerActorNum[i], true);
-                }
+                RecordPlayerVoice(playerActorNum[i], true); // // 경청하는 사람 TransmitEnabled false
             }
         }
     }
@@ -156,3 +143,19 @@ public class VoiceManager : MonoBehaviourPunCallbacks
         }
     }
 }
+
+
+//PhotonView localPhotonView = PhotonView.Get(this);
+
+//if (!localPhotonView.IsMine)
+//    return;
+//GameObject localObject = localPhotonView.gameObject;
+//Transform childTransform = localObject.transform.Find("SpeakerObject");
+//if (recorder.TransmitEnabled) // 소리 전송 중
+//{
+//    childTransform.gameObject.GetComponentInChildren<MeshRenderer>().enabled = true;
+//}
+//else
+//{
+//    childTransform.gameObject.GetComponentInChildren<MeshRenderer>().enabled = false;
+//}
