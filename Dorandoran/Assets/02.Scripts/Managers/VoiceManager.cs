@@ -16,6 +16,7 @@ using Photon.Voice.PUN;
 
 public class VoiceManager : MonoBehaviourPunCallbacks
 {
+
     public TextMeshProUGUI logText;
     public Button button;
 
@@ -82,7 +83,7 @@ public class VoiceManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void TogglePlayerVoice(bool on)
     {
-        Photon.Voice.Unity.Recorder recorder = GetComponent< Photon.Voice.Unity.Recorder> ();
+        Photon.Voice.Unity.Recorder recorder = GetComponent<Photon.Voice.Unity.Recorder> ();
 
         if (recorder)
             recorder.TransmitEnabled = on;
@@ -102,11 +103,12 @@ public class VoiceManager : MonoBehaviourPunCallbacks
     void Start()
     {
         logText = GameObject.Find("Canvas_UIManager/LogData").GetComponentInChildren<TextMeshProUGUI>();
+        AudioSource audioSource = GetComponent<AudioSource>().GetComponent<AudioSource>();
+        audioSource.volume = 2.0f;  // 2¹è·Î ÁõÆø
+
         //button = GameObject.Find("Canvas/Button").GetComponentInChildren<Button>();
         //button.onClick.AddListener(ChangeSpeaker);
 
-        Photon.Voice.Unity.Recorder recorder = GetComponent<Photon.Voice.Unity.Recorder>();
-        recorder.VoiceDetectionThreshold = 0.00001f;
     }
 
     // Update is called once per frame

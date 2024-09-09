@@ -86,17 +86,17 @@ public class DataManager : MonoBehaviour
 
     public AudioClip LoadWav(byte[] wavFileData, string clipName = "AudioClip")
     {
-        // WAV ÆÄÀÏ Çì´õ °Ë»ç ¹× ÆÄ½Ì
+        // WAV ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ ï¿½ï¿½ ï¿½Ä½ï¿½
         int channels = BitConverter.ToInt16(wavFileData, 22);
         int sampleRate = BitConverter.ToInt32(wavFileData, 24);
         int bitDepth = BitConverter.ToInt16(wavFileData, 34);
-        int dataStartIndex = 44; // µ¥ÀÌÅÍ´Â WAV Çì´õ µÚ¿¡¼­ ½ÃÀÛ (44¹ÙÀÌÆ®)
+        int dataStartIndex = 44; // ï¿½ï¿½ï¿½ï¿½ï¿½Í´ï¿½ WAV ï¿½ï¿½ï¿½ ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (44ï¿½ï¿½ï¿½ï¿½Æ®)
 
-        // ¿Àµð¿À µ¥ÀÌÅÍÀÇ »ùÇÃ ¼ö °è»ê
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½
         int bytesPerSample = bitDepth / 8;
         int sampleCount = (wavFileData.Length - dataStartIndex) / bytesPerSample;
 
-        // ¿Àµð¿À µ¥ÀÌÅÍ¸¦ float ¹è¿­·Î º¯È¯
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ float ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½È¯
         float[] audioData = new float[sampleCount];
         if (bitDepth == 16)
         {
@@ -114,19 +114,19 @@ public class DataManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Áö¿øµÇÁö ¾Ê´Â ºñÆ® ±íÀÌ: " + bitDepth);
+            Debug.LogError("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´ï¿½ ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½: " + bitDepth);
             return null;
         }
 
-        // AudioClip »ý¼º
+        // AudioClip ï¿½ï¿½ï¿½ï¿½
         AudioClip audioClip = AudioClip.Create(clipName, sampleCount, channels, sampleRate, false);
         audioClip.SetData(audioData, 0);
 
         return audioClip;
     }
 
-    #region ¾È¾¸
-    // ¿Àµð¿À Å¬¸³À» ¹ÙÀÌÆ® ¹è¿­·Î º¯È¯ÇÏ±â
+    #region ï¿½È¾ï¿½
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ï±ï¿½
     public void AudioClipToByteArray(AudioClip audioClip)
     {
         float[] data = new float[audioClip.samples * audioClip.channels];
@@ -152,25 +152,25 @@ public class DataManager : MonoBehaviour
     public AudioClip FromBianryToAudioClip(byte[] bins, int channels, int frequency)
     {
        
-        // short Çü½ÄÀ¸·Î º¯È¯µÈ µ¥ÀÌÅÍ¸¦ ´ãÀ» ¹è¿­ »ý¼º
+        // short ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ ï¿½ï¿½ï¿½ï¿½
         short[] shortData = new short[bins.Length / sizeof(short)];
 
-        // byte ¹è¿­À» short ¹è¿­·Î º¯È¯
+        // byte ï¿½è¿­ï¿½ï¿½ short ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½È¯
         Buffer.BlockCopy(bins, 0, shortData, 0, bins.Length);
 
-        // float Çü½ÄÀ¸·Î º¯È¯µÈ µ¥ÀÌÅÍ¸¦ ´ãÀ» ¹è¿­ »ý¼º
+        // float ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ ï¿½ï¿½ï¿½ï¿½
         float[] floatData = new float[shortData.Length];
 
-        // short µ¥ÀÌÅÍ¸¦ float·Î º¯È¯
+        // short ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ floatï¿½ï¿½ ï¿½ï¿½È¯
         for (int i = 0; i < shortData.Length; i++)
         {
             floatData[i] = shortData[i] / (float)short.MaxValue;
         }
 
-        // AudioClip »ý¼º
+        // AudioClip ï¿½ï¿½ï¿½ï¿½
         AudioClip audioClip = AudioClip.Create("GeneratedClip", floatData.Length / channels, channels, frequency, false);
 
-        // AudioClip¿¡ float µ¥ÀÌÅÍ Àû¿ë
+        // AudioClipï¿½ï¿½ float ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         audioClip.SetData(floatData, 0);
 
         return audioClip;
@@ -185,6 +185,9 @@ public class DataManager : MonoBehaviour
     public void SetTopic_Voice(AudioClip audioClip)
     {
         topicClip = audioClip;
+
+
+        ModeratorSound.instance.SpeakPlayer(audioClip);
         SaveAudioClip(audioClip);
         PlayAudio(audioClip);
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -199,7 +202,7 @@ public class DataManager : MonoBehaviour
 
     private void VideoPlayer_prepareCompleted(VideoPlayer source)
     {
-        // ºñµð¿À ÁØºñ ¿Ï·á ÈÄ Àç»ý
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Øºï¿½ ï¿½Ï·ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½
         source.Play();
     }
 
