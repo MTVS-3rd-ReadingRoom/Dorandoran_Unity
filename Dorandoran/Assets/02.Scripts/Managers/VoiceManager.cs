@@ -101,7 +101,7 @@ public class VoiceManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        logText = GameObject.Find("Canvas/LogData").GetComponentInChildren<TextMeshProUGUI>();
+        logText = GameObject.Find("Canvas_UIManager/LogData").GetComponentInChildren<TextMeshProUGUI>();
         //button = GameObject.Find("Canvas/Button").GetComponentInChildren<Button>();
         //button.onClick.AddListener(ChangeSpeaker);
 

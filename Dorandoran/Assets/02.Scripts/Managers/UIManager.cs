@@ -77,8 +77,8 @@ public class UIManager : MonoBehaviour
 
     public void GetTopic()
     {
-        HttpManager.instance.PostTopic_Voice("test_room"); 
-        HttpManager.instance.PostTopic_Text("test_room");
+        HttpManager.instance.PostTopic_Voice("1"); 
+        HttpManager.instance.PostTopic_Text("1");
     }
 
     public void SetTopic(Topic topic)

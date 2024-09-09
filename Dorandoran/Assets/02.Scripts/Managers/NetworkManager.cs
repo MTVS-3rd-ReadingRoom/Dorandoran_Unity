@@ -39,6 +39,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     int playerID = -1;
 
+
     void Awake()
     {
         if(instance == null)
@@ -190,6 +191,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         // 성공적으로 방이 개설되었음을 알려준다.
         print(MethodInfo.GetCurrentMethod().Name + " is Call!");
+        HttpManager.instance.PostDedateRoom("1", "1");
+        HttpManager.instance.PostTopic_Text("1");
+        HttpManager.instance.PostTopic_Voice("1");
+
     }
 
     // 현재 로비에서 룸의 변경사항을 알려주는 콜백 함수

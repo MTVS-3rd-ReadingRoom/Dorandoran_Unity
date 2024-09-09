@@ -200,7 +200,8 @@ public class HttpManager : MonoBehaviour
             byte[] bins = buffer.data;
 
             AudioClip a = WavUtility.ToAudioClip(bins);
-            DataManager.instance.PlayAudio(a);
+            DataManager.instance.SetTopic_Voice(a);
+
         };
 
         // data 를 MultipartForm 으로 셋팅
@@ -226,7 +227,7 @@ public class HttpManager : MonoBehaviour
             string topic_text = webRequest.downloadHandler.text;
             print(topic_text);
             Topic topic = JsonUtility.FromJson<Topic>(topic_text);
-            DataManager.instance.SetTopic(topic);
+            DataManager.instance.SetTopic_Text(topic);
             print($"Success : {MethodInfo.GetCurrentMethod()}");
         };
 

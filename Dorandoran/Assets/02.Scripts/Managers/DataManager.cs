@@ -35,12 +35,13 @@ public class DataManager : MonoBehaviour
     public string nickName;
 
     public int microphoneIndex = 0;
-    public AudioClip topicClip;
 
     public Topic topic;
+    public AudioClip topicClip;
 
     public Coroutine coroutine_Record;
     private AudioSource voiceRecord;
+
 
     private void Awake()
     {
@@ -176,10 +177,16 @@ public class DataManager : MonoBehaviour
     }
     #endregion
 
-    public void SetTopic(Topic topic)
+    public void SetTopic_Text(Topic topic)
     {
         this.topic = topic;
-        UIManager.instance.SetTopic(topic);
+        StageUIManager.instance.SetTopic(topic);
+    }
+
+    public void SetTopic_Voice(AudioClip audioClip)
+    {
+        topicClip = audioClip;
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
     public void PlayAudio(AudioClip audioClip)
