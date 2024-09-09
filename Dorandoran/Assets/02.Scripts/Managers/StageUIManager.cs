@@ -55,6 +55,7 @@ public class StageUIManager : MonoBehaviour
     private void Start()
     {
         InitUI();
+        SetTopic();
     }
     private void InitUI()
     {
@@ -121,12 +122,31 @@ public class StageUIManager : MonoBehaviour
 
 
     #region ажа╕
-    public void SetTopic(Topic topic)
+    public void SetTopic()
     {
-        this.text_Topic.text = topic.topic;
-        text_Topicinfos[0].text = topic.topic;
-        text_Topicinfos[1].text = topic.content;
+        StartCoroutine(Corroutine_SetTopic());
     }
+
+    private IEnumerator Corroutine_SetTopic()
+    {
+        int count = 0;
+        print(0);
+        while (DataManager.instance.topic.topic == null)
+        {
+            yield return new WaitForSeconds(1);
+            count++;
+            if(count > 30)
+            {
+                print(1);
+                break;
+            }
+        }
+
+        text_Topicinfos[0].text = DataManager.instance.topic.topic;
+        text_Topicinfos[1].text = DataManager.instance.topic.content;
+        text_Topic.text = DataManager.instance.topic.topic;
+    }
+
     #endregion
 
 

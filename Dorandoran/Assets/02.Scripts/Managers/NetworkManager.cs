@@ -191,6 +191,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         // 성공적으로 방이 개설되었음을 알려준다.
         print(MethodInfo.GetCurrentMethod().Name + " is Call!");
+        DataManager.instance.topic.topic = null;
+        DataManager.instance.topic.content = null;
+        DataManager.instance.topicClip = null;
         HttpManager.instance.PostDedateRoom("1", "1");
         HttpManager.instance.PostTopic_Text("1");
         HttpManager.instance.PostTopic_Voice("1");

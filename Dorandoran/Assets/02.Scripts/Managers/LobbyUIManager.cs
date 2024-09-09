@@ -136,7 +136,6 @@ public class LobbyUIManager : MonoBehaviour
 
     public void ShowSelectChannelPanel()
     {
-        print(2);
         panel_login.SetActive(true);
         panel_makeRoom.SetActive(false);
         panel_choiceRoom.SetActive(false);
@@ -146,7 +145,6 @@ public class LobbyUIManager : MonoBehaviour
 
     public void ShowMakeRoomPanel()
     {
-        print(1);
         panel_login.SetActive(false);
         panel_makeRoom.SetActive(true);
         panel_choiceRoom.SetActive(false);

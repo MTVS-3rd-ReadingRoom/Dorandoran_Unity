@@ -180,12 +180,13 @@ public class DataManager : MonoBehaviour
     public void SetTopic_Text(Topic topic)
     {
         this.topic = topic;
-        StageUIManager.instance.SetTopic(topic);
     }
 
     public void SetTopic_Voice(AudioClip audioClip)
     {
         topicClip = audioClip;
+        SaveAudioClip(audioClip);
+        PlayAudio(audioClip);
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
