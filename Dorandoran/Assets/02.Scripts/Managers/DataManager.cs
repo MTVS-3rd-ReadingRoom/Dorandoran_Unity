@@ -188,7 +188,7 @@ public class DataManager : MonoBehaviour
 
 
         ModeratorSound.instance.SpeakPlayer(audioClip);
-        SaveAudioClip(audioClip);
+        //SaveAudioClip(audioClip);
         PlayAudio(audioClip);
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }

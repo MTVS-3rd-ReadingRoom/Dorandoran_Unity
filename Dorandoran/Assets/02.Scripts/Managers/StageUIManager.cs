@@ -23,6 +23,7 @@ public class StageUIManager : MonoBehaviour
     public Button button_Quit;
     public GameObject panel_Option;
     public GameObject panel_Quit;
+    public GameObject panel_End;
     public GameObject image_MicInactive;
     private bool activeIndex = false;
     private bool activeInfo = false;
@@ -57,12 +58,20 @@ public class StageUIManager : MonoBehaviour
         InitUI();
         SetTopic();
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            panel_End.transform.SetAsLastSibling();
+            panel_End.SetActive(true);
+        }
+    }
     private void InitUI()
     {
         buttons_PanelTags[0].onClick.AddListener(() => { OnClick_InfoButton(); });
         buttons_PanelTags[1].onClick.AddListener(() => { OnClick_IndexButton(); });
-        button_Option.onClick.AddListener(() => { ActiveSelectMicrophoneUI(); panel_Option.SetActive(true); inactiveStack.Push(() => { panel_Option.SetActive(false); }); });
-        button_Quit.onClick.AddListener(() => { panel_Quit.SetActive(true); inactiveStack.Push(() => { panel_Quit.SetActive(false); }); });
+        button_Option.onClick.AddListener(() => { ActiveSelectMicrophoneUI(); panel_Option.transform.SetAsLastSibling(); panel_Option.SetActive(true); inactiveStack.Push(() => { panel_Option.SetActive(false); }); });
+        button_Quit.onClick.AddListener(() => { panel_Quit.transform.SetAsLastSibling(); panel_Quit.SetActive(true); inactiveStack.Push(() => { panel_Quit.SetActive(false); }); });
         dropdown_MicList.onValueChanged.AddListener(delegate { SelectMicrophone(); });
         dropdown_MicList.GetComponentInChildren<Button>().onClick.AddListener(() => ActiveSelectMicrophoneUI());
 
@@ -85,7 +94,7 @@ public class StageUIManager : MonoBehaviour
 
     private void OnClick_InfoButton()
     {
-        infoPanels[1].transform.SetAsFirstSibling();
+        infoPanels[0].transform.SetAsLastSibling();
         if (activeInfo)
         {
             activeInfo = false;
@@ -100,7 +109,7 @@ public class StageUIManager : MonoBehaviour
 
     private void OnClick_IndexButton()
     {
-        infoPanels[0].transform.SetAsFirstSibling();
+        infoPanels[1].transform.SetAsLastSibling();
         if (activeIndex)
         {
             activeIndex = false;

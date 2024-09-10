@@ -102,7 +102,7 @@ public class VoiceManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        logText = GameObject.Find("Canvas_UIManager/LogData").GetComponentInChildren<TextMeshProUGUI>();
+        //logText = GameObject.Find("Canvas_UIManager/LogData").GetComponentInChildren<TextMeshProUGUI>();
         AudioSource audioSource = GetComponent<AudioSource>().GetComponent<AudioSource>();
         audioSource.volume = 2.0f;  // 2¹è·Î ÁõÆø
 

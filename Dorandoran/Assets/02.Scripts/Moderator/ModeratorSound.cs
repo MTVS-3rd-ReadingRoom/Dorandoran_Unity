@@ -76,8 +76,16 @@ public class ModeratorSound : MonoBehaviourPunCallbacks, IPunObservable
 
     public void RPC_UpdateSound(bool play, AudioClip audioClip)
     {
+        print(1);
         recorder.AudioClip = audioClip;
-        pv.RPC("UpdateSound", RpcTarget.All, play);
+        recorder.enabled = true;
+        recorder.RecordingEnabled = true;
+        recorder.LoopAudioClip = false;
+        recorder.TransmitEnabled = true; // 전송할 것
+        recorder.RecordWhenJoined = true;
+
+        recorder.RestartRecording();
+        //pv.RPC("UpdateSound", RpcTarget.All, play);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
