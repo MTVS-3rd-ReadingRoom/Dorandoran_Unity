@@ -40,7 +40,7 @@ public class StageUIManager : MonoBehaviour
 
     [Header("옵션")]
     public TMP_Dropdown dropdown_MicList;
-    public Slider[] slider;
+    public Slider[] slider_Sound;
     private void Awake()
     {
         if(instance == null)
@@ -63,7 +63,7 @@ public class StageUIManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             panel_End.transform.SetAsLastSibling();
-            panel_End.SetActive(true);
+            panel_End.SetActive(!panel_End.activeSelf);
         }
     }
     private void InitUI()
@@ -79,6 +79,13 @@ public class StageUIManager : MonoBehaviour
         {
             buttons_Inactive[i].onClick.AddListener(() => { InactiveUI(); });
         }
+        slider_Sound[0].value = SoundManager.instance.bgmVolume;
+        slider_Sound[1].value = SoundManager.instance.sfxVolume;
+        //slider_Sound[2].value = 보이스 사운드 볼륨 적용;
+        
+        slider_Sound[0].onValueChanged.AddListener((value) => { SoundManager.instance.ChangeBGMVolum(value); });
+        slider_Sound[1].onValueChanged.AddListener((value) => { SoundManager.instance.ChangeBGMVolum(value); });
+        //slider_Sound[2].onValueChanged.AddListener((value) => { 보이스 사운드 조절 함수 추가 ); });
     }
 
     private void InactiveUI()
@@ -131,26 +138,9 @@ public class StageUIManager : MonoBehaviour
 
 
     #region 주제
+
     public void SetTopic()
     {
-        StartCoroutine(Corroutine_SetTopic());
-    }
-
-    private IEnumerator Corroutine_SetTopic()
-    {
-        int count = 0;
-        print(0);
-        while (DataManager.instance.topic.topic == null)
-        {
-            yield return new WaitForSeconds(1);
-            count++;
-            if(count > 30)
-            {
-                print(1);
-                break;
-            }
-        }
-
         text_Topicinfos[0].text = DataManager.instance.topic.topic;
         text_Topicinfos[1].text = DataManager.instance.topic.content;
         text_Topic.text = DataManager.instance.topic.topic;

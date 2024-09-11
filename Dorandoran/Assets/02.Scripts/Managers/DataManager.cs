@@ -31,6 +31,7 @@ public class DataManager : MonoBehaviour
     public int serial_Room;
     public int recordTime = 30;
     public bool myTurn = false;
+    public string photon_debater_room_no { get; set; } = "test입니다 지워주세요";
 
     public string nickName;
 
@@ -42,6 +43,7 @@ public class DataManager : MonoBehaviour
     public Coroutine coroutine_Record;
     private AudioSource voiceRecord;
 
+    public List<Book> bookList = null;
 
     private void Awake()
     {
@@ -187,10 +189,20 @@ public class DataManager : MonoBehaviour
         topicClip = audioClip;
 
 
-        ModeratorSound.instance.SpeakPlayer(audioClip);
+        //ModeratorSound.instance.SpeakPlayer(audioClip);
+        //PlayAudio(audioClip);
+
         //SaveAudioClip(audioClip);
-        PlayAudio(audioClip);
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    }
+
+    public void SetBookList(List<Book> bookList)
+    {
+        this.bookList = bookList;
+        if(NetworkManager.instance != null)
+        {
+            NetworkManager.instance.SetBookList(bookList);
+        }
     }
 
     public void PlayAudio(AudioClip audioClip)
@@ -217,10 +229,10 @@ public class DataManager : MonoBehaviour
         voiceRecord.clip = Microphone.Start(Microphone.devices[microphoneIndex].ToString(), false, recordTime, 44100);
         yield return new WaitForSeconds(recordTime + 1);
 
+        coroutine_Record = null;
         HttpManager.instance.PostVoiceClip_FormData("test", "test_room",LoadAudioClip(SaveAudioClip(voiceRecord.clip)));
         //LoadWav(LoadAudioClip(SaveAudioClip(record)));
         //audioClip2 = LoadWav(LoadAudioClip(SaveAudioClip(record)));
-        coroutine_Record = null;
     }
 
     public void StopRecord()

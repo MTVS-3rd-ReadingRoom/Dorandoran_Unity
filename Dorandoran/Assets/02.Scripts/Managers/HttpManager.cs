@@ -7,6 +7,17 @@ using System.Reflection;
 using Newtonsoft.Json;
 
 [System.Serializable]
+public struct Error
+{
+    public string error;
+
+    public Error(string error)
+    {
+        this.error = error;
+    }
+}
+
+[System.Serializable]
 public struct RoomNum
 {
     public int id;
@@ -81,6 +92,10 @@ public class HttpManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        PostBookList();
+    }
 
     public void PostSignUp_FormData(string name, string userId, string password, string nickName)
     {
@@ -146,6 +161,8 @@ public class HttpManager : MonoBehaviour
         {
             RoomNum roomNum = JsonUtility.FromJson<RoomNum>(webRequest.downloadHandler.text);
             DataManager.instance.serial_Room = roomNum.id;
+            PostTopic_Text(roomNum.id.ToString());
+            PostTopic_Voice(roomNum.id.ToString());
             print($"Success : {MethodInfo.GetCurrentMethod()}");
         };
 
@@ -285,11 +302,7 @@ public class HttpManager : MonoBehaviour
         info.onComplete = (UnityWebRequest webRequest) =>
         {
             print($"Success : {MethodInfo.GetCurrentMethod()}");
-            List<Book> books = JsonConvert.DeserializeObject<List<Book>>(webRequest.downloadHandler.text);
-            for (int i = 0; i <books.Count; i++)
-            {
-                print($"{books[i].no}, {books[i].author}, {books[i].name}, {books[i].category} ");
-            }
+            DataManager.instance.SetBookList(JsonConvert.DeserializeObject<List<Book>>(webRequest.downloadHandler.text));
         };
 
         StartCoroutine(Get(info));
@@ -308,6 +321,10 @@ public class HttpManager : MonoBehaviour
     {
         using (UnityWebRequest webRequest = UnityWebRequest.Post(info.url, info.body, info.contentType))
         {
+            if (LobbyUIManager.instance != null)
+            {
+                LobbyUIManager.instance.ShowHttpLoadingImage();
+            }
             // 서버에 요청 보내기
             yield return webRequest.SendWebRequest();
 
@@ -320,6 +337,10 @@ public class HttpManager : MonoBehaviour
     {
         using (UnityWebRequest webRequest = UnityWebRequest.Get(info.url))
         {
+            if (LobbyUIManager.instance != null)
+            {
+                LobbyUIManager.instance.ShowHttpLoadingImage();
+            }
             // 서버에 요청 보내기
             yield return webRequest.SendWebRequest();
 
@@ -333,6 +354,10 @@ public class HttpManager : MonoBehaviour
 
         using (UnityWebRequest webRequest = UnityWebRequest.Post(info.url, formData))
         {
+            if (LobbyUIManager.instance != null)
+            {
+                LobbyUIManager.instance.ShowHttpLoadingImage();
+            }
             // 서버에 요청 보내기
             yield return webRequest.SendWebRequest();
 
@@ -346,6 +371,10 @@ public class HttpManager : MonoBehaviour
 
         using (UnityWebRequest webRequest = UnityWebRequest.Post(info.url, formData))
         {
+            if (LobbyUIManager.instance != null)
+            {
+                LobbyUIManager.instance.ShowHttpLoadingImage();
+            }
             webRequest.SetRequestHeader(key, value);
             // 서버에 요청 보내기
             yield return webRequest.SendWebRequest();
@@ -361,6 +390,11 @@ public class HttpManager : MonoBehaviour
         using (UnityWebRequest webRequest = UnityWebRequest.Post(info.url, wwwForm))
         {
             webRequest.SetRequestHeader(key, value);
+
+            if (LobbyUIManager.instance != null)
+            {
+                LobbyUIManager.instance.ShowHttpLoadingImage();
+            }
             // 서버에 요청 보내기
             yield return webRequest.SendWebRequest();
 
@@ -375,6 +409,10 @@ public class HttpManager : MonoBehaviour
         // 만약에 결과가 정상이라면
         if (webRequest.result == UnityWebRequest.Result.Success)
         {
+            if (LobbyUIManager.instance != null)
+            {
+                LobbyUIManager.instance.StopRoateLoading();
+            }
             // 응답 온 데이터를 요청한 클래스로 보내자.
             if (info.onComplete != null)
             {
@@ -386,6 +424,14 @@ public class HttpManager : MonoBehaviour
         {
             // Error 의 이유를 출력
             Debug.LogError("Net Error : " + webRequest.error);
+
+            if(LobbyUIManager.instance != null)
+            {
+                LobbyUIManager.instance.StopRoateLoading();
+                LobbyUIManager.instance.ShowPopUp(JsonUtility.FromJson<Error>(webRequest.downloadHandler.text).error);
+
+                LobbyUIManager.instance.StopGetTopic();
+            }
         }
     }
 
