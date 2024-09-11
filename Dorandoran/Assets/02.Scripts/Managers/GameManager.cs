@@ -50,10 +50,10 @@ public class GameManager : MonoBehaviourPun
     }
     void Start()
     {
-        StartCoroutine(SpawnPlayer());
+        StartCoroutine(SpawnPlayer()); // 0
         if (PhotonNetwork.IsMasterClient)
         {
-            StartCoroutine(SpawnTopicSpeeker());
+            StartCoroutine(SpawnTopicSpeeker()); // 1
         }
 
         // OnPhotonSerializeView 에서 데이터 전송 빈도 수 설정하기(per seconds)

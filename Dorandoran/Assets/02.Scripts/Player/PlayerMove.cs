@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Profiling;
 using Photon.Voice.PUN;
+using UnityEngine.UI;
 
 public class PlayerMove : PlayerStateBase, IPunObservable
 {
@@ -20,7 +21,6 @@ public class PlayerMove : PlayerStateBase, IPunObservable
     PhotonVoice.Recorder recorder;
 
     float mx = 0;
-
 
     void Start()
     {
