@@ -25,9 +25,12 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     float maxTime;
 
     int Order;
+    int playerIndex = 0;
     int playerN = 0;
 
     bool bStartTime = false;
+
+    public TextMeshProUGUI logText;
 
     #region Panel
     [Header("순서UI")]
@@ -55,6 +58,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     void Start()
     {
         Order = 0;
+        playerIndex = 0;
         InitUI();
     }
 
@@ -96,7 +100,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        orderText.text = Order + "번째 발표 순서입니다.\n + ActorNumber: " + PhotonNetwork.LocalPlayer.ActorNumber;
+        logText.text = Order + "번째 발표 순서입니다.\n + 현재 ActorNumber: " + PhotonNetwork.LocalPlayer.ActorNumber;
         if (isRunning && startTime > 0)
         {
             double elapsed = PhotonNetwork.Time - startTime;
@@ -116,11 +120,9 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     {
         // 버튼을 누르면
         int actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
-        Debug.Log("playerSpeak: " + (Order + 1) + "ActorNumber: " + actorNumber);
-        if (actorNumber == (Order + 1) && photonView.IsMine) // 발표를 하고 있는 사용자 && 현재 내 자신만
-        {
+        Debug.Log("playerSpeak: " + Order + "ActorNumber: " + actorNumber);
+        if (actorNumber == Order || Order <= 0)
             NextOrderPlayer();
-        }
     }
 
     public void NextOrderPlayer()
@@ -134,26 +136,25 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     [PunRPC] // all로 뿌리고 isMine으로 1개만 실행되도록 구현
     public void NextOrder()
     {
-        if(!isRunning) // 현재 실행 중이 아니면 실행 중으로 변경
+        ++Order;
+        Order = (Order % (playerN + 1)); // 0 ~ 2
+        if (!isRunning) // 현재 실행 중이 아니면 실행 중으로 변경
         {
             isRunning = true;
+            Order = 0;
         }
-
         // 여기서 모든 클라이언트 컴퓨터에게 해당 함수를 호출해줘야한다.
         playerN = PhotonNetwork.CurrentRoom.Players.Count;
         if (0 == Order) // 1번일 경우 사회자
         {
             panel_Timer.SetActive(false);
-            // orderText.text = "AI 사회자 시간입니다.";
+            orderText.text = "AI 사회자 시간입니다.";
         }
-        else // speakerOrder: 0, 2, 3, 
+        else
         {
             panel_Timer.SetActive(true);
-            // orderText.text = (Order).ToString() + "번째 발표자 발언 시간입니다.";
+            orderText.text = (Order).ToString() + "번째 발표자 발언 시간입니다.";
         }
-        Order++;
-        if (Order != 0)
-            Order = (Order % (playerN));
 
         Debug.Log(Order + "현재 발표 순서");
         Debug.Log(playerN + "명 존재");
@@ -161,10 +162,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
 
     public void RPCNextOrder()
     {
-        if(photonView.IsMine) // 내꺼에서만?
-        {
-            photonView.RPC("NextOrder", RpcTarget.All);
-        }
+        photonView.RPC("NextOrder", RpcTarget.All);
     }
 
     [PunRPC]
@@ -175,17 +173,14 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
 
     public void RPCSetTransmit()
     {
-        if (photonView.IsMine) // 내꺼에서만?
-        {
-            playerN = PhotonNetwork.CurrentRoom.Players.Count;
+        playerN = PhotonNetwork.CurrentRoom.Players.Count;
 
-            photonView.RPC("Toggle", PhotonNetwork.CurrentRoom.GetPlayer(Order + 1), true);
-            for(int i = 0; i < playerN; i++)
+        photonView.RPC("Toggle", PhotonNetwork.CurrentRoom.GetPlayer(Order + 1), true);
+        for (int i = 0; i < playerN; i++)
+        {
+            if (i != (Order + 1))
             {
-                if(i != (Order + 1))
-                {
-                    photonView.RPC("Toggle", PhotonNetwork.CurrentRoom.GetPlayer(i), false);
-                }
+                photonView.RPC("Toggle", PhotonNetwork.CurrentRoom.GetPlayer(i), false);
             }
         }
     }
