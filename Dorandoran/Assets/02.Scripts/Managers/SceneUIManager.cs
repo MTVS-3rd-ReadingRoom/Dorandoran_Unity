@@ -129,6 +129,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     {
         TriggerReset();
         RPCNextOrder();
+        AllMuteTransmit();
         RPCSetTransmit();
     }
 
@@ -171,17 +172,18 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         recorder.TransmitEnabled = toggle;
     }
 
-    public void RPCSetTransmit()
+    public void AllMuteTransmit()
     {
         playerN = PhotonNetwork.CurrentRoom.Players.Count;
 
-        photonView.RPC("Toggle", PhotonNetwork.CurrentRoom.GetPlayer(Order + 1), true);
-        for (int i = 0; i < playerN; i++)
+        for (int i = 1; i < playerN + 1; i++)
         {
-            if (i != (Order + 1))
-            {
-                photonView.RPC("Toggle", PhotonNetwork.CurrentRoom.GetPlayer(i), false);
-            }
+            photonView.RPC("Toggle", PhotonNetwork.CurrentRoom.GetPlayer(i), false);
         }
+    }
+
+    public void RPCSetTransmit()
+    {
+        photonView.RPC("Toggle", PhotonNetwork.CurrentRoom.GetPlayer(Order), true);
     }
 }
