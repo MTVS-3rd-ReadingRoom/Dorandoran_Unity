@@ -38,6 +38,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
 
     public TextMeshProUGUI logText;
 
+    public TextMeshProUGUI recorder_InterestText;
     CharacterTurn m_eCurCharacterTurn;
     #region Panel
     [Header("순서UI")]
@@ -129,6 +130,8 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
+        recorder_InterestText.text = "Recorder Interest Group: " + recorder.InterestGroup;
+
         logText.text = PlayN + "번째 발표 순서입니다.\n + 현재 ActorNumber: " + PhotonNetwork.LocalPlayer.ActorNumber + "\n"
             + "레코더의 그룹: " + recorder.InterestGroup;
         if (isRunning && startTime > 0)

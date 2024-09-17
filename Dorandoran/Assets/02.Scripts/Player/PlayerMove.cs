@@ -34,8 +34,8 @@ public class PlayerMove : PlayerStateBase, IPunObservable
 
     void Update()
     {
-        //Move();
-        //Rotate();
+        Move();
+        Rotate();
     }
 
     void Move()
@@ -57,6 +57,7 @@ public class PlayerMove : PlayerStateBase, IPunObservable
             {
                 myAnim.SetFloat("Horizontal", h);
                 myAnim.SetFloat("Vertical", v);
+                Debug.Log("Animation: HorizontalValue: " + h + "Vertical: " + v + "\n");
             }
         }
         else

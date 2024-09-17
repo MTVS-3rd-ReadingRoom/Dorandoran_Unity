@@ -70,10 +70,10 @@ public class GameManager : MonoBehaviourPun
 
         int playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
 
-        Vector3 initPosition = PlayerPositions[playerCount - 1];
-        Quaternion rotationQuaternion = Quaternion.Euler(PlayerRotations[playerCount - 1]);
+        // Vector3 initPosition = PlayerPositions[playerCount - 1];
+        // Quaternion rotationQuaternion = Quaternion.Euler(PlayerRotations[playerCount - 1]);
 
-        GameObject player = PhotonNetwork.Instantiate("Player", initPosition, rotationQuaternion);
+        GameObject player = PhotonNetwork.Instantiate("Player", new Vector3(530.0f, 4.5f, 210.0f), Quaternion.identity);
         Debug.Log("현재 플레이어 생성");
     }
 
