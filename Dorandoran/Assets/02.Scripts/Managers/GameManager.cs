@@ -8,12 +8,15 @@ using Photon.Pun.Demo.PunBasics;
 using NumSystem = System.Numerics;
 using UnityEngine.UIElements;
 using Photon.Voice;
+using ExitGames.Client.Photon.StructWrapping;
 
 public class GameManager : MonoBehaviourPun
 {
     public TMP_Text text_playerList;
 
     static GameManager gameManager = null;
+
+    PhotonView pv;
 
     struct TransformData
     {
@@ -45,11 +48,22 @@ public class GameManager : MonoBehaviourPun
         }
     }
 
+    public Vector3 GetPlayerPosition(int idx)
+    {
+        return PlayerPositions[idx];
+    }
+
+    public Vector3 GetPlayerRotation(int idx)
+    {
+        return PlayerRotations[idx];
+    }
+
     public void PlayerDataSetting()
     {
     }
     void Start()
     {
+        pv = GetComponent<PhotonView>();
         StartCoroutine(SpawnPlayer()); // 0
         if (PhotonNetwork.IsMasterClient)
         {
@@ -91,7 +105,6 @@ public class GameManager : MonoBehaviourPun
     }
     void Update()
     {
-        // PrintPlayerList();
     }
 
     void PrintPlayerList()
@@ -113,6 +126,31 @@ public class GameManager : MonoBehaviourPun
         }
     }
 
+    public bool CheckSittingPlayer()
+    {
+        bool sittingCheck = false;
+        int maxPlayer = PhotonNetwork.CurrentRoom.PlayerCount;
+        if (maxPlayer <= 0)
+            return false;
+        foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
+        {
+            foreach (PhotonView view in FindObjectsOfType<PhotonView>())
+            {
+                if(view.Owner != null)
+                {
+                    PlayerMove playerMove = view.GetComponentInChildren<PlayerMove>();
+                    if(playerMove)
+                    {
+                        if (!playerMove.GetSitting())
+                            return false;
+                        else
+                            sittingCheck = true;
+                    }
+                }
+            }
+        }
+        return sittingCheck;
+    }
 
     private void OnDestroy()
     {

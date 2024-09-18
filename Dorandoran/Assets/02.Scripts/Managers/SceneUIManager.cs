@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Voice.Unity;
 using Photon.Voice.PUN;
+using Photon.Pun.Demo.PunBasics;
 
 public class SceneUIManager : MonoBehaviourPunCallbacks
 {
@@ -40,6 +41,10 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
 
     public TextMeshProUGUI recorder_InterestText;
     CharacterTurn m_eCurCharacterTurn;
+
+    GameManager gameManager;
+
+    bool checkSittingPlayer;
     #region Panel
     [Header("순서UI")]
     public GameObject panel_Order;
@@ -89,6 +94,9 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         m_eCurCharacterTurn = CharacterTurn.CharacterHostTurn;
         PlayN = 0;
         playerIndex = 0;
+        checkSittingPlayer = false;
+
+        gameManager = GameObject.Find("GameManager").GetComponentInChildren<GameManager>();
         InitUI();
     }
 
@@ -121,15 +129,25 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         button_Next.onClick.AddListener(NextOrderMessage);
     }
 
-    public void UpdateTime()
+    public void CheckSittingPlayer()
     {
+        if (!checkSittingPlayer)
+        {
+            if(gameManager.CheckSittingPlayer())
+            {
+                NextOrderMessage();
+                checkSittingPlayer = true;
+            }
 
-
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        // 앉아있는 플레이어 체크
+        CheckSittingPlayer();
+
         recorder_InterestText.text = "Recorder Interest Group: " + recorder.InterestGroup;
 
         logText.text = PlayN + "번째 발표 순서입니다.\n + 현재 ActorNumber: " + PhotonNetwork.LocalPlayer.ActorNumber + "\n"
@@ -223,12 +241,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SpeakGroup(byte groupID)
     {
-        recorder.InterestGroup = groupID;
-        //if (PhotonNetwork.IsMasterClient)
-        //{
-            
-        //}
-            
+        recorder.InterestGroup = groupID;            
     }
 
     public void SetSameSpeakGroup()
