@@ -20,10 +20,16 @@ public class PlayerMove : PlayerStateBase, IPunObservable
     PhotonVoice.Recorder recorder;
 
     float mx = 0;
+    int groundLayer;
 
     bool sitting;
     bool preSitting;
     GameManager gameManager;
+
+    bool isGround;
+
+    Vector3 velocity;
+    float jumpHeight;
     void Start()
     {
         cam = Camera.main.transform;
@@ -34,7 +40,11 @@ public class PlayerMove : PlayerStateBase, IPunObservable
         sitting = false;
         preSitting = false;
 
+        jumpHeight = 0.8f;
+
         gameManager = GameObject.Find("GameManager").GetComponentInChildren<GameManager>();
+
+        groundLayer = LayerMask.NameToLayer("Ground");
         //playerID = pv.ViewID;
     }
 
@@ -65,9 +75,13 @@ public class PlayerMove : PlayerStateBase, IPunObservable
             }
         }
         Move();
-        //Rotate();
+        Rotate();
     }
 
+    bool CheckIsGround()
+    {
+        return Physics.Raycast(transform.position, Vector3.down, 0.3f, groundLayer);
+    }
     void Move()
     {
         // 소유권을 가진 캐릭터라면
@@ -78,17 +92,28 @@ public class PlayerMove : PlayerStateBase, IPunObservable
             float h = Input.GetAxis("Horizontal");
             float v = Input.GetAxis("Vertical");
             Vector3 dir = new Vector3(h, 0, v);
-            dir.y = 0;
-            // dir = transform.TransformDirection(dir);
+            dir.y = 0.0f;
+            dir = transform.TransformDirection(dir);
+
             if (dir.magnitude > 0.0f) // 이동하지 않으면
             {
                 sitting = false;
                 myAnim.SetBool("Sitting", sitting);
             }
-
-            if (dir.magnitude >= 1)
+            else if (dir.magnitude >= 1)
+            {
                 dir.Normalize();
+            }
+
+            if (isGround && velocity.y < 0.0f)
+                velocity.y = 0.0f;
+
+            Jump();
+            velocity.y += -10.0f * Time.deltaTime;
+
             cc.Move(dir * moveSpeed * Time.deltaTime);
+            cc.Move(velocity * Time.deltaTime);
+            isGround = cc.isGrounded;
             //transform.forward = dir;
 
             if (myAnim != null)
@@ -98,10 +123,20 @@ public class PlayerMove : PlayerStateBase, IPunObservable
                 Debug.Log("Animation: HorizontalValue: " + h + "Vertical: " + v + "\n");
             }
 
+
+
         }
         else
         {
             transform.position = Vector3.Lerp(transform.position, myPos, Time.deltaTime * trackingSpeed);
+        }
+    }
+
+    public void Jump()
+    {
+        if(Input.GetKeyDown(KeyCode.Space) && isGround)
+        {
+            velocity.y = Mathf.Sqrt(jumpHeight * -2.0f * -20.0f);
         }
     }
 
@@ -137,10 +172,10 @@ public class PlayerMove : PlayerStateBase, IPunObservable
         if (pv.IsMine)
         {
             // 사용자의 마우스 좌우 드래그 입력을 받는다.
-            //mx += Input.GetAxis("Mouse X") * rotSpeed * Time.deltaTime;
+            mx += Input.GetAxis("Mouse X") * rotSpeed * Time.deltaTime;
 
             // 입력받은 방향에 따라 플레이어를 좌우로 회전한다.
-            //transform.eulerAngles = new Vector3(0, mx, 0);
+            transform.eulerAngles = new Vector3(0, mx, 0);
         }
         else
         {
