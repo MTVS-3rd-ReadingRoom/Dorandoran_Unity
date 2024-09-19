@@ -60,11 +60,11 @@ public class StageUIManager : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            panel_End.transform.SetAsLastSibling();
-            panel_End.SetActive(true);
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    panel_End.transform.SetAsLastSibling();
+        //    panel_End.SetActive(true);
+        //}
     }
     private void InitUI()
     {

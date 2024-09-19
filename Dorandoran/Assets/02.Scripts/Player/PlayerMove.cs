@@ -11,6 +11,7 @@ public class PlayerMove : PlayerStateBase, IPunObservable
 {
     public float trackingSpeed = 3;
 
+    CameraFollow cameraFollow;
     Transform cam;
     CharacterController cc;
     Animator myAnim;
@@ -45,6 +46,8 @@ public class PlayerMove : PlayerStateBase, IPunObservable
         gameManager = GameObject.Find("GameManager").GetComponentInChildren<GameManager>();
 
         groundLayer = LayerMask.NameToLayer("Ground");
+
+        cameraFollow = Camera.main.GetComponentInChildren<CameraFollow>();
         //playerID = pv.ViewID;
     }
 
@@ -58,6 +61,7 @@ public class PlayerMove : PlayerStateBase, IPunObservable
             {
                 sitting = false;
                 myAnim.SetBool("Sitting", sitting);
+                gameManager.OnPlayerCamera();
             }
             else if (sitting) // 앉는 상태 중일 경우
             {
@@ -160,6 +164,7 @@ public class PlayerMove : PlayerStateBase, IPunObservable
                     sitting = true;
                     preSitting = false;
                     myAnim.SetBool("Sitting", sitting);
+                    gameManager.OnStaticCamera();
                     return;
                 }
             }

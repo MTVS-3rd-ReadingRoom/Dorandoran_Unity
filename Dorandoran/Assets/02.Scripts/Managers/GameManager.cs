@@ -24,6 +24,9 @@ public class GameManager : MonoBehaviourPun
         public Vector3 rot;
     }
 
+    Camera mainCamera;
+    Camera playerCamera;
+
     [SerializeField]
     public Vector3[] PlayerPositions;
 
@@ -34,6 +37,8 @@ public class GameManager : MonoBehaviourPun
 
     int playerSpeak = 0;
 
+
+    bool sittingCheck;
     private void Awake()
     {
         if (null == gameManager)
@@ -63,6 +68,11 @@ public class GameManager : MonoBehaviourPun
     }
     void Start()
     {
+        mainCamera = GameObject.Find("discussionPosition/Main Camera").GetComponent<Camera>();
+        playerCamera = GameObject.Find("discussionPosition/Player Camera").GetComponent<Camera>();
+
+        mainCamera.enabled = false;
+        sittingCheck = false;
         pv = GetComponent<PhotonView>();
         StartCoroutine(SpawnPlayer()); // 0
         if (PhotonNetwork.IsMasterClient)
@@ -105,8 +115,20 @@ public class GameManager : MonoBehaviourPun
     }
     void Update()
     {
+
     }
 
+    public void OnStaticCamera()
+    {
+        mainCamera.enabled = true;
+        playerCamera.enabled = false;
+    }
+
+    public void OnPlayerCamera()
+    {
+        playerCamera.enabled = true;
+        mainCamera.enabled = false;
+    }
     void PrintPlayerList()
     {
         Dictionary<int, Player> playerDict = PhotonNetwork.CurrentRoom.Players;
@@ -128,7 +150,7 @@ public class GameManager : MonoBehaviourPun
 
     public bool CheckSittingPlayer()
     {
-        bool sittingCheck = false;
+        sittingCheck = false;
         int maxPlayer = PhotonNetwork.CurrentRoom.PlayerCount;
         if (maxPlayer <= 0)
             return false;
