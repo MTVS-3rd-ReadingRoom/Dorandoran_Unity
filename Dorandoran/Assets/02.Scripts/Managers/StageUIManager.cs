@@ -72,10 +72,19 @@ public class StageUIManager : MonoBehaviourPun
 
     private void Start()
     {
-        InitUI();
-        SetTopic();
+        //InitUI(); 
+        //SetTopic();
     }
+    public bool test = false;
+    private void Update()
+    {
+        if (test)
+        {
 
+            test = false;
+            uiSequence = Move_PanelCurrentIndex();
+        }
+    }
 
     private void InitUI()
     {
@@ -141,11 +150,21 @@ public class StageUIManager : MonoBehaviourPun
         {
             string text = $"{indexString[index]}";
             panel_CurrentOrder.GetComponentInChildren<TMP_Text>().text = text;
-            panel_CurrentOrder.DOAnchorPos3DX(-1300, 0.25f).SetEase(Ease.InSine);
+            uiSequence = Move_PanelCurrentIndex();
         }
         index++;
     }
 
+    Sequence Move_PanelCurrentIndex()
+    {
+        return DOTween.Sequence()
+        .OnStart(() =>
+        {
+            panel_CurrentOrder.anchoredPosition3D = new Vector3(-1600, 0, 0);
+        })
+        .Append(panel_CurrentOrder.DOAnchorPos3DX(0, 0.5f).SetEase(Ease.OutSine))
+        .Append(panel_CurrentOrder.DOAnchorPos3DX(1600, 0.5f).SetEase(Ease.InSine).SetDelay(3));
+    }
 
     #region ����ȭ��
 
