@@ -6,9 +6,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Voice.Unity;
 using Photon.Voice.PUN;
+using Photon.Pun.Demo.PunBasics;
 
 public class SceneUIManager : MonoBehaviourPunCallbacks
 {
+    enum CharacterTurn
+    {
+        CharacterHostTurn,
+        CharacterPlayerTurn,
+        CharacterDebateTurn,
+        CharacterTurnEnd
+    }
     public Photon.Voice.Unity.Recorder recorder;
 
     public TextMeshProUGUI orderText;
@@ -24,14 +32,19 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
 
     float maxTime;
 
-    int Order;
+    int PlayN;
     int playerIndex = 0;
-    int playerN = 0;
 
     bool bStartTime = false;
 
     public TextMeshProUGUI logText;
 
+    public TextMeshProUGUI recorder_InterestText;
+    CharacterTurn m_eCurCharacterTurn;
+
+    GameManager gameManager;
+
+    bool checkSittingPlayer;
     #region Panel
     [Header("순서UI")]
     public GameObject panel_Order;
@@ -39,6 +52,27 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     public Button button_Next;
     #endregion
 
+    // 클릭했을 때마다 증가
+    void NextTurn() // 다음에 턴
+    {
+        ++PlayN;
+        Debug.Log("현재 PlayN: " + PlayN);
+        if (PlayN <= PhotonNetwork.CurrentRoom.PlayerCount) // 총 플레이어 숫자만큼 증가했다면
+        {
+            m_eCurCharacterTurn = CharacterTurn.CharacterPlayerTurn;
+            orderText.text = (PlayN).ToString() + "번째 발표자 발언 시간입니다.";
+            AllMuteTransmit();
+            RPCSetTransmit();
+            SetSameSpeakGroup();
+        }
+        else if (PlayN == PhotonNetwork.CurrentRoom.PlayerCount + 1) // 플레이어 수보다 1만큼 커지면 토론 시간
+        {
+            m_eCurCharacterTurn = CharacterTurn.CharacterDebateTurn;
+            orderText.text = "토론 시간입니다.";
+            DebatePlayer();
+            PlayN = 0;
+        }
+    }
     private void Awake()
     {
         if (instance == null)
@@ -57,8 +91,12 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        Order = 0;
+        m_eCurCharacterTurn = CharacterTurn.CharacterHostTurn;
+        PlayN = 0;
         playerIndex = 0;
+        checkSittingPlayer = false;
+
+        gameManager = GameObject.Find("GameManager").GetComponentInChildren<GameManager>();
         InitUI();
     }
 
@@ -91,16 +129,29 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         button_Next.onClick.AddListener(NextOrderMessage);
     }
 
-    public void UpdateTime()
+    public void CheckSittingPlayer()
     {
+        if (!checkSittingPlayer)
+        {
+            if(gameManager.CheckSittingPlayer())
+            {
+                NextOrderMessage();
+                checkSittingPlayer = true;
+            }
 
-
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        logText.text = Order + "번째 발표 순서입니다.\n + 현재 ActorNumber: " + PhotonNetwork.LocalPlayer.ActorNumber;
+        // 앉아있는 플레이어 체크
+        CheckSittingPlayer();
+
+        recorder_InterestText.text = "Recorder Interest Group: " + recorder.InterestGroup;
+
+        logText.text = PlayN + "번째 발표 순서입니다.\n + 현재 ActorNumber: " + PhotonNetwork.LocalPlayer.ActorNumber + "\n"
+            + "레코더의 그룹: " + recorder.InterestGroup;
         if (isRunning && startTime > 0)
         {
             double elapsed = PhotonNetwork.Time - startTime;
@@ -111,53 +162,69 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
             // 시간이 지남 or (키 누름 && 현재 차례인 플레이어가 눌렀을 경우) 0, 사회자, 2, 3 ~ 플레이어 수
             if (remainingTime < 0)
             {
-                NextOrderPlayer();
+                NextOrderRPC();
             }
         }
     }
 
     void NextOrderMessage()
     {
-        // 버튼을 누르면
-        int actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
-        Debug.Log("playerSpeak: " + Order + "ActorNumber: " + actorNumber);
-        if (actorNumber == Order || Order <= 0)
-            NextOrderPlayer();
+        switch(m_eCurCharacterTurn)
+        {
+            case CharacterTurn.CharacterHostTurn:
+                HostTurnRPC();
+                TriggerReset();
+                break;
+            case CharacterTurn.CharacterPlayerTurn:
+                NextOrderRPC();
+                break;
+            case CharacterTurn.CharacterDebateTurn:
+                NextOrderRPC();
+                break;
+        }
     }
 
-    public void NextOrderPlayer()
+    public void DiscussPlayer()
+    {
+        TriggerReset();
+    }
+
+    public void NextOrderRPC()
     {
         TriggerReset();
         RPCNextOrder();
-        RPCSetTransmit();
+    }
+
+    public void DebatePlayer()
+    {
+        AllSpeakTransmit();
+        DivideTwoSpeakGroup();
+    }
+
+    public void HostTurnRPC()
+    {
+        photonView.RPC("HostTurn", RpcTarget.All);
+    }
+
+    [PunRPC] // all로 뿌리고 isMine으로 1개만 실행되도록 구현
+    public void HostTurn()
+    {
+        if (!isRunning) // 현재 실행 중이 아니면 실행 중으로 변경
+            isRunning = true;
+
+        panel_Timer.SetActive(false);
+        orderText.text = "AI 사회자 시간입니다.";
+        m_eCurCharacterTurn = CharacterTurn.CharacterPlayerTurn;
     }
 
     // 버튼 동기화 - 버튼을 눌렀을때 isMine인 사용자에게 모두 해당 함수를 실행하도록 구현
     [PunRPC] // all로 뿌리고 isMine으로 1개만 실행되도록 구현
     public void NextOrder()
     {
-        ++Order;
-        Order = (Order % (playerN + 1)); // 0 ~ 2
-        if (!isRunning) // 현재 실행 중이 아니면 실행 중으로 변경
-        {
-            isRunning = true;
-            Order = 0;
-        }
-        // 여기서 모든 클라이언트 컴퓨터에게 해당 함수를 호출해줘야한다.
-        playerN = PhotonNetwork.CurrentRoom.Players.Count;
-        if (0 == Order) // 1번일 경우 사회자
-        {
-            panel_Timer.SetActive(false);
-            orderText.text = "AI 사회자 시간입니다.";
-        }
-        else
-        {
-            panel_Timer.SetActive(true);
-            orderText.text = (Order).ToString() + "번째 발표자 발언 시간입니다.";
-        }
+        NextTurn();
+        panel_Timer.SetActive(true);
 
-        Debug.Log(Order + "현재 발표 순서");
-        Debug.Log(playerN + "명 존재");
+        Debug.Log(PlayN + "현재 발표 순서");
     }
 
     public void RPCNextOrder()
@@ -171,17 +238,55 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         recorder.TransmitEnabled = toggle;
     }
 
+    [PunRPC]
+    public void SpeakGroup(byte groupID)
+    {
+        recorder.InterestGroup = groupID;            
+    }
+
+    public void SetSameSpeakGroup()
+    {
+        for (int i = 1; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
+        {
+            RPCSetSpeakGroup(i, 0);
+        }
+    }
+
+    public void DivideTwoSpeakGroup()
+    {
+        // 1 ~ 2 - 2명
+        // 1 ~ 4 - 4명
+        int PlayerCount = PhotonNetwork.CurrentRoom.PlayerCount;
+        for (int i = 1; i < PlayerCount / 2 + 1; i++)
+        {
+            RPCSetSpeakGroup(i, 1);
+            RPCSetSpeakGroup((i + PlayerCount / 2), 2);
+        }
+    }
+
+    public void RPCSetSpeakGroup(int playerActor, byte GroupID)
+    {
+        photonView.RPC("SpeakGroup", PhotonNetwork.CurrentRoom.GetPlayer(playerActor), GroupID);
+    }
+
+    public void AllMuteTransmit()
+    {
+        for (int i = 1; i < PhotonNetwork.CurrentRoom.Players.Count + 1; i++)
+        {
+            photonView.RPC("Toggle", PhotonNetwork.CurrentRoom.GetPlayer(i), false);
+        }
+    }
+
+    public void AllSpeakTransmit()
+    {
+        for (int i = 1; i < PhotonNetwork.CurrentRoom.Players.Count + 1; i++)
+        {
+            photonView.RPC("Toggle", PhotonNetwork.CurrentRoom.GetPlayer(i), true);
+        }
+    }
+
     public void RPCSetTransmit()
     {
-        playerN = PhotonNetwork.CurrentRoom.Players.Count;
-
-        photonView.RPC("Toggle", PhotonNetwork.CurrentRoom.GetPlayer(Order + 1), true);
-        for (int i = 0; i < playerN; i++)
-        {
-            if (i != (Order + 1))
-            {
-                photonView.RPC("Toggle", PhotonNetwork.CurrentRoom.GetPlayer(i), false);
-            }
-        }
+        photonView.RPC("Toggle", PhotonNetwork.CurrentRoom.GetPlayer(PlayN), true);
     }
 }

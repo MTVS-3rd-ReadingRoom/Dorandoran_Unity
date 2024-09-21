@@ -8,6 +8,7 @@ using Photon.Pun.Demo.PunBasics;
 using NumSystem = System.Numerics;
 using UnityEngine.UIElements;
 using Photon.Voice;
+using ExitGames.Client.Photon.StructWrapping;
 
 public class GameManager : MonoBehaviourPun
 {
@@ -15,11 +16,16 @@ public class GameManager : MonoBehaviourPun
 
     static GameManager gameManager = null;
 
+    PhotonView pv;
+
     struct TransformData
     {
         public Vector3 pos;
         public Vector3 rot;
     }
+
+    Camera mainCamera;
+    Camera playerCamera;
 
     [SerializeField]
     public Vector3[] PlayerPositions;
@@ -31,6 +37,8 @@ public class GameManager : MonoBehaviourPun
 
     int playerSpeak = 0;
 
+
+    bool sittingCheck;
     private void Awake()
     {
         if (null == gameManager)
@@ -45,11 +53,27 @@ public class GameManager : MonoBehaviourPun
         }
     }
 
+    public Vector3 GetPlayerPosition(int idx)
+    {
+        return PlayerPositions[idx];
+    }
+
+    public Vector3 GetPlayerRotation(int idx)
+    {
+        return PlayerRotations[idx];
+    }
+
     public void PlayerDataSetting()
     {
     }
     void Start()
     {
+        mainCamera = GameObject.Find("discussionPosition/Main Camera").GetComponent<Camera>();
+        playerCamera = GameObject.Find("discussionPosition/Player Camera").GetComponent<Camera>();
+
+        mainCamera.enabled = false;
+        sittingCheck = false;
+        pv = GetComponent<PhotonView>();
         StartCoroutine(SpawnPlayer()); // 0
         if (PhotonNetwork.IsMasterClient)
         {
@@ -70,10 +94,10 @@ public class GameManager : MonoBehaviourPun
 
         int playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
 
-        Vector3 initPosition = PlayerPositions[playerCount - 1];
-        Quaternion rotationQuaternion = Quaternion.Euler(PlayerRotations[playerCount - 1]);
+        // Vector3 initPosition = PlayerPositions[playerCount - 1];
+        // Quaternion rotationQuaternion = Quaternion.Euler(PlayerRotations[playerCount - 1]);
 
-        GameObject player = PhotonNetwork.Instantiate("Player", initPosition, rotationQuaternion);
+        GameObject player = PhotonNetwork.Instantiate("Player", new Vector3(530.0f, 4.5f, 210.0f), Quaternion.identity);
         Debug.Log("현재 플레이어 생성");
     }
 
@@ -91,9 +115,20 @@ public class GameManager : MonoBehaviourPun
     }
     void Update()
     {
-        // PrintPlayerList();
+
     }
 
+    public void OnStaticCamera()
+    {
+        mainCamera.enabled = true;
+        playerCamera.enabled = false;
+    }
+
+    public void OnPlayerCamera()
+    {
+        playerCamera.enabled = true;
+        mainCamera.enabled = false;
+    }
     void PrintPlayerList()
     {
         Dictionary<int, Player> playerDict = PhotonNetwork.CurrentRoom.Players;
@@ -113,6 +148,31 @@ public class GameManager : MonoBehaviourPun
         }
     }
 
+    public bool CheckSittingPlayer()
+    {
+        sittingCheck = false;
+        int maxPlayer = PhotonNetwork.CurrentRoom.PlayerCount;
+        if (maxPlayer <= 0)
+            return false;
+        foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
+        {
+            foreach (PhotonView view in FindObjectsOfType<PhotonView>())
+            {
+                if(view.Owner != null)
+                {
+                    PlayerMove playerMove = view.GetComponentInChildren<PlayerMove>();
+                    if(playerMove)
+                    {
+                        if (!playerMove.GetSitting())
+                            return false;
+                        else
+                            sittingCheck = true;
+                    }
+                }
+            }
+        }
+        return sittingCheck;
+    }
 
     private void OnDestroy()
     {

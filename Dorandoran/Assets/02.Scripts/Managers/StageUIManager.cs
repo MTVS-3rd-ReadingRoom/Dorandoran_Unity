@@ -14,7 +14,7 @@ public class StageUIManager : MonoBehaviour
     public static StageUIManager instance;
     private Stack<Action> inactiveStack = new Stack<Action>();
 
-    [Header("±âº» UI")]
+    [Header("ï¿½âº» UI")]
     public TMP_Text text_Topic;
     public RectTransform[] infoPanels;
     public Button[] buttons_PanelTags;
@@ -28,17 +28,17 @@ public class StageUIManager : MonoBehaviour
     private bool activeIndex = false;
     private bool activeInfo = false;
 
-    [Header("¹æ Á¤º¸")]
+    [Header("ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     public TMP_Text[] text_Topicinfos;
 
-    [Header("¸ñÂ÷")]
+    [Header("ï¿½ï¿½ï¿½ï¿½")]
     public Panel_IndexUser infoIndexUserUI_Prefab;
     public RectTransform infoContent;
     public List<Panel_IndexUser> infoIndexUsers = new List<Panel_IndexUser>();
     public RectTransform infoIndexLast;
 
 
-    [Header("¿É¼Ç")]
+    [Header("ï¿½É¼ï¿½")]
     public TMP_Dropdown dropdown_MicList;
     public Slider[] slider_Sound;
     private void Awake()
@@ -60,11 +60,11 @@ public class StageUIManager : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            panel_End.transform.SetAsLastSibling();
-            panel_End.SetActive(!panel_End.activeSelf);
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    panel_End.transform.SetAsLastSibling();
+        //    panel_End.SetActive(true);
+        //}
     }
     private void InitUI()
     {
@@ -81,11 +81,11 @@ public class StageUIManager : MonoBehaviour
         }
         slider_Sound[0].value = SoundManager.instance.bgmVolume;
         slider_Sound[1].value = SoundManager.instance.sfxVolume;
-        //slider_Sound[2].value = º¸ÀÌ½º »ç¿îµå º¼·ý Àû¿ë;
+        //slider_Sound[2].value = ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½;
         
         slider_Sound[0].onValueChanged.AddListener((value) => { SoundManager.instance.ChangeBGMVolum(value); });
         slider_Sound[1].onValueChanged.AddListener((value) => { SoundManager.instance.ChangeBGMVolum(value); });
-        //slider_Sound[2].onValueChanged.AddListener((value) => { º¸ÀÌ½º »ç¿îµå Á¶Àý ÇÔ¼ö Ãß°¡ ); });
+        //slider_Sound[2].onValueChanged.AddListener((value) => { ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ ï¿½ß°ï¿½ ); });
     }
 
     private void InactiveUI()
@@ -97,7 +97,7 @@ public class StageUIManager : MonoBehaviour
         }
     }
 
-    #region ¸ÞÀÎÈ­¸é
+    #region ï¿½ï¿½ï¿½ï¿½È­ï¿½ï¿½
 
     private void OnClick_InfoButton()
     {
@@ -137,7 +137,7 @@ public class StageUIManager : MonoBehaviour
     #endregion
 
 
-    #region ÁÖÁ¦
+    #region ï¿½ï¿½ï¿½ï¿½
 
     public void SetTopic()
     {
@@ -149,7 +149,7 @@ public class StageUIManager : MonoBehaviour
     #endregion
 
 
-    #region ¸ñÂ÷
+    #region ï¿½ï¿½ï¿½ï¿½
 
     public void AddInfoIndex_UserInfo(string name)
     {
@@ -164,7 +164,7 @@ public class StageUIManager : MonoBehaviour
     #endregion
 
 
-    #region ¿É¼Ç
+    #region ï¿½É¼ï¿½
 
     private void ActiveSelectMicrophoneUI()
     {

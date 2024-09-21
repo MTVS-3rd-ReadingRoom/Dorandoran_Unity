@@ -138,7 +138,7 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.16
-  m_Height: 1.83
+  m_Height: 1.55
   m_Direction: 1
   m_Center: {x: 0, y: 0.69, z: 0}
 --- !u!143 &3350761849301120839
@@ -160,13 +160,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.8
+  m_Height: 1.4
   m_Radius: 0.16
   m_SlopeLimit: 51.12
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.72, z: 0}
+  m_Center: {x: 0, y: 0.62, z: 0}
 --- !u!114 &3202296379669447219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,8 +235,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2295484230890115861}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: c849b300a132edf419c333fce53c61e4, type: 3}
-  m_Controller: {fileID: 9100000, guid: c0ed0667f460f0543b9bfaf5df46e2f8, type: 2}
+  m_Avatar: {fileID: 9000000, guid: 89668bff297232441b48159d20518923, type: 3}
+  m_Controller: {fileID: 9100000, guid: 02bfd051b0d59c645b1b6918ecc9aeaa, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -398,7 +398,6 @@ GameObject:
   - component: {fileID: 7332983237297940098}
   - component: {fileID: 9143725655589060361}
   - component: {fileID: 3697467989812811477}
-  - component: {fileID: 2542421885282170604}
   m_Layer: 0
   m_Name: SpeakerObject
   m_TagString: Untagged
@@ -471,29 +470,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &2542421885282170604
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3403389114186664678}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 0.37
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0.2, z: -0.00000008940697}
 --- !u!1 &4390093608151492274
 GameObject:
   m_ObjectHideFlags: 0
@@ -519,7 +495,7 @@ Transform:
   m_GameObject: {fileID: 4390093608151492274}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -3.7}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -721,7 +697,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ch46_nonPBR
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 190602246406848653, guid: e41acc7c957a6e243a56a320fd58206f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
