@@ -43,7 +43,7 @@ public class DataManager : MonoBehaviour
     public Coroutine coroutine_Record;
     private AudioSource voiceRecord;
 
-    public List<Book> bookList = null;
+    public List<BookUI> bookList = null;
 
     private void Awake()
     {
@@ -196,7 +196,7 @@ public class DataManager : MonoBehaviour
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
-    public void SetBookList(List<Book> bookList)
+    public void SetBookList(List<BookUI> bookList)
     {
         this.bookList = bookList;
         if(NetworkManager.instance != null)

@@ -244,7 +244,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public void SetBookList(List<Book> bookList)
+    public void SetBookList(List<BookUI> bookList)
     {
         List<Dropdown.OptionData> options = new List<Dropdown.OptionData>();
         foreach (var item in bookList)

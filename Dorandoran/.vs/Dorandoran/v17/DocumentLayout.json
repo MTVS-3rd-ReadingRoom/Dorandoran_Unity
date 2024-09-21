@@ -3,11 +3,23 @@
   "WorkspaceRootPath": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|c:\\users\\admin\\dorandoran_unity\\dorandoran\\assets\\02.scripts\\cinemachinemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\managers\\httpmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\managers\\httpmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\bookui\\autoflip.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\bookui\\autoflip.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|c:\\users\\admin\\dorandoran_unity\\dorandoran\\assets\\02.scripts\\bookui\\bookui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\bookui\\bookui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\cinemachinemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\cinemachinemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|c:\\users\\admin\\dorandoran_unity\\dorandoran\\assets\\02.scripts\\managers\\sceneuimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\managers\\sceneuimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\managers\\sceneuimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -17,10 +29,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\managers\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\managers\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\managers\\httpmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|solutionrelative:assets\\02.scripts\\managers\\httpmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D50FB820-79D3-19AA-3325-3ABFDC88FD6E}|Assembly-CSharp.csproj|C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\assets\\02.scripts\\managers\\voicemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -70,11 +78,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "VoiceManager.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\VoiceManager.cs",
               "RelativeDocumentMoniker": "Assets\\02.Scripts\\Managers\\VoiceManager.cs",
@@ -87,7 +95,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "SceneUIManager.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\SceneUIManager.cs",
               "RelativeDocumentMoniker": "Assets\\02.Scripts\\Managers\\SceneUIManager.cs",
@@ -96,12 +104,37 @@
               "ViewState": "AQIAAGQAAAAAAAAAAIA7wGYAAABrAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-08T11:52:35.513Z",
-              "IsPinned": true,
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AutoFlip.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\BookUI\\AutoFlip.cs",
+              "RelativeDocumentMoniker": "Assets\\02.Scripts\\BookUI\\AutoFlip.cs",
+              "ToolTip": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\BookUI\\AutoFlip.cs",
+              "RelativeToolTip": "Assets\\02.Scripts\\BookUI\\AutoFlip.cs",
+              "ViewState": "AQIAAFwAAAAAAAAAAAAcwAkAAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-17T06:06:16.861Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
+              "Title": "BookUI.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\BookUI\\BookUI.cs",
+              "RelativeDocumentMoniker": "Assets\\02.Scripts\\BookUI\\BookUI.cs",
+              "ToolTip": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\BookUI\\BookUI.cs",
+              "RelativeToolTip": "Assets\\02.Scripts\\BookUI\\BookUI.cs",
+              "ViewState": "AQIAABMAAAAAAAAAAAAAwA4AAAATAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-17T06:06:08.497Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "CinemachineManager.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\CinemachineManager.cs",
               "RelativeDocumentMoniker": "Assets\\02.Scripts\\CinemachineManager.cs",
@@ -109,12 +142,11 @@
               "RelativeToolTip": "Assets\\02.Scripts\\CinemachineManager.cs",
               "ViewState": "AQIAAAoAAAAAAAAAAAAcwBEAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-15T04:45:29.755Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-15T04:45:29.755Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "PlayerMove.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Player\\PlayerMove.cs",
               "RelativeDocumentMoniker": "Assets\\02.Scripts\\Player\\PlayerMove.cs",
@@ -126,7 +158,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "StageUIManager.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\StageUIManager.cs",
               "RelativeDocumentMoniker": "Assets\\02.Scripts\\Managers\\StageUIManager.cs",
@@ -134,12 +166,11 @@
               "RelativeToolTip": "Assets\\02.Scripts\\Managers\\StageUIManager.cs",
               "ViewState": "AQIAAEEAAAAAAAAAAAAAAFEAAABAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-09T05:03:03.626Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-09T05:03:03.626Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "AudioClipWrapper.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\Photon\\PhotonVoice\\PhotonVoiceApi\\Platforms\\Unity\\AudioClipWrapper.cs",
               "RelativeDocumentMoniker": "Assets\\Photon\\PhotonVoice\\PhotonVoiceApi\\Platforms\\Unity\\AudioClipWrapper.cs",
@@ -151,7 +182,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 16,
               "Title": "LoadBalancingClient.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\Photon\\PhotonRealtime\\Code\\LoadBalancingClient.cs",
               "RelativeDocumentMoniker": "Assets\\Photon\\PhotonRealtime\\Code\\LoadBalancingClient.cs",
@@ -163,7 +194,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "GameManager.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\GameManager.cs",
               "RelativeDocumentMoniker": "Assets\\02.Scripts\\Managers\\GameManager.cs",
@@ -171,25 +202,24 @@
               "RelativeToolTip": "Assets\\02.Scripts\\Managers\\GameManager.cs",
               "ViewState": "AQIAAGYAAAAAAAAAAAAnwHYAAAAfAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-09T01:52:36.328Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-09T01:52:36.328Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "HttpManager.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\HttpManager.cs",
               "RelativeDocumentMoniker": "Assets\\02.Scripts\\Managers\\HttpManager.cs",
               "ToolTip": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\HttpManager.cs",
               "RelativeToolTip": "Assets\\02.Scripts\\Managers\\HttpManager.cs",
-              "ViewState": "AQIAAB4BAAAAAAAAAAApwC8BAABAAAAA",
+              "ViewState": "AQIAACMAAAAAAAAAAAArwCwAAAAUAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-08T09:02:02.843Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "PlayerSound.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Player\\PlayerSound.cs",
               "RelativeDocumentMoniker": "Assets\\02.Scripts\\Player\\PlayerSound.cs",
@@ -201,7 +231,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "NetworkManager.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\NetworkManager.cs",
               "RelativeDocumentMoniker": "Assets\\02.Scripts\\Managers\\NetworkManager.cs",
@@ -209,11 +239,12 @@
               "RelativeToolTip": "Assets\\02.Scripts\\Managers\\NetworkManager.cs",
               "ViewState": "AQIAAC0AAAAAAAAAAAAMwB4AAAAWAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-09T01:51:48.493Z"
+              "WhenOpened": "2024-09-09T01:51:48.493Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 14,
               "Title": "ModeratorSound.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Moderator\\ModeratorSound.cs",
               "RelativeDocumentMoniker": "Assets\\02.Scripts\\Moderator\\ModeratorSound.cs",
@@ -225,7 +256,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "SoundManager.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\SoundManager.cs",
               "RelativeDocumentMoniker": "Assets\\02.Scripts\\Managers\\SoundManager.cs",
@@ -237,7 +268,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "LobbyUIManager.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\LobbyUIManager.cs",
               "RelativeDocumentMoniker": "Assets\\02.Scripts\\Managers\\LobbyUIManager.cs",
@@ -249,7 +280,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "UIManager.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Dorandoran_Unity\\Dorandoran\\Assets\\02.Scripts\\Managers\\UIManager.cs",
               "RelativeDocumentMoniker": "Assets\\02.Scripts\\Managers\\UIManager.cs",

@@ -42,7 +42,7 @@ public struct Topic
 }
 
 [System.Serializable]
-public struct Book
+public struct BookUI
 {
     public int no;
     public string isbn;
@@ -54,7 +54,7 @@ public struct Book
 [System.Serializable]
 public struct BookList
 {
-    public List<Book> books; 
+    public List<BookUI> books; 
 }
 
 public class HttpInfo
@@ -302,7 +302,7 @@ public class HttpManager : MonoBehaviour
         info.onComplete = (UnityWebRequest webRequest) =>
         {
             print($"Success : {MethodInfo.GetCurrentMethod()}");
-            DataManager.instance.SetBookList(JsonConvert.DeserializeObject<List<Book>>(webRequest.downloadHandler.text));
+            DataManager.instance.SetBookList(JsonConvert.DeserializeObject<List<BookUI>>(webRequest.downloadHandler.text));
         };
 
         StartCoroutine(Get(info));
