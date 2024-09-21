@@ -117,7 +117,7 @@ public class HttpManager : MonoBehaviour
         formData.Add(new MultipartFormDataSection("password", password));
         formData.Add(new MultipartFormDataSection("nickName", nickName));
 
-        StartCoroutine(UploadFileByFormData(info, formData));
+        StartCoroutine(UploadFileByFormData(info, formData, MethodInfo.GetCurrentMethod().Name));
     }
 
 
@@ -146,7 +146,7 @@ public class HttpManager : MonoBehaviour
         formData.Add(new MultipartFormDataSection("userId", userId));
         formData.Add(new MultipartFormDataSection("password", password));
 
-        StartCoroutine(UploadFileByFormData(info, formData));
+        StartCoroutine(UploadFileByFormData(info, formData, MethodInfo.GetCurrentMethod().Name));
     }
 
 
@@ -162,7 +162,7 @@ public class HttpManager : MonoBehaviour
             RoomNum roomNum = JsonUtility.FromJson<RoomNum>(webRequest.downloadHandler.text);
             DataManager.instance.serial_Room = roomNum.id;
             PostTopic_Text(roomNum.id.ToString());
-            PostTopic_Voice(roomNum.id.ToString());
+            //PostTopic_Voice(roomNum.id.ToString());
             print($"Success : {MethodInfo.GetCurrentMethod()}");
         };
 
@@ -170,7 +170,7 @@ public class HttpManager : MonoBehaviour
         formData.Add(new MultipartFormDataSection("bookName", book_name));
         formData.Add(new MultipartFormDataSection("photonDebateRoomNo", photon_debater_room_no));
 
-        StartCoroutine(UploadFileByFormData(info, formData));
+        StartCoroutine(UploadFileByFormData(info, formData, MethodInfo.GetCurrentMethod().Name));
     }
 
     // 2. (프론트)토론이 시작되면 host는 모든 사용자에게 백엔드에서 받은 토론방 식별값을 보낸다
@@ -196,7 +196,7 @@ public class HttpManager : MonoBehaviour
 
         //List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
         //formData.Add(new MultipartFormDataSection("debateroom_no", debateroom_no));
-        StartCoroutine(UploadFileByWWWFormData(info, wwwForm));
+        StartCoroutine(UploadFileByWWWFormData(info, wwwForm, MethodInfo.GetCurrentMethod().Name));
     }
 
 
@@ -225,7 +225,7 @@ public class HttpManager : MonoBehaviour
         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
         formData.Add(new MultipartFormDataSection("chat_room_id ", chat_room_id));
 
-        StartCoroutine(UploadFileByFormData(info, formData));
+        StartCoroutine(UploadFileByFormData(info, formData, MethodInfo.GetCurrentMethod().Name));
 
     }
 
@@ -252,7 +252,7 @@ public class HttpManager : MonoBehaviour
         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
         formData.Add(new MultipartFormDataSection("chat_room_id ", chat_room_id));
 
-        StartCoroutine(UploadFileByFormData(info, formData));
+        StartCoroutine(UploadFileByFormData(info, formData, MethodInfo.GetCurrentMethod().Name));
 
     }
 
@@ -270,7 +270,7 @@ public class HttpManager : MonoBehaviour
         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
         formData.Add(new MultipartFormDataSection("chat_room_id ", chat_room_id));
 
-        StartCoroutine(UploadFileByFormData(info, formData));
+        StartCoroutine(UploadFileByFormData(info, formData, MethodInfo.GetCurrentMethod().Name));
     }
    
 
@@ -292,7 +292,7 @@ public class HttpManager : MonoBehaviour
         formData.Add(new MultipartFormDataSection("chat_room_id", chat_room_id));
         formData.Add(new MultipartFormFileSection("file", file, "voice"+user_id+".wav", "audio/wav"));
 
-        StartCoroutine(UploadFileByFormData(info, formData));
+        StartCoroutine(UploadFileByFormData(info, formData, MethodInfo.GetCurrentMethod().Name));
     }
     public void PostBookList()
     {
@@ -305,7 +305,7 @@ public class HttpManager : MonoBehaviour
             DataManager.instance.SetBookList(JsonConvert.DeserializeObject<List<BookUI>>(webRequest.downloadHandler.text));
         };
 
-        StartCoroutine(Get(info));
+        StartCoroutine(Get(info, MethodInfo.GetCurrentMethod().Name));
     }
 
 
@@ -317,7 +317,7 @@ public class HttpManager : MonoBehaviour
     //}
 
 
-    public IEnumerator Post(HttpInfo info)
+    public IEnumerator Post(HttpInfo info, string method)
     {
         using (UnityWebRequest webRequest = UnityWebRequest.Post(info.url, info.body, info.contentType))
         {
@@ -329,11 +329,11 @@ public class HttpManager : MonoBehaviour
             yield return webRequest.SendWebRequest();
 
             // 서버에게 응답이 왔다.
-            DoneRequest(webRequest, info);
+            DoneRequest(webRequest, info, method);
         }
     }
 
-    public IEnumerator Get(HttpInfo info)
+    public IEnumerator Get(HttpInfo info, string method)
     {
         using (UnityWebRequest webRequest = UnityWebRequest.Get(info.url))
         {
@@ -345,11 +345,11 @@ public class HttpManager : MonoBehaviour
             yield return webRequest.SendWebRequest();
 
             // 서버에게 응답이 왔다.
-            DoneRequest(webRequest, info);
+            DoneRequest(webRequest, info, method);
         }
     }
 
-    public IEnumerator UploadFileByFormData(HttpInfo info, List<IMultipartFormSection> formData)
+    public IEnumerator UploadFileByFormData(HttpInfo info, List<IMultipartFormSection> formData, string method)
     {
 
         using (UnityWebRequest webRequest = UnityWebRequest.Post(info.url, formData))
@@ -362,11 +362,11 @@ public class HttpManager : MonoBehaviour
             yield return webRequest.SendWebRequest();
 
             // 서버에게 응답이 왔다.
-            DoneRequest(webRequest, info);
+            DoneRequest(webRequest, info, method);
         }
     }
 
-    public IEnumerator UploadFileByFormData_AddHeaderKey(HttpInfo info, List<IMultipartFormSection> formData)
+    public IEnumerator UploadFileByFormData_AddHeaderKey(HttpInfo info, List<IMultipartFormSection> formData, string method)
     {
 
         using (UnityWebRequest webRequest = UnityWebRequest.Post(info.url, formData))
@@ -380,11 +380,11 @@ public class HttpManager : MonoBehaviour
             yield return webRequest.SendWebRequest();
 
             // 서버에게 응답이 왔다.
-            DoneRequest(webRequest, info);
+            DoneRequest(webRequest, info, method);
         }
     }
 
-    public IEnumerator UploadFileByWWWFormData( HttpInfo info, WWWForm wwwForm)
+    public IEnumerator UploadFileByWWWFormData( HttpInfo info, WWWForm wwwForm, string method)
     {
 
         using (UnityWebRequest webRequest = UnityWebRequest.Post(info.url, wwwForm))
@@ -399,12 +399,12 @@ public class HttpManager : MonoBehaviour
             yield return webRequest.SendWebRequest();
 
             // 서버에게 응답이 왔다.
-            DoneRequest(webRequest, info);
+            DoneRequest(webRequest, info, method);
         }
     }
 
 
-    void DoneRequest(UnityWebRequest webRequest, HttpInfo info)
+    void DoneRequest(UnityWebRequest webRequest, HttpInfo info, string method)
     {
         // 만약에 결과가 정상이라면
         if (webRequest.result == UnityWebRequest.Result.Success)
@@ -423,7 +423,7 @@ public class HttpManager : MonoBehaviour
         else
         {
             // Error 의 이유를 출력
-            Debug.LogError("Net Error : " + webRequest.error);
+            Debug.LogError($"Net Error : {webRequest.error} ({method})");
 
             if(LobbyUIManager.instance != null)
             {

@@ -23,7 +23,7 @@ public class PlayerMove : PlayerStateBase, IPunObservable
     float mx = 0;
     int groundLayer;
 
-    bool sitting;
+    bool isReady;
     bool preSitting;
     GameManager gameManager;
 
@@ -31,6 +31,10 @@ public class PlayerMove : PlayerStateBase, IPunObservable
 
     Vector3 velocity;
     float jumpHeight;
+    Chair chair;
+    bool Cu;
+
+
     void Start()
     {
         cam = Camera.main.transform;
@@ -38,7 +42,7 @@ public class PlayerMove : PlayerStateBase, IPunObservable
         myAnim = GetComponentInChildren<Animator>();
         pv = GetComponent<PhotonView>();
         recorder = GetComponentInChildren<PhotonVoice.Recorder>();
-        sitting = false;
+        isReady = false;
         preSitting = false;
 
         jumpHeight = 0.8f;
@@ -57,29 +61,62 @@ public class PlayerMove : PlayerStateBase, IPunObservable
         ///// 소유권을 가진 캐릭터가 앉아있다면 회전 막기
         if (pv.IsMine)
         {
-            if (preSitting == sitting && sitting == true && Input.GetKeyDown(KeyCode.P)) // 값이 바뀌지 않았을 때
+            if (Input.GetKeyDown(KeyCode.P)) // 값이 바뀌지 않았을 때
             {
-                sitting = false;
-                myAnim.SetBool("Sitting", sitting);
-                gameManager.OnPlayerCamera();
+                if (chair != null)
+                {
+                    if (isReady == false)
+                    {
+                        if (chair.Sitting(DataManager.instance.nickName))
+                        {
+                            isReady = true;
+                            Sitting();
+                            myAnim.SetBool("Sitting", isReady);
+                            gameManager.OnStaticCamera();
+                            return; // 바로 종료
+                        }
+                    }
+                    else
+                    {
+                        isReady = false;
+                        chair.Eixt();
+                        myAnim.SetBool("Sitting", isReady);
+                        gameManager.OnPlayerCamera();
+                    }
+                }
             }
-            else if (sitting) // 앉는 상태 중일 경우
+
+            if (Input.GetKeyDown(KeyCode.Q))
             {
-                preSitting = sitting; // 현재 상태를 이전 상태 보관에 넣기 - 바로 종료하기 때문
-                return; // 바로 종료
+                Cursor.visible = !Cursor.visible;
+
+                if (Cursor.visible)
+                {
+                    Cursor.lockState = CursorLockMode.None;
+                    myAnim.SetFloat("Horizontal", 0);
+                    myAnim.SetFloat("Vertical", 0);
+                }
+                else
+                {
+                    Cursor.lockState = CursorLockMode.Locked;
+                }
             }
         }
         else
         {
-            myAnim.SetBool("Sitting", sitting);
-            if(sitting) // 앉아있을때
+            myAnim.SetBool("Sitting", isReady);
+            if (isReady) // 앉아있을때
             {
                 transform.eulerAngles = new Vector3(0, 0, 0);
                 transform.rotation = myRot;
             }
         }
-        Move();
-        Rotate();
+
+        if (!isReady)
+        {
+            Move();
+            Rotate();
+        }
     }
 
     bool CheckIsGround()
@@ -93,41 +130,43 @@ public class PlayerMove : PlayerStateBase, IPunObservable
         {
             // 현재 카메라가 바라보는 방향으로 이동
             // CharacterController Move 함수 사용
-            float h = Input.GetAxis("Horizontal");
-            float v = Input.GetAxis("Vertical");
-            Vector3 dir = new Vector3(h, 0, v);
-            dir.y = 0.0f;
-            dir = transform.TransformDirection(dir);
-
-            if (dir.magnitude > 0.0f) // 이동하지 않으면
+            if (!Cursor.visible && !isReady)
             {
-                sitting = false;
-                myAnim.SetBool("Sitting", sitting);
+                float h = Input.GetAxis("Horizontal");
+                float v = Input.GetAxis("Vertical");
+                Vector3 dir = new Vector3(h, 0, v);
+                dir.y = 0.0f;
+                dir = transform.TransformDirection(dir);
+
+                if (dir.magnitude > 0.0f) // 이동하지 않으면
+                {
+                    isReady = false;
+                    myAnim.SetBool("Sitting", isReady);
+                }
+                else if (dir.magnitude >= 1)
+                {
+                    dir.Normalize();
+                }
+
+                if (isGround && velocity.y < 0.0f)
+                    velocity.y = 0.0f;
+
+                Jump();
+                velocity.y += -10.0f * Time.deltaTime;
+
+                cc.Move(dir * moveSpeed * Time.deltaTime);
+                cc.Move(velocity * Time.deltaTime);
+                isGround = cc.isGrounded;
+                //transform.forward = dir;
+
+                if (myAnim != null)
+                {
+                    myAnim.SetFloat("Horizontal", h);
+                    myAnim.SetFloat("Vertical", v);
+                    //Debug.Log("Animation: HorizontalValue: " + h + "Vertical: " + v + "\n");
+                }
+
             }
-            else if (dir.magnitude >= 1)
-            {
-                dir.Normalize();
-            }
-
-            if (isGround && velocity.y < 0.0f)
-                velocity.y = 0.0f;
-
-            Jump();
-            velocity.y += -10.0f * Time.deltaTime;
-
-            cc.Move(dir * moveSpeed * Time.deltaTime);
-            cc.Move(velocity * Time.deltaTime);
-            isGround = cc.isGrounded;
-            //transform.forward = dir;
-
-            if (myAnim != null)
-            {
-                myAnim.SetFloat("Horizontal", h);
-                myAnim.SetFloat("Vertical", v);
-                Debug.Log("Animation: HorizontalValue: " + h + "Vertical: " + v + "\n");
-            }
-
-
 
         }
         else
@@ -144,30 +183,32 @@ public class PlayerMove : PlayerStateBase, IPunObservable
         }
     }
 
-    void Sitting(GameObject gameObject)
+    void Sitting()
     {
         // p 누르기 + 근처 의자와 충돌 + 앉는 애니메이션 실행
-        if (Input.GetKeyDown(KeyCode.P) && pv.IsMine)
+        if (pv.IsMine && chair != null)
         {
-            for (int i = 0; i < 4; i++)
-            {
-                if (gameObject.tag == "Chair0" + i)
-                {
-                    Quaternion rotationQuaternion = Quaternion.Euler(gameManager.GetPlayerRotation(i));
-                    Vector3 playerPosition = gameManager.GetPlayerPosition(i);
-                    transform.position = new Vector3(playerPosition.x, playerPosition.y/* + 1.0f*/, playerPosition.z);
-                    transform.eulerAngles = new Vector3(0, 0, 0);
-                    myRot = rotationQuaternion;
-                    transform.rotation = myRot;
+            transform.position = chair.transform.position;
+            transform.rotation = chair.transform.rotation;
+            //for (int i = 0; i < 4; i++)
+            //{
+            //    if (gameObject.tag == "Chair0" + i)
+            //    {
+            //        Quaternion rotationQuaternion = Quaternion.Euler(gameManager.GetPlayerRotation(i));
+            //        Vector3 playerPosition = gameManager.GetPlayerPosition(i);
+            //        transform.position = new Vector3(playerPosition.x, playerPosition.y/* + 1.0f*/, playerPosition.z);
+            //        transform.eulerAngles = new Vector3(0, 0, 0);
+            //        myRot = rotationQuaternion;
+            //        transform.rotation = myRot;
 
-                    mx = 0;
-                    sitting = true;
-                    preSitting = false;
-                    myAnim.SetBool("Sitting", sitting);
-                    gameManager.OnStaticCamera();
-                    return;
-                }
-            }
+            //        mx = 0;
+            //        sitting = true;
+            //        preSitting = false;
+            //        myAnim.SetBool("Sitting", sitting);
+            //        gameManager.OnStaticCamera();
+            //        return;
+            //    }
+            //}
 
         }
     }
@@ -176,11 +217,14 @@ public class PlayerMove : PlayerStateBase, IPunObservable
     {
         if (pv.IsMine)
         {
-            // 사용자의 마우스 좌우 드래그 입력을 받는다.
-            mx += Input.GetAxis("Mouse X") * rotSpeed * Time.deltaTime;
+            if (!Cursor.visible && !isReady)
+            {
+                // 사용자의 마우스 좌우 드래그 입력을 받는다.
+                mx += Input.GetAxis("Mouse X") * rotSpeed * Time.deltaTime;
 
-            // 입력받은 방향에 따라 플레이어를 좌우로 회전한다.
-            transform.eulerAngles = new Vector3(0, mx, 0);
+                // 입력받은 방향에 따라 플레이어를 좌우로 회전한다.
+                transform.eulerAngles = new Vector3(0, mx, 0);
+            }
         }
         else
         {
@@ -190,7 +234,7 @@ public class PlayerMove : PlayerStateBase, IPunObservable
 
     public bool GetSitting()
     {
-        return sitting;
+        return isReady;
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -201,14 +245,14 @@ public class PlayerMove : PlayerStateBase, IPunObservable
             // iterable 데이터를 보낸다.
             stream.SendNext(transform.position);
             stream.SendNext(transform.rotation);
-            stream.SendNext(sitting);
+            stream.SendNext(isReady);
         }
         // 그렇지 않고, 만일 데이터를 서버로부터 읽어야하는 상태라면...
         else if (stream.IsReading)
         {
             myPos = (Vector3)stream.ReceiveNext();
             myRot = (Quaternion)stream.ReceiveNext();
-            sitting = (bool)stream.ReceiveNext();
+            isReady = (bool)stream.ReceiveNext();
         }
     }
 
@@ -226,11 +270,21 @@ public class PlayerMove : PlayerStateBase, IPunObservable
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Chair") && pv.IsMine) // 만약 Chair라는 레이어의 마스크를 가지고 있다면
         {
-            Sitting(other.gameObject);
+
+            chair = other.GetComponent<Chair>();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Chair") && pv.IsMine) // 만약 Chair라는 레이어의 마스크를 가지고 있다면
+        {
+
+            chair = null;
         }
     }
 }

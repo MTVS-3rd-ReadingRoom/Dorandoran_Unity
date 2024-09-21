@@ -56,6 +56,8 @@ MonoBehaviour:
   - SpeakGroup
   - DebateOrder
   - HostTurn
+  - PrintCurrentIndex
+  - StartSetting
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

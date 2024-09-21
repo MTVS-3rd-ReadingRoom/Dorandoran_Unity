@@ -8,13 +8,24 @@ using UnityEngine.UI;
 using DG;
 using DG.Tweening;
 using System;
+using Photon.Pun;
 
-public class StageUIManager : MonoBehaviour
+public class StageUIManager : MonoBehaviourPun
 {
     public static StageUIManager instance;
     private Stack<Action> inactiveStack = new Stack<Action>();
 
-    [Header("�⺻ UI")]
+    public string[] nickName = new string[] { "", "", "", "" };
+    private string[] indexString = new string[]
+    { 
+        $"찬성 측 입론", "반대 측 입론", "회의 시간", 
+        "반대측 반론", "찬성측 반론", "회의 시간",
+        "찬성측 반론", "반대측 반론", "회의 시간",
+        "반대측 주장 정리 및 결론", "찬성측 주창 정리 및 결론"
+    };
+    public int index = 0;
+
+    [Header("메인 UI")]
     public TMP_Text text_Topic;
     public RectTransform[] infoPanels;
     public Button[] buttons_PanelTags;
@@ -25,22 +36,27 @@ public class StageUIManager : MonoBehaviour
     public GameObject panel_Quit;
     public GameObject panel_End;
     public GameObject image_MicInactive;
+    public RectTransform panel_CurrentOrder;
     private bool activeIndex = false;
     private bool activeInfo = false;
 
-    [Header("�� ����")]
+    [Header("Topic")]
     public TMP_Text[] text_Topicinfos;
 
-    [Header("����")]
+    [Header("정보")]
     public Panel_IndexUser infoIndexUserUI_Prefab;
     public RectTransform infoContent;
     public List<Panel_IndexUser> infoIndexUsers = new List<Panel_IndexUser>();
     public RectTransform infoIndexLast;
 
 
-    [Header("�ɼ�")]
+    [Header("Option")]
     public TMP_Dropdown dropdown_MicList;
     public Slider[] slider_Sound;
+
+    Sequence uiSequence;
+
+
     private void Awake()
     {
         if(instance == null)
@@ -53,19 +69,14 @@ public class StageUIManager : MonoBehaviour
         }
     }
 
+
     private void Start()
     {
         InitUI();
         SetTopic();
     }
-    private void Update()
-    {
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    panel_End.transform.SetAsLastSibling();
-        //    panel_End.SetActive(true);
-        //}
-    }
+
+
     private void InitUI()
     {
         buttons_PanelTags[0].onClick.AddListener(() => { OnClick_InfoButton(); });
@@ -88,6 +99,7 @@ public class StageUIManager : MonoBehaviour
         //slider_Sound[2].onValueChanged.AddListener((value) => { ���̽� ���� ���� �Լ� �߰� ); });
     }
 
+
     private void InactiveUI()
     {
         if(inactiveStack.Count > 0)
@@ -97,22 +109,60 @@ public class StageUIManager : MonoBehaviour
         }
     }
 
+    // 토론 시작시 이름 셋팅
+    public void RPC_StartSetting(string team1_NickName1, string team1_NickName2, string team2_NickName1, string team2_NickName2)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            StartSetting(team1_NickName1, team1_NickName2, team2_NickName1, team2_NickName2);
+        }
+    }
+
+
+    [PunRPC]
+    private void StartSetting(string team1_NickName1, string team1_NickName2, string team2_NickName1, string team2_NickName2)
+    {
+        nickName = new string[] { team1_NickName1, team1_NickName2, team2_NickName1, team2_NickName2 };
+        indexString = new string[]
+        {
+            $"찬성({nickName[0]}) 측 입론", $"반대({nickName[2]}) 측 입론", "회의 시간",
+            $"반대({nickName[4]}) 측 반론", $"찬성({nickName[1]}) 측 반론", "회의 시간",
+            $"찬성({nickName[0]}) 측 반론", $"반대({nickName[2]}) 측 반론", "회의 시간",
+            $"반대({nickName[4]}) 측 주장 정리 및 결론", $"찬성({nickName[1]}) 측 주창 정리 및 결론"
+        };
+    }
+
+
+    // 현재 진행 차례 출력
+    [PunRPC]
+    private void PrintCurrentIndex()
+    {
+        if(index < indexString.Length)
+        {
+            string text = $"{indexString[index]}";
+            panel_CurrentOrder.GetComponentInChildren<TMP_Text>().text = text;
+            panel_CurrentOrder.DOAnchorPos3DX(-1300, 0.25f).SetEase(Ease.InSine);
+        }
+        index++;
+    }
+
+
     #region ����ȭ��
 
     private void OnClick_InfoButton()
+{
+    infoPanels[0].transform.SetAsLastSibling();
+    if (activeInfo)
     {
-        infoPanels[0].transform.SetAsLastSibling();
-        if (activeInfo)
-        {
-            activeInfo = false;
-            infoPanels[0].DOAnchorPos3DX(-1300, 0.25f).SetEase(Ease.InSine);
-        }
-        else
-        {
-            activeInfo = true;
-            infoPanels[0].DOAnchorPos3DX(0, 0.25f).SetEase(Ease.InSine);
-        }
+        activeInfo = false;
+        infoPanels[0].DOAnchorPos3DX(-1300, 0.25f).SetEase(Ease.InSine);
     }
+    else
+    {
+        activeInfo = true;
+        infoPanels[0].DOAnchorPos3DX(0, 0.25f).SetEase(Ease.InSine);
+    }
+}
 
     private void OnClick_IndexButton()
     {

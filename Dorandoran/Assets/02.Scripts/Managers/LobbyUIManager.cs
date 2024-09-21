@@ -237,8 +237,9 @@ public class LobbyUIManager : MonoBehaviour
         DataManager.instance.topic.topic = null;
         DataManager.instance.topic.content = null;
         DataManager.instance.topicClip = null;
-        HttpManager.instance.PostDedateRoom(NetworkManager.instance.GetBook(), DataManager.instance.photon_debater_room_no);
-        getTopic = StartCoroutine(Coroutine_GetTopic());
+        NetworkManager.instance.CreateRoom();
+        //HttpManager.instance.PostDedateRoom(NetworkManager.instance.GetBook(), DataManager.instance.photon_debater_room_no);
+        //getTopic = StartCoroutine(Coroutine_GetTopic());
         panel_SceneLoad.SetActive(true);
     }
 
@@ -255,7 +256,12 @@ public class LobbyUIManager : MonoBehaviour
 
     private IEnumerator Coroutine_GetTopic()
     {
-        while(DataManager.instance.topic.topic == null || DataManager.instance.topicClip == null)
+        //while(DataManager.instance.topic.topic == null || DataManager.instance.topicClip == null)
+        //{
+        //    yield return new WaitForSeconds(0.5f);
+        //}
+
+        while (DataManager.instance.topic.topic == null)
         {
             yield return new WaitForSeconds(0.5f);
         }
