@@ -21,6 +21,7 @@ public class LobbyUIManager : MonoBehaviour
     public GameObject panel_SelectChannel;
     public GameObject panel_makeRoom;
     public GameObject panel_choiceRoom;
+    public GameObject panel_MyStudy;
     public GameObject panel_PopUp;
     public GameObject panel_HttpLoad;
     public GameObject panel_SceneLoad;
@@ -47,6 +48,9 @@ public class LobbyUIManager : MonoBehaviour
     [Header("채널 선택")]
     public Button[] buttons_MakeRoomChannel;
     public Button[] buttons_ChoiceRoomChannel;
+    public Button[] buttons_MyStudy;
+    public List<Button> buttons_MyBook = new List<Button>();
+    
     #endregion
 
     #region 방 만들기
@@ -73,6 +77,8 @@ public class LobbyUIManager : MonoBehaviour
     public TMP_Dropdown dropdown_MicList;
     public Slider[] slider_Sound;
     #endregion
+
+    public GameObject panel_MyBook;
 
     public Coroutine getTopic;
 
@@ -137,6 +143,11 @@ public class LobbyUIManager : MonoBehaviour
         {
             buttons_ChoiceRoomChannel[i].onClick.AddListener(() => { ShowChoiceRoomPanel(); });
         }
+        for (int i = 0; i < buttons_MyStudy.Length; i++)
+        {
+            buttons_MyStudy[i].onClick.AddListener(() => { ShowMyStudyPanel(); });
+        }
+
         for (int i = 0; i < button_Exit.Length; i++)
         {
             button_Exit[i].onClick.AddListener(() => { panel_PopUp.SetActive(false); });
@@ -144,6 +155,11 @@ public class LobbyUIManager : MonoBehaviour
         for (int i = 0; i < buttons_Inactive.Length; i++)
         {
             buttons_Inactive[i].onClick.AddListener(() => { InactiveUI(); });
+        }
+
+        for (int i = 0; i < buttons_MyBook.Count; i++)
+        {
+            buttons_MyBook[i].onClick.AddListener(() => { ShowMyBook(); });
         }
 
         button_Option.onClick.AddListener(() => { ActiveSelectMicrophoneUI(); panel_Option.SetActive(true); inactiveStack.Push(() => { panel_Option.SetActive(false); }); });
@@ -235,7 +251,8 @@ public class LobbyUIManager : MonoBehaviour
             return;
 
         DataManager.instance.topic.topic = null;
-        DataManager.instance.topic.content = null;
+        DataManager.instance.topic.proposition = null;
+        DataManager.instance.topic.opposition = null;
         DataManager.instance.topicClip = null;
         HttpManager.instance.PostDedateRoom(NetworkManager.instance.GetBook(), DataManager.instance.photon_debater_room_no);
         getTopic = StartCoroutine(Coroutine_GetTopic());
@@ -284,6 +301,7 @@ public class LobbyUIManager : MonoBehaviour
         panel_choiceRoom.SetActive(false);
         panel_signUp.SetActive(false);
         panel_SelectChannel.SetActive(false);
+        panel_MyStudy.SetActive(false);
         panel_PopUp.SetActive(false);
         panel_HttpLoad.SetActive(false);
         panel_SceneLoad.SetActive(false);
@@ -296,6 +314,7 @@ public class LobbyUIManager : MonoBehaviour
         panel_choiceRoom.SetActive(false);
         panel_signUp.SetActive(false);
         panel_SelectChannel.SetActive(true);
+        panel_MyStudy.SetActive(false);
         panel_PopUp.SetActive(false);
         panel_HttpLoad.SetActive(false);
         panel_SceneLoad.SetActive(false);
@@ -308,6 +327,7 @@ public class LobbyUIManager : MonoBehaviour
         panel_choiceRoom.SetActive(false);
         panel_signUp.SetActive(false);
         panel_SelectChannel.SetActive(false);
+        panel_MyStudy.SetActive(false);
         panel_PopUp.SetActive(false);
         panel_HttpLoad.SetActive(false);
         panel_SceneLoad.SetActive(false);
@@ -320,6 +340,7 @@ public class LobbyUIManager : MonoBehaviour
         panel_choiceRoom.SetActive(true);
         panel_signUp.SetActive(false);
         panel_SelectChannel.SetActive(false);
+        panel_MyStudy.SetActive(false);
         panel_PopUp.SetActive(false);
         panel_HttpLoad.SetActive(false);
         panel_SceneLoad.SetActive(false);
@@ -332,9 +353,31 @@ public class LobbyUIManager : MonoBehaviour
         panel_choiceRoom.SetActive(false);
         panel_signUp.SetActive(true);
         panel_SelectChannel.SetActive(false);
+        panel_MyStudy.SetActive(false);
         panel_PopUp.SetActive(false);
         panel_HttpLoad.SetActive(false);
         panel_SceneLoad.SetActive(false);
+    }
+
+    public void ShowMyStudyPanel()
+    {
+        panel_login.SetActive(false);
+        panel_makeRoom.SetActive(false);
+        panel_choiceRoom.SetActive(false);
+        panel_signUp.SetActive(false);
+        panel_SelectChannel.SetActive(false);
+        panel_MyStudy.SetActive(true);
+        panel_PopUp.SetActive(false);
+        panel_HttpLoad.SetActive(false);
+        panel_SceneLoad.SetActive(false);
+
+        inactiveStack.Push(() => { ShowSelectChannelPanel(); });
+    }
+
+    public void ShowMyBook()
+    {
+        panel_MyBook.SetActive(true);
+        inactiveStack.Push(() => { panel_MyBook.SetActive(false); });
     }
 
     public void ShowLoading()
@@ -344,6 +387,7 @@ public class LobbyUIManager : MonoBehaviour
         panel_choiceRoom.SetActive(false);
         panel_signUp.SetActive(false);
         panel_SelectChannel.SetActive(false);
+        panel_MyStudy.SetActive(false);
         panel_PopUp.SetActive(false);
         panel_HttpLoad.SetActive(false);
         panel_SceneLoad.SetActive(true);

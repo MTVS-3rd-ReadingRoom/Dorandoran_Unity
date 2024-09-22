@@ -76,7 +76,6 @@ public class ModeratorSound : MonoBehaviourPunCallbacks, IPunObservable
 
     public void RPC_UpdateSound(bool play, AudioClip audioClip)
     {
-        print(1);
         recorder.AudioClip = audioClip;
         recorder.enabled = true;
         recorder.RecordingEnabled = true;

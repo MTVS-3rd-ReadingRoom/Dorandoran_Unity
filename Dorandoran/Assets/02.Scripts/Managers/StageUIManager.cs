@@ -70,7 +70,7 @@ public class StageUIManager : MonoBehaviourPun
         }
     }
 
-
+    
     private void Start()
     {
         pv = GetComponent<PhotonView>();
@@ -215,7 +215,8 @@ public class StageUIManager : MonoBehaviourPun
         if (PhotonNetwork.IsMasterClient)
         {
             text_Topicinfos[0].text = DataManager.instance.topic.topic;
-            text_Topicinfos[1].text = DataManager.instance.topic.content;
+            text_Topicinfos[1].text = DataManager.instance.topic.opposition;
+            //text_Topicinfos[2].text = DataManager.instance.topic.proposition;
             text_Topic.text = DataManager.instance.topic.topic;
             pv.RPC("SendTopic", RpcTarget.AllBuffered, text_Topicinfos[0].text, text_Topicinfos[1].text, text_Topic.text);
         }

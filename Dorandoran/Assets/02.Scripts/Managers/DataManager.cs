@@ -24,6 +24,13 @@ public struct AudioClip_Json
     }
 }
 
+public class TopicText
+{
+    public string topic;
+    public string proposition;
+    public string opposition;
+} 
+
 public class DataManager : MonoBehaviour
 {
     public static DataManager instance;
@@ -37,7 +44,7 @@ public class DataManager : MonoBehaviour
 
     public int microphoneIndex = 0;
 
-    public Topic topic;
+    public TopicText topic = new TopicText();
     public AudioClip topicClip;
 
     public Coroutine coroutine_Record;
@@ -181,7 +188,15 @@ public class DataManager : MonoBehaviour
 
     public void SetTopic_Text(Topic topic)
     {
-        this.topic = topic;
+        this.topic = new TopicText();
+        string[] temp = topic.topic.Split("설명 : ");
+        this.topic.topic = temp[0].Substring(5);
+        print(temp[0]);
+        temp = temp[1].Split("|||");
+        this.topic.proposition = temp[0];
+        print(temp[0]);
+        this.topic.opposition = temp[1];
+        print(temp[1]);
     }
 
     public void SetTopic_Voice(AudioClip audioClip)

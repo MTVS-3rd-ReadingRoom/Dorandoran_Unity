@@ -294,6 +294,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
             speakerIdList[9] = oppositionSide[0];
             speakerIdList[11] = oppositionSide[0];
         }
+        ModeratorSound.instance.SpeakPlayer(DataManager.instance.topicClip);
     }
     private void InitPlayerData()
     {
@@ -315,6 +316,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         orderText.text = "AI 사회자 시간입니다.";
         m_eCurCharacterTurn = CharacterTurn.CharacterPlayerTurn;
         InitPlayerData();
+
     }
 
     // 버튼 동기화 - 버튼을 눌렀을때 isMine인 사용자에게 모두 해당 함수를 실행하도록 구현

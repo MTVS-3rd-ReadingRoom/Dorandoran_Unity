@@ -97,7 +97,7 @@ public class HttpManager : MonoBehaviour
         PostBookList();
     }
 
-    public void PostSignUp_FormData(string name, string userId, string password, string nickName)
+    public void PostSignUp_FormData(string name, string userId, string password, string email)
     {
         print($"Start : {MethodInfo.GetCurrentMethod()}");
         HttpInfo info = new HttpInfo();
@@ -115,7 +115,7 @@ public class HttpManager : MonoBehaviour
         formData.Add(new MultipartFormDataSection("name", name));
         formData.Add(new MultipartFormDataSection("userId", userId));
         formData.Add(new MultipartFormDataSection("password", password));
-        formData.Add(new MultipartFormDataSection("nickName", nickName));
+        formData.Add(new MultipartFormDataSection("email", email));
 
         StartCoroutine(UploadFileByFormData(info, formData, MethodInfo.GetCurrentMethod().Name));
     }
