@@ -19,7 +19,6 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         CharacterDebateTurn,
         CharacterTurnEnd
     }
-
     public Photon.Voice.Unity.Recorder recorder;
 
     public Chair announcer_Chair;
@@ -63,12 +62,12 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     public GameObject panel_Order;
     public GameObject panel_Timer;
     public Button button_Next;
-    public Button chat_Send;
     #endregion
 
     // 클릭했을 때마다 증가
     void NextTurn() // 다음에 턴
     {
+        CinemachineManager.instance.AddInstructions();
         if (timelineIndex < times.Length) // 총 플레이어 숫자만큼 증가했다면
         {
             orderText.text = StageUIManager.instance.PrintCurrentIndex(timelineIndex);
@@ -84,9 +83,9 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
                 AllMuteTransmit();
                 if (speakerIdList[timelineIndex] != announcer_Chair)
                 {
-                    CinemachineManager.instance.AddInstructions(speakerIdList[timelineIndex].virtualCamera);
                     RPCSetTransmit();
                 }
+                CinemachineManager.instance.AddInstructions(speakerIdList[timelineIndex].virtualCamera);
                 SetSameSpeakGroup();
             }
             print(timelineIndex);
@@ -195,9 +194,9 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
             double elapsed = PhotonNetwork.Time - startTime;
             double remainingTime = timeDuration - elapsed;
 
-            
-            timeText.text = "제한시간\n" + (int)remainingTime + "초";
+            timeText.text = (int)(remainingTime / 60) + "분 " + (int)(remainingTime % 60) + "초 / 2분 제한시간";
 
+            print(remainingTime);
             // 시간이 지남 or (키 누름 && 현재 차례인 플레이어가 눌렀을 경우) 0, 사회자, 2, 3 ~ 플레이어 수
             if (remainingTime < 0)
             {
@@ -215,6 +214,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
                 TriggerReset();
                 break;
             case CharacterTurn.CharacterPlayerTurn:
+                print(2);
                 NextOrderRPC();
                 break;
             case CharacterTurn.CharacterDebateTurn:
@@ -286,6 +286,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
             speakerIdList[9] = oppositionSide[0];
             speakerIdList[11] = oppositionSide[0];
         }
+        gameManager.StartCamera();
     }
     private void InitPlayerData()
     {

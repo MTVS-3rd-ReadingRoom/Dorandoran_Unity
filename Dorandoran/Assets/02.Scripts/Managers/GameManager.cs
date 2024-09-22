@@ -10,6 +10,7 @@ using UnityEngine.UIElements;
 using Photon.Voice;
 using ExitGames.Client.Photon.StructWrapping;
 using static PlayerProsAndCons;
+using Cinemachine;
 
 public class GameManager : MonoBehaviourPun
 {
@@ -27,6 +28,7 @@ public class GameManager : MonoBehaviourPun
 
     Camera mainCamera;
     Camera playerCamera;
+    public Camera cinemachineCamera;
 
     [SerializeField]
     public Vector3[] PlayerPositions;
@@ -129,6 +131,14 @@ public class GameManager : MonoBehaviourPun
     {
         playerCamera.enabled = true;
         mainCamera.enabled = false;
+    }
+
+    public void StartCamera()
+    {
+
+        playerCamera.enabled = false;
+        mainCamera.enabled = false;
+        cinemachineCamera.gameObject.SetActive(true);
     }
     void PrintPlayerList()
     {
