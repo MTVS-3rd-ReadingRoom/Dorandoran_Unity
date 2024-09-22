@@ -30,6 +30,7 @@ public class PlayerMove : PlayerStateBase, IPunObservable
     bool isGround;
 
     Vector3 velocity;
+    Vector3 myPrevPos;
     float jumpHeight;
     Chair chair;
     bool Cu;
@@ -97,7 +98,7 @@ public class PlayerMove : PlayerStateBase, IPunObservable
             {
                 Cursor.visible = !Cursor.visible;
 
-                if (Cursor.visible)
+                if (Cursor.visible) 
                 {
                     Cursor.lockState = CursorLockMode.None;
                     myAnim.SetFloat("Horizontal", 0);
@@ -114,16 +115,21 @@ public class PlayerMove : PlayerStateBase, IPunObservable
             myAnim.SetBool("Sitting", isReady);
             if (isReady) // ¾É¾ÆÀÖÀ»¶§
             {
+                if(chair)
+                {
+                    transform.position = chair.transform.position;
+                }
                 transform.eulerAngles = new Vector3(0, 0, 0);
                 transform.rotation = myRot;
             }
         }
 
-        if (!isReady)
-        {
-            Move();
-            Rotate();
-        }
+        Move();
+        Rotate();
+        //if (!isReady)
+        //{
+
+        //}
     }
 
     bool CheckIsGround()
@@ -178,7 +184,32 @@ public class PlayerMove : PlayerStateBase, IPunObservable
         }
         else
         {
-            transform.position = Vector3.Lerp(transform.position, myPos, Time.deltaTime * trackingSpeed);
+            Vector3 targetPos = Vector3.Lerp(transform.position, myPos, Time.deltaTime * trackingSpeed);
+
+            float dist = (targetPos - myPrevPos).magnitude;
+            transform.position = dist > 0.01f ? targetPos : myPos;
+            //Vector2 animPos = dist > 0.01f ? Vector2.one : Vector2.zero;
+
+            Vector3 localDir = transform.InverseTransformDirection(targetPos - myPrevPos);
+
+            float deltaX = localDir.x;
+            float deltaZ = localDir.z;
+
+            float newX = 0;
+            float newZ = 0;
+            if (Mathf.Abs(deltaX) > 0.01f)
+            {
+                newX = deltaX > 0 ? 1.0f : -1.0f;
+            }
+
+            if (Mathf.Abs(deltaZ) > 0.01f)
+            {
+                newZ = deltaZ > 0 ? 1.0f : -1.0f;
+            }
+
+            myPrevPos = transform.position;
+            myAnim.SetFloat("Horizontal", newX);
+            myAnim.SetFloat("Vertical", newZ);
         }
     }
 

@@ -16,12 +16,17 @@ using System.Xml;
 
 public class ChatManager : MonoBehaviourPun, IOnEventCallback
 {
-    enum AlignedText
+    enum OwnerText
     {
-        Right,
-        Left,
-        AlignedTextEnd
+        Mine,
+        Other,
+        OwnerTextEnd
     }
+
+
+    public GameObject ChattingPanel;
+    public UnityEngine.UI.Button chat_Send;
+    public UnityEngine.UI.Button chat_Button;
 
     public static ChatManager chatManager = null;
 
@@ -37,6 +42,8 @@ public class ChatManager : MonoBehaviourPun, IOnEventCallback
 
     // 현재 토론 찬반 정보 - 해당 스크립트 기준
     PlayerProsAndCons.DebatePosition curDebatePosition;
+
+    bool bOnChattingPanel;
 
     private void Awake()
     {
@@ -61,16 +68,23 @@ public class ChatManager : MonoBehaviourPun, IOnEventCallback
         input_chat.text = "";
         text_chatContent.text = "";
 
+        bOnChattingPanel = false;
+
         // 인풋 필드 Submit 이벤트에 SendMyMessage 바인딩
         input_chat.onSubmit.AddListener(SendMyMessage);
 
+
+        chat_Button.onClick.AddListener(OnChattingPanel);
         // 좌측 하단으로 Content 피봇 변경
         scrollChatRect.content.pivot = Vector2.zero;
 
         img_charbackground = scrollChatRect.transform.GetComponent<UnityEngine.UI.Image>();
-        img_charbackground.color = new Color32(255, 255, 255, 10);
+        img_charbackground.color = new Color32(255, 255, 255, 200);
 
         curDebatePosition = DebatePosition.DebatePositionEnd;
+
+        ChattingPanel.SetActive(false);
+
     }
 
     void SendMyMessage(string msg)
@@ -97,7 +111,7 @@ public class ChatManager : MonoBehaviourPun, IOnEventCallback
             EventSystem.current.SetSelectedGameObject(null);
 
             string recieveMessage = $"\n[{sendContent[3].ToString()}]{sendContent[1].ToString()} : {sendContent[2].ToString()}";
-            AddAlignedText(recieveMessage, AlignedText.Right);
+            AddAlignedText(recieveMessage, OwnerText.Mine);
         }
     }
 
@@ -115,11 +129,9 @@ public class ChatManager : MonoBehaviourPun, IOnEventCallback
 
             if (!receiveObjects[0].Equals((int)curDebatePosition))
                 return;
-            AddAlignedText(recieveMessage, AlignedText.Left);
+            AddAlignedText(recieveMessage, OwnerText.Other);
             input_chat.text = "";
         }
-
-        img_charbackground.color = new Color32(255, 255, 255, 50);
         StopAllCoroutines();
         StartCoroutine(AlphaReturn(2.0f));
     }
@@ -127,7 +139,7 @@ public class ChatManager : MonoBehaviourPun, IOnEventCallback
     IEnumerator AlphaReturn(float time)
     {
         yield return new WaitForSeconds(time);
-        img_charbackground.color = new Color32(255, 255, 255, 10);
+        img_charbackground.color = new Color32(255, 255, 255, 200);
     }
 
     private void OnDisable()
@@ -138,8 +150,13 @@ public class ChatManager : MonoBehaviourPun, IOnEventCallback
     // Update is called once per frame
     void Update()
     {
-        // tap 키 - 인풋필드를 활성화
-        if (Input.GetKeyDown(KeyCode.Tab))
+    }
+
+    public void OnChattingPanel()
+    {
+        bOnChattingPanel = !bOnChattingPanel;
+        ChattingPanel.SetActive(bOnChattingPanel);
+        if (bOnChattingPanel)
         {
             EventSystem.current.SetSelectedGameObject(input_chat.gameObject);
             input_chat.OnPointerClick(new PointerEventData(EventSystem.current));
@@ -156,17 +173,16 @@ public class ChatManager : MonoBehaviourPun, IOnEventCallback
         curDebatePosition = debatePosition;
     }
 
-    void AddAlignedText(string text, AlignedText alignedText)
+    void AddAlignedText(string text, OwnerText ownerText)
     {
-        switch(alignedText)
+        switch(ownerText)
         {
-            case AlignedText.Right:
+            case OwnerText.Mine:
                 text_chatContent.text += $"<align=right>{text}</align>\n";
                 break;
-            case AlignedText.Left:
+            case OwnerText.Other:
                 text_chatContent.text += $"<align=left>{text}</align>\n";
                 break;
         }
-        
     }
 }
