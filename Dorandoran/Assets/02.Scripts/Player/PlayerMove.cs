@@ -69,7 +69,7 @@ public class PlayerMove : PlayerStateBase, IPunObservable
                 {
                     if (isReady == false)
                     {
-                        if (chair.Sitting(DataManager.instance.nickName))
+                        if (chair.Sitting(GetComponent<PhotonView>(),DataManager.instance.nickName, PhotonNetwork.LocalPlayer.ActorNumber))
                         {
                             isReady = true;
                             Sitting();

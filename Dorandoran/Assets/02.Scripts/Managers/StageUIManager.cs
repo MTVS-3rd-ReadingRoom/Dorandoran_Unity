@@ -24,7 +24,6 @@ public class StageUIManager : MonoBehaviourPun
             $"찬성측\n반론을 시작해주세요", $"반대측\n반론을 시작해주세요", "3차 내부토의 시작!",
             $"반대측\n주장 정리 및 결론", $"찬성측\n주창 정리 및 결론"
         };
-    public int index = 0;
 
     [Header("메인 UI")]
     public TMP_Text text_Topic;
@@ -134,7 +133,7 @@ public class StageUIManager : MonoBehaviourPun
     }
 
 
-    public string PrintCurrentIndex()
+    public string PrintCurrentIndex(int index)
     {
         if(index < indexString.Length)
         {
@@ -143,7 +142,6 @@ public class StageUIManager : MonoBehaviourPun
             if (uiSequence != null)
                 uiSequence.Kill();
             uiSequence = Move_PanelCurrentIndex();
-            index++;
             return text;
         }
         return null;
