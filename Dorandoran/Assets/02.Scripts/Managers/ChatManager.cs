@@ -10,16 +10,21 @@ using UnityEngine.EventSystems;
 using System;
 using System.Data;
 using UnityEngine.UIElements;
-
-enum PlayerChat
-{
-    Agree,
-    Disgree,
-    PlayerChatEnd
-}
+using static PlayerProsAndCons;
+using ExitGames.Client.Photon.StructWrapping;
+using System.Xml;
 
 public class ChatManager : MonoBehaviourPun, IOnEventCallback
 {
+    enum AlignedText
+    {
+        Right,
+        Left,
+        AlignedTextEnd
+    }
+
+    public static ChatManager chatManager = null;
+
     public ScrollRect scrollChatRect;
     public TMP_Text text_chatContent;
     public TMP_InputField input_chat;
@@ -30,7 +35,21 @@ public class ChatManager : MonoBehaviourPun, IOnEventCallback
 
     PhotonView pv;
 
-    PlayerChat playerChat;
+    // 현재 토론 찬반 정보 - 해당 스크립트 기준
+    PlayerProsAndCons.DebatePosition curDebatePosition;
+
+    private void Awake()
+    {
+        if (null == chatManager)
+        {
+            chatManager = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        } 
+    }
+
     private void OnEnable()
     {
         PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
@@ -39,7 +58,6 @@ public class ChatManager : MonoBehaviourPun, IOnEventCallback
     void Start()
     {
         pv = GetComponent<PhotonView>();
-        playerChat = PlayerChat.Agree;
         input_chat.text = "";
         text_chatContent.text = "";
 
@@ -51,6 +69,8 @@ public class ChatManager : MonoBehaviourPun, IOnEventCallback
 
         img_charbackground = scrollChatRect.transform.GetComponent<UnityEngine.UI.Image>();
         img_charbackground.color = new Color32(255, 255, 255, 10);
+
+        curDebatePosition = DebatePosition.DebatePositionEnd;
     }
 
     void SendMyMessage(string msg)
@@ -60,12 +80,13 @@ public class ChatManager : MonoBehaviourPun, IOnEventCallback
             string currentTime = DateTime.Now.ToString("HH:mm:ss");
 
             // 이벤트에 보낼 내용
-            object[] sendContent = new object[] { playerChat, PhotonNetwork.NickName, msg, currentTime };
+            object[] sendContent = new object[] { curDebatePosition, PhotonNetwork.NickName, msg, currentTime };
 
             // 송신 옵션
             RaiseEventOptions eventOptions = new RaiseEventOptions();
 
-            eventOptions.Receivers = ReceiverGroup.All;
+
+            eventOptions.Receivers = ReceiverGroup.Others;
             // eventOptions.CachingOption = EventCaching.DoNotCache;
 
             // 레이즈 이벤트로 값 동기화
@@ -74,6 +95,9 @@ public class ChatManager : MonoBehaviourPun, IOnEventCallback
 
             print("Send!!");
             EventSystem.current.SetSelectedGameObject(null);
+
+            string recieveMessage = $"\n[{sendContent[3].ToString()}]{sendContent[1].ToString()} : {sendContent[2].ToString()}";
+            AddAlignedText(recieveMessage, AlignedText.Right);
         }
     }
 
@@ -89,11 +113,12 @@ public class ChatManager : MonoBehaviourPun, IOnEventCallback
             object[] receiveObjects = (object[])photonEvent.CustomData;
             string recieveMessage = $"\n[{receiveObjects[3].ToString()}]{receiveObjects[1].ToString()} : {receiveObjects[2].ToString()}";
 
-            if (!receiveObjects[0].Equals((int)playerChat))
+            if (!receiveObjects[0].Equals((int)curDebatePosition))
                 return;
-            text_chatContent.text += recieveMessage;
+            AddAlignedText(recieveMessage, AlignedText.Left);
             input_chat.text = "";
         }
+
         img_charbackground.color = new Color32(255, 255, 255, 50);
         StopAllCoroutines();
         StartCoroutine(AlphaReturn(2.0f));
@@ -121,19 +146,27 @@ public class ChatManager : MonoBehaviourPun, IOnEventCallback
             UnityEngine.Cursor.lockState = CursorLockMode.Confined;
             UnityEngine.Cursor.visible = true;
         }
-
-        if(Input.GetKeyDown(KeyCode.C) && pv.IsMine) // Changed
-        {
-            switch(playerChat)
-            {
-                case PlayerChat.Agree:
-                    playerChat = PlayerChat.Disgree;
-                    break;
-                case PlayerChat.Disgree:
-                    playerChat = PlayerChat.Agree;
-                    break;
-            }
-        }
     }
 
+    // 현재 플레이어의 찬반 정보 넣기
+    public void SetCurChatProsAndConsData(DebatePosition debatePosition)
+    {
+        if (curDebatePosition == debatePosition)
+            return;
+        curDebatePosition = debatePosition;
+    }
+
+    void AddAlignedText(string text, AlignedText alignedText)
+    {
+        switch(alignedText)
+        {
+            case AlignedText.Right:
+                text_chatContent.text += $"<align=right>{text}</align>\n";
+                break;
+            case AlignedText.Left:
+                text_chatContent.text += $"<align=left>{text}</align>\n";
+                break;
+        }
+        
+    }
 }

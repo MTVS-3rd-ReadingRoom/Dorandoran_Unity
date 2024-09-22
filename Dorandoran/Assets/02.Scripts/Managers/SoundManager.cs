@@ -199,7 +199,7 @@ public class SoundManager : MonoBehaviour
     }
 
     public void FadeOut_BGM()
-    {
+    { 
         StartCoroutine(Coroutine_FadeOut_BGM());
     }
 
