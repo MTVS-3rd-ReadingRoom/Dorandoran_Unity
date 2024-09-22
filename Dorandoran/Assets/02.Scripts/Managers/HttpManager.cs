@@ -200,12 +200,12 @@ public class HttpManager : MonoBehaviour
     }
 
 
-    public void PostTopic_Voice(string chat_room_id)
+    public void PostTopic_Voice(string text)
     {
         print($"Start : {MethodInfo.GetCurrentMethod()}");
         HttpInfo info = new HttpInfo();
         // 서버 URL 설정
-        info.url = url + "/api/topic_suggest";
+        info.url = url + "/api/tts/basic";
 
         //UnityWebRequest webRequest = new UnityWebRequest();
         //webRequest.downloadHandler = new DownloadHandlerAudioClip(info.url, AudioType.WAV);
@@ -223,7 +223,7 @@ public class HttpManager : MonoBehaviour
 
         // data 를 MultipartForm 으로 셋팅
         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
-        formData.Add(new MultipartFormDataSection("chat_room_id ", chat_room_id));
+        formData.Add(new MultipartFormDataSection("text ", text));
 
         StartCoroutine(UploadFileByFormData(info, formData, MethodInfo.GetCurrentMethod().Name));
 
@@ -299,6 +299,20 @@ public class HttpManager : MonoBehaviour
         HttpInfo info = new HttpInfo();
         // 서버 URL 설정
         info.url = url + "/api/book";
+        info.onComplete = (UnityWebRequest webRequest) =>
+        {
+            print($"Success : {MethodInfo.GetCurrentMethod()}");
+            DataManager.instance.SetBookList(JsonConvert.DeserializeObject<List<BookUI>>(webRequest.downloadHandler.text));
+        };
+
+        StartCoroutine(Get(info, MethodInfo.GetCurrentMethod().Name));
+    }
+
+    public void PostBookList(string text)
+    {
+        HttpInfo info = new HttpInfo();
+        // 서버 URL 설정
+        info.url = url + "/api/tts/basic";
         info.onComplete = (UnityWebRequest webRequest) =>
         {
             print($"Success : {MethodInfo.GetCurrentMethod()}");

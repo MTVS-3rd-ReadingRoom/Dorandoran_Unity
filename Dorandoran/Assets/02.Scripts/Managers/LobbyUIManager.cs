@@ -237,9 +237,8 @@ public class LobbyUIManager : MonoBehaviour
         DataManager.instance.topic.topic = null;
         DataManager.instance.topic.content = null;
         DataManager.instance.topicClip = null;
-        NetworkManager.instance.CreateRoom();
-        //HttpManager.instance.PostDedateRoom(NetworkManager.instance.GetBook(), DataManager.instance.photon_debater_room_no);
-        //getTopic = StartCoroutine(Coroutine_GetTopic());
+        HttpManager.instance.PostDedateRoom(NetworkManager.instance.GetBook(), DataManager.instance.photon_debater_room_no);
+        getTopic = StartCoroutine(Coroutine_GetTopic());
         panel_SceneLoad.SetActive(true);
     }
 
@@ -266,8 +265,15 @@ public class LobbyUIManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
 
-        NetworkManager.instance.CreateRoom();
+        HttpManager.instance.PostTopic_Voice(DataManager.instance.topic.topic);
+        
+        while (DataManager.instance.topicClip == null)
+        {
+            yield return new WaitForSeconds(0.5f);
+        }
+
         getTopic = null;
+        NetworkManager.instance.CreateRoom();
     }
 
     #region ÆÇ³Ú ¿¢Æ¼ºê
@@ -347,6 +353,7 @@ public class LobbyUIManager : MonoBehaviour
     {
         text_Error.text = error;
         panel_PopUp.SetActive(true);
+        StopGetTopic();
     }
 
     public void ShowHttpLoadingImage()

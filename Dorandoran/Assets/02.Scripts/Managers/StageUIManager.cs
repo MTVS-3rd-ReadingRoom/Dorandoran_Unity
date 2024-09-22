@@ -72,8 +72,8 @@ public class StageUIManager : MonoBehaviourPun
 
     private void Start()
     {
-        //InitUI(); 
-        //SetTopic();
+        InitUI(); 
+        SetTopic();
     }
     public bool test = false;
     private void Update()
