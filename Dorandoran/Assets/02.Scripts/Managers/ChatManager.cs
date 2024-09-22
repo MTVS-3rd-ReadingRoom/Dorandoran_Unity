@@ -12,9 +12,17 @@ using System.Data;
 using UnityEngine.UIElements;
 using static PlayerProsAndCons;
 using ExitGames.Client.Photon.StructWrapping;
+using System.Xml;
 
 public class ChatManager : MonoBehaviourPun, IOnEventCallback
 {
+    enum AlignedText
+    {
+        Right,
+        Left,
+        AlignedTextEnd
+    }
+
     public static ChatManager chatManager = null;
 
     public ScrollRect scrollChatRect;
@@ -77,7 +85,8 @@ public class ChatManager : MonoBehaviourPun, IOnEventCallback
             // 송신 옵션
             RaiseEventOptions eventOptions = new RaiseEventOptions();
 
-            eventOptions.Receivers = ReceiverGroup.All;
+
+            eventOptions.Receivers = ReceiverGroup.Others;
             // eventOptions.CachingOption = EventCaching.DoNotCache;
 
             // 레이즈 이벤트로 값 동기화
@@ -86,6 +95,9 @@ public class ChatManager : MonoBehaviourPun, IOnEventCallback
 
             print("Send!!");
             EventSystem.current.SetSelectedGameObject(null);
+
+            string recieveMessage = $"\n[{sendContent[3].ToString()}]{sendContent[1].ToString()} : {sendContent[2].ToString()}";
+            AddAlignedText(recieveMessage, AlignedText.Right);
         }
     }
 
@@ -103,9 +115,10 @@ public class ChatManager : MonoBehaviourPun, IOnEventCallback
 
             if (!receiveObjects[0].Equals((int)curDebatePosition))
                 return;
-            text_chatContent.text += recieveMessage;
+            AddAlignedText(recieveMessage, AlignedText.Left);
             input_chat.text = "";
         }
+
         img_charbackground.color = new Color32(255, 255, 255, 50);
         StopAllCoroutines();
         StartCoroutine(AlphaReturn(2.0f));
@@ -141,5 +154,19 @@ public class ChatManager : MonoBehaviourPun, IOnEventCallback
         if (curDebatePosition == debatePosition)
             return;
         curDebatePosition = debatePosition;
+    }
+
+    void AddAlignedText(string text, AlignedText alignedText)
+    {
+        switch(alignedText)
+        {
+            case AlignedText.Right:
+                text_chatContent.text += $"<align=right>{text}</align>\n";
+                break;
+            case AlignedText.Left:
+                text_chatContent.text += $"<align=left>{text}</align>\n";
+                break;
+        }
+        
     }
 }
