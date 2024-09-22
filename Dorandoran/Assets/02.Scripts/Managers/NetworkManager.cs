@@ -120,7 +120,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void CreateRoom()
     {
         string roomName = roomInput.text;
-        int maxPlayer = roomInputDropDown.value + 1;
+        int maxPlayer = (roomInputDropDown.value + 1) * 2; // (2Έν(index: 0), 4Έν(index: 1))
 
         if (roomName.Length > 0 && maxPlayer >= 1)
         {
