@@ -18,6 +18,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         CharacterDebateTurn,
         CharacterTurnEnd
     }
+
     public Photon.Voice.Unity.Recorder recorder;
 
     public TextMeshProUGUI orderText;
@@ -51,6 +52,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     public GameObject panel_Order;
     public GameObject panel_Timer;
     public Button button_Next;
+    public Button chat_Send;
     #endregion
 
     // 클릭했을 때마다 증가
@@ -159,7 +161,8 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
             double elapsed = PhotonNetwork.Time - startTime;
             double remainingTime = timeDuration - elapsed;
 
-            timeText.text = (int)(remainingTime / 60) + "분 " + (int)(remainingTime % 60) + "초 / 2분 제한시간";
+            
+            timeText.text = "제한시간\n" + (int)remainingTime + "초";
 
             // 시간이 지남 or (키 누름 && 현재 차례인 플레이어가 눌렀을 경우) 0, 사회자, 2, 3 ~ 플레이어 수
             if (remainingTime < 0)
