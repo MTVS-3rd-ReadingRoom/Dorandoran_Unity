@@ -26,7 +26,7 @@ public class PlayerMove : PlayerStateBase, IPunObservable
     bool isReady;
     bool preSitting;
     GameManager gameManager;
-
+    PlayerProsAndCons playerProAndCons;
     bool isGround;
 
     Vector3 velocity;
@@ -52,6 +52,8 @@ public class PlayerMove : PlayerStateBase, IPunObservable
         groundLayer = LayerMask.NameToLayer("Ground");
 
         cameraFollow = Camera.main.GetComponentInChildren<CameraFollow>();
+
+        playerProAndCons = GetComponentInChildren<PlayerProsAndCons>();
         //playerID = pv.ViewID;
     }
 
@@ -73,6 +75,11 @@ public class PlayerMove : PlayerStateBase, IPunObservable
                             Sitting();
                             myAnim.SetBool("Sitting", isReady);
                             gameManager.OnStaticCamera();
+
+                            if(chair.transform.parent.localPosition.z > 0.0f) // 찬성
+                                playerProAndCons.SetCurPlayerProsAndConsData((int)PlayerProsAndCons.DebatePosition.Pro);
+                            else // 반대
+                                playerProAndCons.SetCurPlayerProsAndConsData((int)PlayerProsAndCons.DebatePosition.Con);
                             return; // 바로 종료
                         }
                     }
@@ -190,26 +197,6 @@ public class PlayerMove : PlayerStateBase, IPunObservable
         {
             transform.position = chair.transform.position;
             transform.rotation = chair.transform.rotation;
-            //for (int i = 0; i < 4; i++)
-            //{
-            //    if (gameObject.tag == "Chair0" + i)
-            //    {
-            //        Quaternion rotationQuaternion = Quaternion.Euler(gameManager.GetPlayerRotation(i));
-            //        Vector3 playerPosition = gameManager.GetPlayerPosition(i);
-            //        transform.position = new Vector3(playerPosition.x, playerPosition.y/* + 1.0f*/, playerPosition.z);
-            //        transform.eulerAngles = new Vector3(0, 0, 0);
-            //        myRot = rotationQuaternion;
-            //        transform.rotation = myRot;
-
-            //        mx = 0;
-            //        sitting = true;
-            //        preSitting = false;
-            //        myAnim.SetBool("Sitting", sitting);
-            //        gameManager.OnStaticCamera();
-            //        return;
-            //    }
-            //}
-
         }
     }
 

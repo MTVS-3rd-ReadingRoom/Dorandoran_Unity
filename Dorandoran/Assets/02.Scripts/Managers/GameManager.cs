@@ -9,6 +9,7 @@ using NumSystem = System.Numerics;
 using UnityEngine.UIElements;
 using Photon.Voice;
 using ExitGames.Client.Photon.StructWrapping;
+using static PlayerProsAndCons;
 
 public class GameManager : MonoBehaviourPun
 {
@@ -172,6 +173,24 @@ public class GameManager : MonoBehaviourPun
             }
         }
         return sittingCheck;
+    }
+
+    public void SetPlayerProsAndConsText()
+    {
+        foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
+        {
+            foreach (PhotonView view in FindObjectsOfType<PhotonView>())
+            {
+                if (view.Owner != null)
+                {
+                    PlayerProsAndCons playerProsAndCons = view.GetComponentInChildren<PlayerProsAndCons>();
+                    if (playerProsAndCons)
+                    {
+                        playerProsAndCons.OnDebatePosition(true);
+                    }
+                }
+            }
+        }
     }
 
     private void OnDestroy()

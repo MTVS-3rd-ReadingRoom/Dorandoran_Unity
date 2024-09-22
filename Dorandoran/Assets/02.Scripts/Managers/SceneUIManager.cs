@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using Photon.Voice.Unity;
 using Photon.Voice.PUN;
 using Photon.Pun.Demo.PunBasics;
+using DG.Tweening.Core.Easing;
 
 public class SceneUIManager : MonoBehaviourPunCallbacks
 {
@@ -136,6 +137,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
             if(gameManager.CheckSittingPlayer())
             {
                 NextOrderMessage();
+                gameManager.SetPlayerProsAndConsText();
                 checkSittingPlayer = true;
             }
 

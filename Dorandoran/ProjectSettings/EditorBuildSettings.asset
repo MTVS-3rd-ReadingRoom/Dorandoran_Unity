@@ -5,10 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/01.Scenes/SampleScene_HMJ.unity
     guid: 5924732e090d5ff448d6d7fe75686038
   - enabled: 1
+    path: Assets/01.Scenes/SampleScene_Sim.unity
+    guid: 5c36001843b537e45ac3553fe66b40cf
+  - enabled: 1
+    path: Assets/01.Scenes/fwOF_FreeDemo_OldForest MJ_20240921.unity
+    guid: 3804cdf4e2110164fba99cdf6bc518bf
+  - enabled: 0
     path: Assets/01.Scenes/fwOF_FreeDemo_OldForest 1.unity
     guid: 5ba232c6ead75674a8c388e0d53b569d
   - enabled: 0
