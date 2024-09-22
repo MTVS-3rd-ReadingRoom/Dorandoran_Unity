@@ -70,24 +70,33 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         CinemachineManager.instance.AddInstructions();
         if (timelineIndex < times.Length) // 총 플레이어 숫자만큼 증가했다면
         {
+            print(timelineIndex);
             orderText.text = StageUIManager.instance.PrintCurrentIndex(timelineIndex);
             if (timelineIndex == 1 || timelineIndex == 4 || timelineIndex == 7 || timelineIndex == 10)
             {
                 m_eCurCharacterTurn = CharacterTurn.CharacterDebateTurn;
-                CinemachineManager.instance.AddInstructions(announcer_Chair.virtualCamera);
                 DebatePlayer();
+                CinemachineManager.instance.AddInstructions();
             }
             else
             {
                 m_eCurCharacterTurn = CharacterTurn.CharacterPlayerTurn;
                 AllMuteTransmit();
-                if (speakerIdList[timelineIndex] != announcer_Chair)
+                if (speakerIdList[timelineIndex] != announcer_Chair && speakerIdList[timelineIndex] != null)
                 {
                     RPCSetTransmit();
                 }
-                CinemachineManager.instance.AddInstructions(speakerIdList[timelineIndex].virtualCamera);
+                if (speakerIdList[timelineIndex] != null)
+                {
+                    CinemachineManager.instance.AddInstructions(speakerIdList[timelineIndex].virtualCameraIndex);
+                }
+                else
+                {
+                    CinemachineManager.instance.AddInstructions();
+                }
                 SetSameSpeakGroup();
             }
+            timeDuration = times[timelineIndex];
             print(timelineIndex);
             timelineIndex++;
         }
@@ -194,9 +203,8 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
             double elapsed = PhotonNetwork.Time - startTime;
             double remainingTime = timeDuration - elapsed;
 
-            timeText.text = (int)(remainingTime / 60) + "분 " + (int)(remainingTime % 60) + "초 / 2분 제한시간";
+            timeText.text = (int)(remainingTime / 60) + "분 " + (int)(remainingTime % 60) + $"초 / {timeDuration}초 제한시간";
 
-            print(remainingTime);
             // 시간이 지남 or (키 누름 && 현재 차례인 플레이어가 눌렀을 경우) 0, 사회자, 2, 3 ~ 플레이어 수
             if (remainingTime < 0)
             {
@@ -214,7 +222,6 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
                 TriggerReset();
                 break;
             case CharacterTurn.CharacterPlayerTurn:
-                print(2);
                 NextOrderRPC();
                 break;
             case CharacterTurn.CharacterDebateTurn:
@@ -242,6 +249,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     
     IEnumerator Coroutine_InitPlayerData()
     {
+        gameManager.StartCamera();
         yield return new WaitForSeconds(2.5f);
         for (int i = 0; i < propositionSide_Chair.Length; i++)
         {
@@ -286,7 +294,6 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
             speakerIdList[9] = oppositionSide[0];
             speakerIdList[11] = oppositionSide[0];
         }
-        gameManager.StartCamera();
     }
     private void InitPlayerData()
     {

@@ -10,7 +10,7 @@ public class Chair : MonoBehaviourPun, IPunObservable
     public bool sitting;
     public string playerName;
     public int id;
-    public CinemachineVirtualCamera virtualCamera;
+    public int virtualCameraIndex;
 
     public bool Sitting(PhotonView pv, string playerName, int id)
     {
