@@ -113,4 +113,9 @@ public class PlayerProsAndCons : MonoBehaviour, IPunObservable
             playerNickName = (string)stream.ReceiveNext();
         }
     }
+
+    public int GetcurDebatePosition()
+    {
+        return curDebatePosition;
+    }
 }

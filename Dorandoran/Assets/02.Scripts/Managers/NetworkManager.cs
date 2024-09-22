@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using System.Reflection;
 using ExitGames.Client.Photon;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+using TMPro;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
@@ -40,13 +41,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     int playerID = -1;
 
-
     void Awake()
     {
         if(instance == null)
         {
             instance = this;
             Screen.SetResolution(1920, 1080, false);
+
         }
         else
         {
@@ -303,6 +304,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         // Join 관련 패널을 활성화한다.
         ChangePanel(1, 2);
     }
+
 
     /// <summary>
     /// 패널의 변경을 하기 위한 함수
