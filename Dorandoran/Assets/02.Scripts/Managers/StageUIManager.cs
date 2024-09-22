@@ -56,6 +56,7 @@ public class StageUIManager : MonoBehaviourPun
 
     Sequence uiSequence;
 
+    PhotonView pv;
 
     private void Awake()
     {
@@ -72,7 +73,8 @@ public class StageUIManager : MonoBehaviourPun
 
     private void Start()
     {
-        InitUI(); 
+        pv = GetComponent<PhotonView>();
+        InitUI();
         SetTopic();
     }
     public bool test = false;
@@ -200,11 +202,31 @@ public class StageUIManager : MonoBehaviourPun
 
     #region ����
 
+    [PunRPC]
+    public void SendTopic(string text1, string text2, string text3)
+    {
+        text_Topicinfos[0].text = text1;
+        text_Topicinfos[1].text = text2;
+        text_Topic.text = text3;
+    }
+
     public void SetTopic()
     {
-        text_Topicinfos[0].text = DataManager.instance.topic.topic;
-        text_Topicinfos[1].text = DataManager.instance.topic.content;
-        text_Topic.text = DataManager.instance.topic.topic;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            text_Topicinfos[0].text = DataManager.instance.topic.topic;
+            text_Topicinfos[1].text = DataManager.instance.topic.content;
+            text_Topic.text = DataManager.instance.topic.topic;
+            pv.RPC("SendTopic", RpcTarget.AllBuffered, text_Topicinfos[0].text, text_Topicinfos[1].text, text_Topic.text);
+        }
+    }
+    public void SetTopicRPC()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            pv.RPC("SetTopic", RpcTarget.MasterClient);
+            // 모든 클라이언트에게 전송
+        }
     }
 
     #endregion
@@ -240,5 +262,4 @@ public class StageUIManager : MonoBehaviourPun
     }
 
     #endregion
-
 }
