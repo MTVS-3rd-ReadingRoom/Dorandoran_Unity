@@ -17,12 +17,13 @@ public class StageUIManager : MonoBehaviourPun
 
     public string[] nickName = new string[] { "", "", "", "" };
     private string[] indexString = new string[]
-    { 
-        $"찬성 측 입론", "반대 측 입론", "회의 시간", 
-        "반대측 반론", "찬성측 반론", "회의 시간",
-        "찬성측 반론", "반대측 반론", "회의 시간",
-        "반대측 주장 정리 및 결론", "찬성측 주창 정리 및 결론"
-    };
+        {
+            "토론을 시작하겠습니다",
+            $"찬성측\n입론을 시작해주세요", $"반대측\n입론을 시작해주세요", "1차 내부토의 시작!",
+            $"반대측\n반론을 시작해주세요", $"찬성측\n반론을 시작해주세요", "2차 내부토의 시작!",
+            $"찬성측\n반론을 시작해주세요", $"반대측\n반론을 시작해주세요", "3차 내부토의 시작!",
+            $"반대측\n주장 정리 및 결론", $"찬성측\n주창 정리 및 결론"
+        };
     public int index = 0;
 
     [Header("메인 UI")]
@@ -118,41 +119,34 @@ public class StageUIManager : MonoBehaviourPun
         }
     }
 
-    // 토론 시작시 이름 셋팅
-    public void RPC_StartSetting(string team1_NickName1, string team1_NickName2, string team2_NickName1, string team2_NickName2)
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            StartSetting(team1_NickName1, team1_NickName2, team2_NickName1, team2_NickName2);
-        }
-    }
 
-
-    [PunRPC]
-    private void StartSetting(string team1_NickName1, string team1_NickName2, string team2_NickName1, string team2_NickName2)
+    public void StartSetting(string team1_NickName1, string team1_NickName2, string team2_NickName1, string team2_NickName2)
     {
         nickName = new string[] { team1_NickName1, team1_NickName2, team2_NickName1, team2_NickName2 };
         indexString = new string[]
         {
-            $"찬성({nickName[0]}) 측 입론", $"반대({nickName[2]}) 측 입론", "회의 시간",
-            $"반대({nickName[4]}) 측 반론", $"찬성({nickName[1]}) 측 반론", "회의 시간",
-            $"찬성({nickName[0]}) 측 반론", $"반대({nickName[2]}) 측 반론", "회의 시간",
-            $"반대({nickName[4]}) 측 주장 정리 및 결론", $"찬성({nickName[1]}) 측 주창 정리 및 결론"
+            "토론을 시작하겠습니다", 
+            $"찬성측({nickName[0]})\n입론을 시작해주세요", $"반대측({nickName[2]})\n입론을 시작해주세요", "1차 내부토의 시작!",
+            $"반대측({nickName[4]})\n반론을 시작해주세요", $"찬성측({nickName[1]})\n반론을 시작해주세요", "2차 내부토의 시작!",
+            $"찬성측({nickName[0]})\n반론을 시작해주세요", $"반대측({nickName[2]})\n반론을 시작해주세요", "3차 내부토의 시작!",
+            $"반대측({nickName[4]})\n주장 정리 및 결론", $"찬성측({nickName[1]})\n주창 정리 및 결론"
         };
     }
 
 
-    // 현재 진행 차례 출력
-    [PunRPC]
-    private void PrintCurrentIndex()
+    public string PrintCurrentIndex()
     {
         if(index < indexString.Length)
         {
             string text = $"{indexString[index]}";
             panel_CurrentOrder.GetComponentInChildren<TMP_Text>().text = text;
+            if (uiSequence != null)
+                uiSequence.Kill();
             uiSequence = Move_PanelCurrentIndex();
+            index++;
+            return text;
         }
-        index++;
+        return null;
     }
 
     Sequence Move_PanelCurrentIndex()
@@ -163,7 +157,7 @@ public class StageUIManager : MonoBehaviourPun
             panel_CurrentOrder.anchoredPosition3D = new Vector3(-1600, 0, 0);
         })
         .Append(panel_CurrentOrder.DOAnchorPos3DX(0, 0.5f).SetEase(Ease.OutSine))
-        .Append(panel_CurrentOrder.DOAnchorPos3DX(1600, 0.5f).SetEase(Ease.InSine).SetDelay(3));
+        .Append(panel_CurrentOrder.DOAnchorPos3DX(1600, 0.5f).SetEase(Ease.InSine).SetDelay(1));
     }
 
     #region ����ȭ��

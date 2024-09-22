@@ -60,7 +60,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         if (PlayN <= PhotonNetwork.CurrentRoom.PlayerCount) // 총 플레이어 숫자만큼 증가했다면
         {
             m_eCurCharacterTurn = CharacterTurn.CharacterPlayerTurn;
-            orderText.text = (PlayN).ToString() + "번째 발표자 발언 시간입니다.";
+            orderText.text = StageUIManager.instance.PrintCurrentIndex();
             AllMuteTransmit();
             RPCSetTransmit();
             SetSameSpeakGroup();
@@ -211,7 +211,6 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     {
         if (!isRunning) // 현재 실행 중이 아니면 실행 중으로 변경
             isRunning = true;
-
         panel_Timer.SetActive(false);
         orderText.text = "AI 사회자 시간입니다.";
         m_eCurCharacterTurn = CharacterTurn.CharacterPlayerTurn;
