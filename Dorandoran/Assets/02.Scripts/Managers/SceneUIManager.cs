@@ -57,6 +57,9 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     GameManager gameManager;
 
     bool checkSittingPlayer;
+    public TMP_Text[] tmpProsAndConsList;
+
+    SceneNetworkManager sceneNetworkManager;
     #region Panel
     [Header("순서UI")]
     public GameObject panel_Order;
@@ -124,6 +127,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         playerIndex = 0;
         checkSittingPlayer = false;
 
+        sceneNetworkManager = GameObject.Find("SceneNetworkManager").GetComponentInChildren<SceneNetworkManager>();
         gameManager = GameObject.Find("GameManager").GetComponentInChildren<GameManager>();
         InitUI();
 
@@ -193,6 +197,8 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     {
         // 앉아있는 플레이어 체크
         CheckSittingPlayer();
+        // 플레이어 찬반 데이터 체크
+        UpdatePlayerProsAndConsList();
 
         recorder_InterestText.text = "Recorder Interest Group: " + recorder.InterestGroup;
 
@@ -388,5 +394,34 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     public void RPCSetTransmit()
     {
         photonView.RPC("Toggle", PhotonNetwork.CurrentRoom.GetPlayer(speakerIdList[timelineIndex].id), true);
+    }
+
+    public void UpdatePlayerProsAndConsList()
+    {
+        int[] actorList = sceneNetworkManager.actorList;
+        for (int i = 0; i < propositionSide_Chair.Length; i++)
+        {
+            if (propositionSide_Chair[i].sitting)
+            {
+                for(int t = 0; t < 4; t++)
+                {
+                    if (propositionSide_Chair[i].id == actorList[t])
+                        tmpProsAndConsList[t].text = "찬반 데이터:\n 찬성";
+                }
+                 
+            }
+        }
+
+        for (int i = 0; i < oppositionSide_Chair.Length; i++)
+        {
+            if (oppositionSide_Chair[i].sitting)
+            {
+                for (int t = 0; t < 4; t++)
+                {
+                    if (oppositionSide_Chair[i].id == actorList[t])
+                        tmpProsAndConsList[t].text = "찬반 데이터:\n 반대";
+                }
+            }
+        }
     }
 }
