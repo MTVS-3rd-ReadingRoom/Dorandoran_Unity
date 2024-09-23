@@ -56,7 +56,11 @@ public class StageUIManager : MonoBehaviourPun
 
     Sequence uiSequence;
 
+    public Button[] buttons_LeaveRoom;
+
     PhotonView pv;
+
+    public RectTransform[] panel_IndexUI;
 
     private void Awake()
     {
@@ -92,6 +96,7 @@ public class StageUIManager : MonoBehaviourPun
     {
         buttons_PanelTags[0].onClick.AddListener(() => { OnClick_InfoButton(); });
         buttons_PanelTags[1].onClick.AddListener(() => { OnClick_IndexButton(); });
+        buttons_PanelTags[2].onClick.AddListener(() => { OnClick_TopicButton(); });
         button_Option.onClick.AddListener(() => { ActiveSelectMicrophoneUI(); panel_Option.transform.SetAsLastSibling(); panel_Option.SetActive(true); inactiveStack.Push(() => { panel_Option.SetActive(false); }); });
         button_Quit.onClick.AddListener(() => { panel_Quit.transform.SetAsLastSibling(); panel_Quit.SetActive(true); inactiveStack.Push(() => { panel_Quit.SetActive(false); }); });
         dropdown_MicList.onValueChanged.AddListener(delegate { SelectMicrophone(); });
@@ -108,6 +113,11 @@ public class StageUIManager : MonoBehaviourPun
         slider_Sound[0].onValueChanged.AddListener((value) => { SoundManager.instance.ChangeBGMVolum(value); });
         slider_Sound[1].onValueChanged.AddListener((value) => { SoundManager.instance.ChangeBGMVolum(value); });
         //slider_Sound[2].onValueChanged.AddListener((value) => { ���̽� ���� ���� �Լ� �߰� ); });
+
+        for (int i = 0; i < buttons_LeaveRoom.Length; i++)
+        {
+            buttons_LeaveRoom[i].onClick.AddListener(()=> { NetworkManager.instance.LeaveRoom(); });
+        }
     }
 
 
@@ -128,10 +138,18 @@ public class StageUIManager : MonoBehaviourPun
         {
             "토론 시작",
             "1차 내부토의 시작!", $"찬성측({nickName[0]})\n입론을 시작해주세요", $"반대측({nickName[2]})\n입론을 시작해주세요", 
-            "2차 내부토의 시작!", $"반대측({nickName[4]})\n반론을 시작해주세요", $"찬성측({nickName[1]})\n반론을 시작해주세요",
+            "2차 내부토의 시작!", $"반대측({nickName[3]})\n반론을 시작해주세요", $"찬성측({nickName[1]})\n반론을 시작해주세요",
             "3차 내부토의 시작!", $"찬성측({nickName[0]})\n반론을 시작해주세요", $"반대측({nickName[2]})\n반론을 시작해주세요", 
-            "최종 내부토의 시작!", $"반대측({nickName[4]})\n주장 정리 및 결론", $"찬성측({nickName[1]})\n주창 정리 및 결론"
+            "최종 내부토의 시작!", $"반대측({nickName[3]})\n주장 정리 및 결론", $"찬성측({nickName[1]})\n주창 정리 및 결론"
         };
+        panel_IndexUI[2].GetComponentInChildren<TMP_Text>().text += $"\n + ({nickName[0]})";
+        panel_IndexUI[3].GetComponentInChildren<TMP_Text>().text += $"\n + ({nickName[2]})";
+        panel_IndexUI[5].GetComponentInChildren<TMP_Text>().text += $"\n + ({nickName[3]})";
+        panel_IndexUI[6].GetComponentInChildren<TMP_Text>().text += $"\n + ({nickName[1]})";
+        panel_IndexUI[8].GetComponentInChildren<TMP_Text>().text += $"\n + ({nickName[0]})";
+        panel_IndexUI[9].GetComponentInChildren<TMP_Text>().text += $"\n + ({nickName[2]})";
+        panel_IndexUI[11].GetComponentInChildren<TMP_Text>().text += $"\n + ({nickName[3]})";
+        panel_IndexUI[12].GetComponentInChildren<TMP_Text>().text += $"\n + ({nickName[1]})";
     }
 
 
@@ -144,6 +162,11 @@ public class StageUIManager : MonoBehaviourPun
             if (uiSequence != null)
                 uiSequence.Kill();
             uiSequence = Move_PanelCurrentIndex();
+            for (int i = 0; i < panel_IndexUI.Length; i++)
+            {
+                panel_IndexUI[i].GetComponent<Image>().color = Color.white;
+            }
+            panel_IndexUI[index].GetComponent<Image>().color = Color.green;
             return text;
         }
         return null;
@@ -163,19 +186,19 @@ public class StageUIManager : MonoBehaviourPun
     #region ����ȭ��
 
     private void OnClick_InfoButton()
-{
-    infoPanels[0].transform.SetAsLastSibling();
-    if (activeInfo)
     {
-        activeInfo = false;
-        infoPanels[0].DOAnchorPos3DX(-1300, 0.25f).SetEase(Ease.InSine);
+        infoPanels[0].transform.SetAsLastSibling();
+        if (activeInfo)
+        {
+            activeInfo = false;
+            infoPanels[0].DOAnchorPos3DX(-1300, 0.25f).SetEase(Ease.InSine);
+        }
+        else
+        {
+            activeInfo = true;
+            infoPanels[0].DOAnchorPos3DX(0, 0.25f).SetEase(Ease.InSine);
+        }
     }
-    else
-    {
-        activeInfo = true;
-        infoPanels[0].DOAnchorPos3DX(0, 0.25f).SetEase(Ease.InSine);
-    }
-}
 
     private void OnClick_IndexButton()
     {
@@ -189,6 +212,21 @@ public class StageUIManager : MonoBehaviourPun
         {
             activeIndex = true;
             infoPanels[1].DOAnchorPos3DX(0, 0.25f).SetEase(Ease.InSine);
+        }
+    }
+
+    private void OnClick_TopicButton()
+    {
+        infoPanels[2].transform.SetAsLastSibling();
+        if (activeIndex)
+        {
+            activeIndex = false;
+            infoPanels[2].DOAnchorPos3DX(-1000, 0.25f).SetEase(Ease.InSine);
+        }
+        else
+        {
+            activeIndex = true;
+            infoPanels[2].DOAnchorPos3DX(0, 0.25f).SetEase(Ease.InSine);
         }
     }
 

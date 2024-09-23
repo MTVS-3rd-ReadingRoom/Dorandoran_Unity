@@ -8,6 +8,7 @@ using System.Reflection;
 using ExitGames.Client.Photon;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
@@ -85,6 +86,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         Debug.LogError("Disconnected from Server - " + cause);
     }
 
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+
+        SceneManager.LoadScene(0);
+    }
+
     void Update()
     {
         StatusText.text = PhotonNetwork.NetworkClientState.ToString();
@@ -146,6 +154,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         // PhotonNetwork.CreateRoom(roomInput.text, new RoomOptions { MaxPlayers = roomInputDropDown.value + 1 });
     }
 
+    public void LeaveRoom()
+    {
+        //PhotonNetwork.LeaveRoom();
+    }
+
     public void Disconnect()
     {
         PhotonNetwork.Disconnect();
@@ -200,7 +213,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         base.OnRoomListUpdate(roomList);
-
+        print(1);
         foreach (RoomInfo room in roomList)
         {
             // 만일, 갱신된 룸 정보가 제거 리스트에 있다면..
