@@ -27,7 +27,6 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     public List<Chair> propositionSide = new List<Chair>();
     public List<Chair> oppositionSide = new List<Chair>();
 
-    public TextMeshProUGUI orderText;
     public static SceneUIManager instance;
 
     public TextMeshProUGUI timeText;
@@ -74,7 +73,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         if (timelineIndex < times.Length) // 총 플레이어 숫자만큼 증가했다면
         {
             print(timelineIndex);
-            orderText.text = StageUIManager.instance.PrintCurrentIndex(timelineIndex);
+            // orderText.text = StageUIManager.instance.PrintCurrentIndex(timelineIndex);
             if (timelineIndex == 1 || timelineIndex == 4 || timelineIndex == 7 || timelineIndex == 10)
             {
                 m_eCurCharacterTurn = CharacterTurn.CharacterDebateTurn;
@@ -319,7 +318,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         if (!isRunning) // 현재 실행 중이 아니면 실행 중으로 변경
             isRunning = true;
         panel_Timer.SetActive(false);
-        orderText.text = "AI 사회자 시간입니다.";
+        // orderText.text = "AI 사회자 시간입니다.";
         m_eCurCharacterTurn = CharacterTurn.CharacterPlayerTurn;
         InitPlayerData();
 
