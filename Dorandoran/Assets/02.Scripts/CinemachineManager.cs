@@ -25,7 +25,6 @@ public class CinemachineManager : MonoBehaviour
 
     public void AddInstructions(int index = 0)
     {
-        print(index + " : " + virtualCameras[index].gameObject.name);
         List<CinemachineBlendListCamera.Instruction> instructions = new List<CinemachineBlendListCamera.Instruction>();
         instructions.AddRange(cinemachine.m_Instructions);
         CinemachineBlendListCamera.Instruction newInstruction = new CinemachineBlendListCamera.Instruction();

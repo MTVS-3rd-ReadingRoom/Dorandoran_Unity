@@ -152,14 +152,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d40f913c20179744f8689e276aa702ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serial_Room: 0
+  serial_Room: 100
   recordTime: 30
   myTurn: 0
   nickName: 
   microphoneIndex: 0
-  topic:
-    topic: 
-    content: 
   topicClip: {fileID: 0}
   bookList: []
 --- !u!4 &55152087

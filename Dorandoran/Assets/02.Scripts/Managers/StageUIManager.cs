@@ -142,14 +142,14 @@ public class StageUIManager : MonoBehaviourPun
             "3차 내부토의 시작!", $"찬성측({nickName[0]})\n반론을 시작해주세요", $"반대측({nickName[2]})\n반론을 시작해주세요", 
             "최종 내부토의 시작!", $"반대측({nickName[3]})\n주장 정리 및 결론", $"찬성측({nickName[1]})\n주창 정리 및 결론"
         };
-        panel_IndexUI[2].GetComponentInChildren<TMP_Text>().text += $"\n + ({nickName[0]})";
-        panel_IndexUI[3].GetComponentInChildren<TMP_Text>().text += $"\n + ({nickName[2]})";
-        panel_IndexUI[5].GetComponentInChildren<TMP_Text>().text += $"\n + ({nickName[3]})";
-        panel_IndexUI[6].GetComponentInChildren<TMP_Text>().text += $"\n + ({nickName[1]})";
-        panel_IndexUI[8].GetComponentInChildren<TMP_Text>().text += $"\n + ({nickName[0]})";
-        panel_IndexUI[9].GetComponentInChildren<TMP_Text>().text += $"\n + ({nickName[2]})";
-        panel_IndexUI[11].GetComponentInChildren<TMP_Text>().text += $"\n + ({nickName[3]})";
-        panel_IndexUI[12].GetComponentInChildren<TMP_Text>().text += $"\n + ({nickName[1]})";
+        panel_IndexUI[2].GetComponentInChildren<TMP_Text>().text += $"\n({nickName[0]})";
+        panel_IndexUI[3].GetComponentInChildren<TMP_Text>().text += $"\n({nickName[2]})";
+        panel_IndexUI[5].GetComponentInChildren<TMP_Text>().text += $"\n({nickName[3]})";
+        panel_IndexUI[6].GetComponentInChildren<TMP_Text>().text += $"\n({nickName[1]})";
+        panel_IndexUI[8].GetComponentInChildren<TMP_Text>().text += $"\n({nickName[0]})";
+        panel_IndexUI[9].GetComponentInChildren<TMP_Text>().text += $"\n({nickName[2]})";
+        panel_IndexUI[11].GetComponentInChildren<TMP_Text>().text += $"\n({nickName[3]})";
+        panel_IndexUI[12].GetComponentInChildren<TMP_Text>().text += $"\n({nickName[1]})";
     }
 
 

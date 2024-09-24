@@ -254,10 +254,10 @@ public class LobbyUIManager : MonoBehaviour
         DataManager.instance.topic.proposition = null;
         DataManager.instance.topic.opposition = null;
         DataManager.instance.topicClip = null;
-        //HttpManager.instance.PostDedateRoom(NetworkManager.instance.GetBook(), DataManager.instance.photon_debater_room_no);
+        HttpManager.instance.PostDedateRoom(NetworkManager.instance.GetBook(), DataManager.instance.photon_debater_room_no);
 
-        DataManager.instance.serial_Room = 123123123;
-        DataManager.instance.SetTopic_Text("{\"topic\":\"주제 : 백설공주의 집에서의 행동은 정당했는가? 설명 : 찬성 측에서는 백설공주가 숲 속에서 길을 잃고 생존을 위해 음식과 잠자리를 찾은 것은 불가피한 선택이라고 주장할 수 있습니다. ||| 반대 측에서는 다른 사람의 집에 무단으로 들어가고 그들의 물건을 사용한 백설공주의 행동이 잘못되었다고 주장할 수 있습니다.");
+        //DataManager.instance.serial_Room = 123123123;
+        //DataManager.instance.SetTopic_Text("{\"topic\":\"주제 : 백설공주의 집에서의 행동은 정당했는가? 설명 : 찬성 측에서는 백설공주가 숲 속에서 길을 잃고 생존을 위해 음식과 잠자리를 찾은 것은 불가피한 선택이라고 주장할 수 있습니다. ||| 반대 측에서는 다른 사람의 집에 무단으로 들어가고 그들의 물건을 사용한 백설공주의 행동이 잘못되었다고 주장할 수 있습니다.");
         getTopic = StartCoroutine(Coroutine_GetTopic());
         panel_SceneLoad.SetActive(true);
     }
@@ -293,7 +293,7 @@ public class LobbyUIManager : MonoBehaviour
         }
 
         getTopic = null;
-        NetworkManager.instance.CreateRoom();
+        NetworkManager.instance.CreateRoom(DataManager.instance.topic.topic);
     }
 
     #region 판넬 엑티브

@@ -76,20 +76,35 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         if (timelineIndex < times.Length) // 총 플레이어 숫자만큼 증가했다면
         {
             print(timelineIndex);
+            int temp = timelineIndex - 1;
+            if (temp >= 0)
+            {
+                if (speakerIdList[temp] != announcer_Chair && speakerIdList[temp] != null)
+                {
+                    if (PhotonNetwork.LocalPlayer.ActorNumber == speakerIdList[temp].id)
+                    {
+                        DataManager.instance.StopRecord(DataManager.instance.serial_Room.ToString());
+                    }
+                }
+            }
             // orderText.text = StageUIManager.instance.PrintCurrentIndex(timelineIndex);
             if (timelineIndex == 1 || timelineIndex == 4 || timelineIndex == 7 || timelineIndex == 10)
             {
                 m_eCurCharacterTurn = CharacterTurn.CharacterDebateTurn;
                 CinemachineManager.instance.AddInstructions();
-                SetSameSpeakGroup();
+                
+                DebatePlayer();
             }
             else
             {
                 m_eCurCharacterTurn = CharacterTurn.CharacterPlayerTurn;
-                //AllMuteTransmit();
+                AllMuteTransmit();
                 if (speakerIdList[timelineIndex] != announcer_Chair && speakerIdList[timelineIndex] != null)
                 {
+                    SetSameSpeakGroup();
                     RPCSetTransmit();
+                    if(PhotonNetwork.LocalPlayer.ActorNumber == speakerIdList[timelineIndex].id)
+                        DataManager.instance.RecordMicrophone(DataManager.instance.serial_Room.ToString());
                 }
                 if (speakerIdList[timelineIndex] != null)
                 {
@@ -99,7 +114,6 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
                 {
                     CinemachineManager.instance.AddInstructions();
                 }
-                DebatePlayer();
             }
             timeDuration = times[timelineIndex];
             StageUIManager.instance.PrintCurrentIndex(timelineIndex);
@@ -108,6 +122,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         else if(!end)
         {
             end = true;
+            SetSameSpeakGroup();
             StageUIManager.instance.panel_End.SetActive(true);
         }
     }
@@ -309,6 +324,12 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         }
         StageUIManager.instance.StartSetting(speakerIdList[2].playerName, speakerIdList[6].playerName, speakerIdList[3].playerName, speakerIdList[5].playerName);
         ModeratorSound.instance.SpeakPlayer(DataManager.instance.topicClip);
+
+        DataManager.instance.serial_Room = (int)PhotonNetwork.CurrentRoom.CustomProperties["SERIAL_ROOMNUM"];
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            HttpManager.instance.PostDedateRoom_User(DataManager.instance.serial_Room);
+        }
     }
     private void InitPlayerData()
     {
@@ -357,12 +378,13 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SpeakGroup(byte groupID)
     {
-        recorder.InterestGroup = groupID;            
+        recorder.InterestGroup = groupID;
+        
     }
 
     public void SetSameSpeakGroup()
     {
-        for (int i = 1; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
+        for (int i = 1; i <= PhotonNetwork.CurrentRoom.PlayerCount; i++)
         {
             RPCSetSpeakGroup(i, 0);
         }
@@ -403,6 +425,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
 
     public void RPCSetTransmit()
     {
+        print(speakerIdList[timelineIndex].id);
         photonView.RPC("Toggle", PhotonNetwork.CurrentRoom.GetPlayer(speakerIdList[timelineIndex].id), true);
     }
 
