@@ -27,6 +27,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     public List<Chair> propositionSide = new List<Chair>();
     public List<Chair> oppositionSide = new List<Chair>();
 
+    // public TextMeshProUGUI orderText;
     public static SceneUIManager instance;
 
     public TextMeshProUGUI timeText;
@@ -59,6 +60,8 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     public TMP_Text[] tmpProsAndConsList;
 
     SceneNetworkManager sceneNetworkManager;
+
+    bool end = false;
     #region Panel
     [Header("¼ø¼­UI")]
     public GameObject panel_Order;
@@ -77,13 +80,13 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
             if (timelineIndex == 1 || timelineIndex == 4 || timelineIndex == 7 || timelineIndex == 10)
             {
                 m_eCurCharacterTurn = CharacterTurn.CharacterDebateTurn;
-                DebatePlayer();
                 CinemachineManager.instance.AddInstructions();
+                SetSameSpeakGroup();
             }
             else
             {
                 m_eCurCharacterTurn = CharacterTurn.CharacterPlayerTurn;
-                AllMuteTransmit();
+                //AllMuteTransmit();
                 if (speakerIdList[timelineIndex] != announcer_Chair && speakerIdList[timelineIndex] != null)
                 {
                     RPCSetTransmit();
@@ -96,11 +99,16 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
                 {
                     CinemachineManager.instance.AddInstructions();
                 }
-                SetSameSpeakGroup();
+                DebatePlayer();
             }
             timeDuration = times[timelineIndex];
-            print(timelineIndex);
+            StageUIManager.instance.PrintCurrentIndex(timelineIndex);
             timelineIndex++;
+        }
+        else if(!end)
+        {
+            end = true;
+            StageUIManager.instance.panel_End.SetActive(true);
         }
     }
     private void Awake()
@@ -299,6 +307,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
             speakerIdList[9] = oppositionSide[0];
             speakerIdList[11] = oppositionSide[0];
         }
+        StageUIManager.instance.StartSetting(speakerIdList[2].playerName, speakerIdList[6].playerName, speakerIdList[3].playerName, speakerIdList[5].playerName);
         ModeratorSound.instance.SpeakPlayer(DataManager.instance.topicClip);
     }
     private void InitPlayerData()

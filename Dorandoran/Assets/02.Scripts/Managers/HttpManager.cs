@@ -243,8 +243,8 @@ public class HttpManager : MonoBehaviour
         {
             string topic_text = webRequest.downloadHandler.text;
             print(topic_text);
-            Topic topic = JsonUtility.FromJson<Topic>(topic_text);
-            DataManager.instance.SetTopic_Text(topic);
+            //Topic topic = JsonUtility.FromJson<Topic>(topic_text);
+            DataManager.instance.SetTopic_Text(topic_text);
             print($"Success : {MethodInfo.GetCurrentMethod()}");
         };
 

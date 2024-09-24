@@ -186,11 +186,14 @@ public class DataManager : MonoBehaviour
     }
     #endregion
 
-    public void SetTopic_Text(Topic topic)
+    public void SetTopic_Text(string topic)
     {
         this.topic = new TopicText();
-        string[] temp = topic.topic.Split("설명 : ");
-        this.topic.topic = temp[0].Substring(5);
+        string[] temp = topic.Split("설명 : ");
+        temp[0] = temp[0].Substring(15);
+        temp[0] = temp[0].Replace("\n", "");
+        temp[0] = temp[0].Replace("\n", "");
+        this.topic.topic = temp[0];
         print(temp[0]);
         temp = temp[1].Split("|||");
         this.topic.proposition = temp[0];
