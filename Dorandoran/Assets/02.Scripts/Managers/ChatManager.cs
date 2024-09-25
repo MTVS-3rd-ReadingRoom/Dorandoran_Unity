@@ -131,9 +131,11 @@ public class ChatManager : MonoBehaviourPun, IOnEventCallback
                 return;
             AddAlignedText(recieveMessage, OwnerText.Other);
             input_chat.text = "";
+
+            StopAllCoroutines();
+            StartCoroutine(AlphaReturn(2.0f));
         }
-        StopAllCoroutines();
-        StartCoroutine(AlphaReturn(2.0f));
+
     }
 
     IEnumerator AlphaReturn(float time)
