@@ -47,7 +47,7 @@ public class UIManager : MonoBehaviour
     private void InitUI()
     {
         dropdown_MicrophoneName.onValueChanged.AddListener(delegate { SelectMicrophone(); });
-        button_Record.onClick.AddListener(delegate { DataManager.instance.RecordMicrophone(); });
+        //button_Record.onClick.AddListener(delegate { DataManager.instance.RecordMicrophone(Data); });
         button_Signup.onClick.AddListener(delegate { HttpManager.instance.PostSignUp_FormData("test", "test", "test", "test"); });
         button_Login.onClick.AddListener(delegate { HttpManager.instance.PostLogIn_FormData("1", "1"); });
         button_DedateRoom.onClick.AddListener(delegate { HttpManager.instance.PostDedateRoom("1", "test_room"); });

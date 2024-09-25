@@ -20,7 +20,6 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         CharacterTurnEnd
     }
     public Photon.Voice.Unity.Recorder recorder;
-
     public Chair announcer_Chair;
     public Chair[] propositionSide_Chair;
     public Chair[] oppositionSide_Chair;
@@ -67,50 +66,13 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     public GameObject panel_Order;
     public GameObject panel_Timer;
     public Button button_Next;
+    public Button button_Start;
     #endregion
 
+    bool isStart = false;
+
     // 클릭했을 때마다 증가
-    void NextTurn() // 다음에 턴
-    {
-        CinemachineManager.instance.AddInstructions();
-        if (timelineIndex < times.Length) // 총 플레이어 숫자만큼 증가했다면
-        {
-            print(timelineIndex);
-            // orderText.text = StageUIManager.instance.PrintCurrentIndex(timelineIndex);
-            if (timelineIndex == 1 || timelineIndex == 4 || timelineIndex == 7 || timelineIndex == 10)
-            {
-                m_eCurCharacterTurn = CharacterTurn.CharacterDebateTurn;
-                CinemachineManager.instance.AddInstructions();
-                SetSameSpeakGroup();
-            }
-            else
-            {
-                m_eCurCharacterTurn = CharacterTurn.CharacterPlayerTurn;
-                //AllMuteTransmit();
-                if (speakerIdList[timelineIndex] != announcer_Chair && speakerIdList[timelineIndex] != null)
-                {
-                    RPCSetTransmit();
-                }
-                if (speakerIdList[timelineIndex] != null)
-                {
-                    CinemachineManager.instance.AddInstructions(speakerIdList[timelineIndex].virtualCameraIndex);
-                }
-                else
-                {
-                    CinemachineManager.instance.AddInstructions();
-                }
-                DebatePlayer();
-            }
-            timeDuration = times[timelineIndex];
-            StageUIManager.instance.PrintCurrentIndex(timelineIndex);
-            timelineIndex++;
-        }
-        else if(!end)
-        {
-            end = true;
-            StageUIManager.instance.panel_End.SetActive(true);
-        }
-    }
+   
     private void Awake()
     {
         if (instance == null)
@@ -154,6 +116,39 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
                 null, null, null,
                 null, null, null,
             };
+
+        button_Next.gameObject.SetActive(false);
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            button_Start.gameObject.SetActive(false);
+        }
+    }
+
+    void Update()
+    {
+        // 앉아있는 플레이어 체크
+        CheckSittingPlayer();
+        // 플레이어 찬반 데이터 체크
+        UpdatePlayerProsAndConsList();
+
+        recorder_InterestText.text = "Recorder Interest Group: " + recorder.InterestGroup;
+
+        //logText.text = PlayN + "번째 발표 순서입니다.\n + 현재 ActorNumber: " + PhotonNetwork.LocalPlayer.ActorNumber + "\n"
+        //    + "레코더의 그룹: " + recorder.InterestGroup;
+        if (isRunning && startTime > 0)
+        {
+            double elapsed = PhotonNetwork.Time - startTime;
+            double remainingTime = timeDuration - elapsed;
+
+            timeText.text = (int)(remainingTime / 60) + "분 " + (int)(remainingTime % 60) + $"초 / {timeDuration}초 제한시간";
+
+            // 시간이 지남 or (키 누름 && 현재 차례인 플레이어가 눌렀을 경우) 0, 사회자, 2, 3 ~ 플레이어 수
+            if (remainingTime < 0)
+            {
+                print("NextOrderRPC : " +1);
+                NextOrderRPC();
+            }
+        }
     }
 
     [PunRPC]
@@ -183,48 +178,46 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     public void InitUI()
     {
         button_Next.onClick.AddListener(NextOrderMessage);
+        button_Start.onClick.AddListener(RPC_StartDebate);
     }
 
     public void CheckSittingPlayer()
     {
-        if (!checkSittingPlayer)
+        if (!isStart)
         {
-            if(gameManager.CheckSittingPlayer())
+            if (gameManager.CheckSittingPlayer())
             {
-                NextOrderMessage();
                 gameManager.SetPlayerProsAndConsText();
                 checkSittingPlayer = true;
             }
-
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        // 앉아있는 플레이어 체크
-        CheckSittingPlayer();
-        // 플레이어 찬반 데이터 체크
-        UpdatePlayerProsAndConsList();
-
-        recorder_InterestText.text = "Recorder Interest Group: " + recorder.InterestGroup;
-
-        //logText.text = PlayN + "번째 발표 순서입니다.\n + 현재 ActorNumber: " + PhotonNetwork.LocalPlayer.ActorNumber + "\n"
-        //    + "레코더의 그룹: " + recorder.InterestGroup;
-        if (isRunning && startTime > 0)
-        {
-            double elapsed = PhotonNetwork.Time - startTime;
-            double remainingTime = timeDuration - elapsed;
-
-            timeText.text = (int)(remainingTime / 60) + "분 " + (int)(remainingTime % 60) + $"초 / {timeDuration}초 제한시간";
-
-            // 시간이 지남 or (키 누름 && 현재 차례인 플레이어가 눌렀을 경우) 0, 사회자, 2, 3 ~ 플레이어 수
-            if (remainingTime < 0)
+            else
             {
-                NextOrderRPC();
+                checkSittingPlayer = false;
             }
         }
     }
+
+    public void RPC_StartDebate()
+    {
+        print(checkSittingPlayer + " , " + isStart);
+        if (checkSittingPlayer && !isStart)
+        {
+            print("RPC_StartDebate");
+            button_Start.gameObject.SetActive(false);
+            photonView.RPC("StartDebate", RpcTarget.AllBuffered);
+        }
+    }
+
+    [PunRPC]
+    public void StartDebate()
+    {
+
+        print("StartDebate");
+        button_Start.gameObject.SetActive(false);
+        isStart = true;
+        NextOrderMessage();
+    }
+
 
     void NextOrderMessage()
     {
@@ -232,12 +225,13 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         {
             case CharacterTurn.CharacterHostTurn:
                 HostTurnRPC();
-                TriggerReset();
                 break;
             case CharacterTurn.CharacterPlayerTurn:
+                print("NextOrderRPC : " + 2);
                 NextOrderRPC();
                 break;
             case CharacterTurn.CharacterDebateTurn:
+                print("NextOrderRPC : " + 3);
                 NextOrderRPC();
                 break;
         }
@@ -308,7 +302,15 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
             speakerIdList[11] = oppositionSide[0];
         }
         StageUIManager.instance.StartSetting(speakerIdList[2].playerName, speakerIdList[6].playerName, speakerIdList[3].playerName, speakerIdList[5].playerName);
-        ModeratorSound.instance.SpeakPlayer(DataManager.instance.topicClip);
+
+        DataManager.instance.serial_Room = (int)PhotonNetwork.CurrentRoom.CustomProperties["SERIAL_ROOMNUM"];
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            HttpManager.instance.PostDedateRoom_User(DataManager.instance.serial_Room);
+        }
+
+        if(PhotonNetwork.IsMasterClient)
+            NextOrderMessage();
     }
     private void InitPlayerData()
     {
@@ -332,6 +334,10 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         InitPlayerData();
 
     }
+    public void RPCNextOrder()
+    {
+        photonView.RPC("NextOrder", RpcTarget.All);
+    }
 
     // 버튼 동기화 - 버튼을 눌렀을때 isMine인 사용자에게 모두 해당 함수를 실행하도록 구현
     [PunRPC] // all로 뿌리고 isMine으로 1개만 실행되도록 구현
@@ -343,9 +349,75 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         //Debug.Log(PlayN + "현재 발표 순서");
     }
 
-    public void RPCNextOrder()
+    void NextTurn() // 다음에 턴
     {
-        photonView.RPC("NextOrder", RpcTarget.All);
+        print("NextTurn : " + timelineIndex);
+        CinemachineManager.instance.AddInstructions();
+        if (timelineIndex < times.Length) // 총 플레이어 숫자만큼 증가했다면
+        {
+            if (timelineIndex == 0 && PhotonNetwork.IsMasterClient)
+            {
+                ModeratorSound.instance.SpeakPlayer(DataManager.instance.topicClip);
+            }
+
+            int temp = timelineIndex - 1;
+            if (temp >= 0)
+            {
+                if (speakerIdList[temp] != announcer_Chair && speakerIdList[temp] != null)
+                {
+                    if (PhotonNetwork.LocalPlayer.ActorNumber == speakerIdList[temp].id)
+                    {
+                        DataManager.instance.StopRecord(DataManager.instance.serial_Room.ToString());
+                    }
+                }
+            }
+            // orderText.text = StageUIManager.instance.PrintCurrentIndex(timelineIndex);
+            if (timelineIndex == 1 || timelineIndex == 4 || timelineIndex == 7 || timelineIndex == 10)
+            {
+                m_eCurCharacterTurn = CharacterTurn.CharacterDebateTurn;
+                CinemachineManager.instance.AddInstructions();
+
+                DebatePlayer();
+            }
+            else
+            {
+                m_eCurCharacterTurn = CharacterTurn.CharacterPlayerTurn;
+                AllMuteTransmit();
+                if (speakerIdList[timelineIndex] != announcer_Chair && speakerIdList[timelineIndex] != null)
+                {
+                    SetSameSpeakGroup();
+                    RPCSetTransmit();
+                    if (PhotonNetwork.LocalPlayer.ActorNumber == speakerIdList[timelineIndex].id)
+                    {
+                        DataManager.instance.RecordMicrophone(DataManager.instance.serial_Room.ToString());
+                        button_Next.gameObject.SetActive(true);
+                        StageUIManager.instance.SetActiveMicUI(true);
+                    }
+                    else
+                    {
+                        button_Next.gameObject.SetActive(false);
+                        StageUIManager.instance.SetActiveMicUI(false);
+                    }
+                }
+                if (speakerIdList[timelineIndex] != null)
+                {
+                    CinemachineManager.instance.AddInstructions(speakerIdList[timelineIndex].virtualCameraIndex);
+                }
+                else
+                {
+                    CinemachineManager.instance.AddInstructions();
+                }
+            }
+            timeDuration = times[timelineIndex];
+            StageUIManager.instance.PrintCurrentIndex(timelineIndex);
+            timelineIndex++;
+        }
+        else if (!end)
+        {
+            end = true;
+            SetSameSpeakGroup();
+            StageUIManager.instance.panel_End.SetActive(true);
+        }
     }
 
     [PunRPC]
@@ -357,12 +429,13 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SpeakGroup(byte groupID)
     {
-        recorder.InterestGroup = groupID;            
+        recorder.InterestGroup = groupID;
+        
     }
 
     public void SetSameSpeakGroup()
     {
-        for (int i = 1; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
+        for (int i = 1; i <= PhotonNetwork.CurrentRoom.PlayerCount; i++)
         {
             RPCSetSpeakGroup(i, 0);
         }
@@ -403,6 +476,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
 
     public void RPCSetTransmit()
     {
+        print(speakerIdList[timelineIndex].id);
         photonView.RPC("Toggle", PhotonNetwork.CurrentRoom.GetPlayer(speakerIdList[timelineIndex].id), true);
     }
 

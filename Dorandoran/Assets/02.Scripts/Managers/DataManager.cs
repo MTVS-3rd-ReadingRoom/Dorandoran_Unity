@@ -186,16 +186,12 @@ public class DataManager : MonoBehaviour
     }
     #endregion
 
-    public void SetTopic_Text(string topic)
+    public void SetTopic_Text(Topic topic)
     {
         this.topic = new TopicText();
-        string[] temp = topic.Split("설명 : ");
-        temp[0] = temp[0].Substring(15);
-        temp[0] = temp[0].Replace("\n", "");
-        temp[0] = temp[0].Replace("\n", "");
-        this.topic.topic = temp[0];
-        print(temp[0]);
-        temp = temp[1].Split("|||");
+        this.topic.topic = topic.topic;
+        print(topic.topic);
+        string[] temp = topic.content.Split("|||");
         this.topic.proposition = temp[0];
         print(temp[0]);
         this.topic.opposition = temp[1];
@@ -236,30 +232,31 @@ public class DataManager : MonoBehaviour
         source.Play();
     }
 
-    public void RecordMicrophone()
+    public void RecordMicrophone(string roomID)
     {
         print("Start Record");
-        coroutine_Record = StartCoroutine(Corr_RecordAndPost());
+        coroutine_Record = StartCoroutine(Corr_RecordAndPost(roomID));
     }
 
-    private IEnumerator Corr_RecordAndPost()
+    private IEnumerator Corr_RecordAndPost(string roomID)
     {
         voiceRecord.clip = Microphone.Start(Microphone.devices[microphoneIndex].ToString(), false, recordTime, 44100);
         yield return new WaitForSeconds(recordTime + 1);
 
         coroutine_Record = null;
-        HttpManager.instance.PostVoiceClip_FormData("test", "test_room",LoadAudioClip(SaveAudioClip(voiceRecord.clip)));
+        HttpManager.instance.PostVoiceClip_FormData(HttpManager.instance.value, roomID, LoadAudioClip(SaveAudioClip(voiceRecord.clip)));
         //LoadWav(LoadAudioClip(SaveAudioClip(record)));
         //audioClip2 = LoadWav(LoadAudioClip(SaveAudioClip(record)));
     }
 
-    public void StopRecord()
+    public void StopRecord(string roomID)
     {
         if(coroutine_Record != null)
         {
+            coroutine_Record = null;
             StopCoroutine(coroutine_Record);
             voiceRecord.Stop();
-            HttpManager.instance.PostVoiceClip_FormData("test", "test_room", LoadAudioClip(SaveAudioClip(voiceRecord.clip)));
+            HttpManager.instance.PostVoiceClip_FormData(HttpManager.instance.value, roomID, LoadAudioClip(SaveAudioClip(voiceRecord.clip)));
         }
     }
 }

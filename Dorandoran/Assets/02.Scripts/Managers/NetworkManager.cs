@@ -132,7 +132,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         // LoginUIController.LoginUI.ShowMakeRoomPanel();
     }
 
-    public void CreateRoom()
+    public void CreateRoom(string topic)
     {
         string roomName = roomInput.text;
         int maxPlayer = (roomInputDropDown.value + 1) * 2; // (2명(index: 0), 4명(index: 1))
@@ -147,15 +147,15 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
             // 룸의 커스텀 정보를 추가한다.
             // 키 값 등록하기
-            roomOpt.CustomRoomPropertiesForLobby = new string[] { "MASTER_NAME", "PASSWORD" };
+            roomOpt.CustomRoomPropertiesForLobby = new string[] { "MASTER_NAME", "PASSWORD", "TOPIC", "SERIAL_ROOMNUM" };
             Hashtable roomTable = new Hashtable();
             roomTable.Add("MASTER_NAME", PhotonNetwork.NickName);
             roomTable.Add("PASSWORD", 1234);
+            roomTable.Add("TOPIC", topic);
+            roomTable.Add("SERIAL_ROOMNUM", DataManager.instance.serial_Room);
             roomOpt.CustomRoomProperties = roomTable;
-
             PhotonNetwork.CreateRoom(roomName, roomOpt, TypedLobby.Default);
         }
-
 
         // PhotonNetwork.CreateRoom(roomInput.text, new RoomOptions { MaxPlayers = roomInputDropDown.value + 1 });
     }
@@ -177,7 +177,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
         Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
-
         PhotonNetwork.LoadLevel(1); // 1번 빌드 셋팅으로 고정 이동
         print("방 참가완료");
     }

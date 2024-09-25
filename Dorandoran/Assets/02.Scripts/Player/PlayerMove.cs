@@ -35,13 +35,16 @@ public class PlayerMove : PlayerStateBase, IPunObservable
     Chair chair;
     bool Cu;
 
+    private void Awake()
+    {
 
+        pv = GetComponent<PhotonView>();
+    }
     void Start()
     {
         cam = Camera.main.transform;
         cc = GetComponent<CharacterController>();
         myAnim = GetComponentInChildren<Animator>();
-        pv = GetComponent<PhotonView>();
         recorder = GetComponentInChildren<PhotonVoice.Recorder>();
         isReady = false;
         preSitting = false;

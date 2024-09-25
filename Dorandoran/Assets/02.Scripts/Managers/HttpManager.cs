@@ -20,11 +20,11 @@ public struct Error
 [System.Serializable]
 public struct RoomNum
 {
-    public int id;
+    public int roomId;
 
     public RoomNum(int id)
     {
-        this.id = id;
+        this.roomId = id;
     }
 }
 
@@ -75,7 +75,7 @@ public class HttpManager : MonoBehaviour
 {
     public static HttpManager instance;
     public const string key = "Authorization";
-    public string value { get; private set; }
+    public string value;
 
     public const string url = "http://www.dorandoran.life:11225";
 
@@ -160,10 +160,9 @@ public class HttpManager : MonoBehaviour
         info.onComplete = (UnityWebRequest webRequest) =>
         {
             RoomNum roomNum = JsonUtility.FromJson<RoomNum>(webRequest.downloadHandler.text);
-            DataManager.instance.serial_Room = roomNum.id;
-            PostTopic_Text(roomNum.id.ToString());
-            //PostTopic_Voice(roomNum.id.ToString());
-            print($"Success : {MethodInfo.GetCurrentMethod()}");
+            DataManager.instance.serial_Room = roomNum.roomId;
+            PostTopic_Text(roomNum.roomId.ToString());
+            print($"Success : {MethodInfo.GetCurrentMethod()} - {webRequest.downloadHandler.text}");
         };
 
         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
@@ -243,8 +242,8 @@ public class HttpManager : MonoBehaviour
         {
             string topic_text = webRequest.downloadHandler.text;
             print(topic_text);
-            //Topic topic = JsonUtility.FromJson<Topic>(topic_text);
-            DataManager.instance.SetTopic_Text(topic_text);
+            Topic topic = JsonUtility.FromJson<Topic>(topic_text);
+            DataManager.instance.SetTopic_Text(topic);
             print($"Success : {MethodInfo.GetCurrentMethod()}");
         };
 
