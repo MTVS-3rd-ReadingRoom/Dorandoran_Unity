@@ -9,6 +9,9 @@ using ExitGames.Client.Photon;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using TMPro;
 using UnityEngine.Rendering.LookDev;
+using UnityEngine.SceneManagement;
+using Photon.Voice.PUN;
+using Photon.Voice.Unity;
 
 public class SceneNetworkManager : MonoBehaviourPunCallbacks
 {
@@ -36,6 +39,15 @@ public class SceneNetworkManager : MonoBehaviourPunCallbacks
 
     void Update()
     {
+
+    }
+
+    private void LateUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            DisconnectPlayer();
+        }
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer) // 입장 - 전체적으로 갱신
@@ -90,5 +102,15 @@ public class SceneNetworkManager : MonoBehaviourPunCallbacks
         }
     }
 
-    
+    public override void OnLeftRoom()
+    {
+        SceneReloadManager.instance.NextScene();
+        PhotonNetwork.LoadLevel(0);
+    }         
+
+    public void DisconnectPlayer()
+    {
+        PhotonNetwork.LeaveRoom();
+    }
+
 }

@@ -11,6 +11,9 @@ using Photon.Voice;
 using ExitGames.Client.Photon.StructWrapping;
 using static PlayerProsAndCons;
 using Cinemachine;
+using UnityEngine.SceneManagement;
+using Photon.Voice.Unity;
+using Photon.Voice.PUN;
 
 public class GameManager : MonoBehaviourPun
 {
@@ -20,6 +23,7 @@ public class GameManager : MonoBehaviourPun
 
     PhotonView pv;
 
+    bool leaveRoomRequested;
     struct TransformData
     {
         public Vector3 pos;
@@ -71,6 +75,7 @@ public class GameManager : MonoBehaviourPun
     }
     void Start()
     {
+        leaveRoomRequested = false;
         mainCamera = GameObject.Find("discussionPosition/Main Camera").GetComponent<Camera>();
         playerCamera = GameObject.Find("discussionPosition/Player Camera").GetComponent<Camera>();
 
@@ -121,6 +126,10 @@ public class GameManager : MonoBehaviourPun
 
     }
 
+    private void LateUpdate()
+    {
+
+    }
     public void OnStaticCamera()
     {
         mainCamera.enabled = true;
@@ -162,6 +171,8 @@ public class GameManager : MonoBehaviourPun
     public bool CheckSittingPlayer()
     {
         sittingCheck = false;
+        if (PhotonNetwork.CurrentRoom == null)
+            return false;
         int maxPlayer = PhotonNetwork.CurrentRoom.PlayerCount;
         if (maxPlayer <= 0)
             return false;
@@ -202,6 +213,7 @@ public class GameManager : MonoBehaviourPun
             }
         }
     }
+
 
     private void OnDestroy()
     {

@@ -50,6 +50,7 @@ public class ChatManager : MonoBehaviourPun, IOnEventCallback
         if (null == chatManager)
         {
             chatManager = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {

@@ -48,7 +48,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             instance = this;
             Screen.SetResolution(1920, 1080, false);
-
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -95,7 +95,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        StatusText.text = PhotonNetwork.NetworkClientState.ToString();
+        //// StatusText.text = PhotonNetwork.NetworkClientState.ToString();
+        //if (Input.GetKeyDown(KeyCode.L))
+        //{
+        //    PhotonNetwork.LeaveRoom();
+        //}
+
+
     }
 
     public void Connect()
@@ -156,7 +162,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void LeaveRoom()
     {
-        //PhotonNetwork.LeaveRoom();
+        PhotonNetwork.LeaveRoom();
     }
 
     public void Disconnect()
@@ -236,25 +242,28 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             }
         }
 
-        // 기존의 모든 방 정보를 삭제한다.
-        for (int i = 0; i < scrollContent.childCount; i++)
+        if (scrollContent)
         {
-            Destroy(scrollContent.GetChild(i).gameObject);
-        }
-
-
-        foreach (RoomInfo room in roomList)
-        {
-            // cachedRoomList에 있는 모든 방을 만들어서 스크롤뷰에 추가한다.
-            GameObject go = Instantiate(roomPrefab, scrollContent);
-            RoomPanel roomPanel = go.GetComponent<RoomPanel>();
-            roomPanel.SetRoomInfo(room);
-            //// 버튼에 방 입장 기능 연결하기
-            roomPanel.btn_join.onClick.AddListener(() =>
+            // 기존의 모든 방 정보를 삭제한다.
+            for (int i = 0; i < scrollContent.childCount; i++)
             {
-                PhotonNetwork.JoinRoom(room.Name);
-            });
+                Destroy(scrollContent.GetChild(i).gameObject);
+            }
 
+
+            foreach (RoomInfo room in roomList)
+            {
+                // cachedRoomList에 있는 모든 방을 만들어서 스크롤뷰에 추가한다.
+                GameObject go = Instantiate(roomPrefab, scrollContent);
+                RoomPanel roomPanel = go.GetComponent<RoomPanel>();
+                roomPanel.SetRoomInfo(room);
+                //// 버튼에 방 입장 기능 연결하기
+                roomPanel.btn_join.onClick.AddListener(() =>
+                {
+                    PhotonNetwork.JoinRoom(room.Name);
+                });
+
+            }
         }
     }
 
