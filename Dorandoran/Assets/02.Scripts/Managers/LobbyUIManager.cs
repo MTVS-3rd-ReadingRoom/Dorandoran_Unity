@@ -56,6 +56,8 @@ public class LobbyUIManager : MonoBehaviour
     #region 방 만들기
     [Header("방 만들기")]
     public Button button_CreateRoom;
+    public Button button_Cancle;
+    //public Button button_
 
     #endregion
 
@@ -137,11 +139,11 @@ public class LobbyUIManager : MonoBehaviour
         button_CreateRoom.onClick.AddListener(() => { CreateRoom(); });
         for (int i = 0; i < buttons_MakeRoomChannel.Length; i++)
         {
-            buttons_MakeRoomChannel[i].onClick.AddListener(() => { ShowMakeRoomPanel(); });
+            buttons_MakeRoomChannel[i].onClick.AddListener(() => { ShowMakeChoiceRoomPanel(); });
         }
         for (int i = 0; i < buttons_ChoiceRoomChannel.Length; i++)
         {
-            buttons_ChoiceRoomChannel[i].onClick.AddListener(() => { ShowChoiceRoomPanel(); });
+            buttons_ChoiceRoomChannel[i].onClick.AddListener(() => { ShowChoiceRoomPanel();  });
         }
         for (int i = 0; i < buttons_MyStudy.Length; i++)
         {
@@ -163,8 +165,9 @@ public class LobbyUIManager : MonoBehaviour
         }
 
         button_Option.onClick.AddListener(() => { ActiveSelectMicrophoneUI(); panel_Option.SetActive(true); inactiveStack.Push(() => { panel_Option.SetActive(false); }); });
-        button_Quit.onClick.AddListener(() => { panel_Quit.SetActive(true); inactiveStack.Push(() => { panel_Quit.SetActive(false); }); });
+        button_Quit.onClick.AddListener(() => { panel_Quit.SetActive(true); inactiveStack.Push(() => { panel_Quit.SetActive(false); });  });
         button_QuitGame.onClick.AddListener(() => { Application.Quit(); });
+
 
         dropdown_MicList.onValueChanged.AddListener(delegate { SelectMicrophone(); });
         dropdown_MicList.GetComponentInChildren<Button>().onClick.AddListener(() => ActiveSelectMicrophoneUI());
@@ -177,7 +180,7 @@ public class LobbyUIManager : MonoBehaviour
         slider_Sound[1].onValueChanged.AddListener((value) => { SoundManager.instance.ChangeBGMVolum(value); });
         //slider_Sound[2].onValueChanged.AddListener((value) => { 보이스 사운드 조절 함수 추가 ); });
 
-      
+        button_Cancle.onClick.AddListener(() => { ShowChoiceRoomPanel(); });
     }
     private void InactiveUI()
     {
@@ -317,6 +320,19 @@ public class LobbyUIManager : MonoBehaviour
         panel_choiceRoom.SetActive(false);
         panel_signUp.SetActive(false);
         panel_SelectChannel.SetActive(true);
+        panel_MyStudy.SetActive(false);
+        panel_PopUp.SetActive(false);
+        panel_HttpLoad.SetActive(false);
+        panel_SceneLoad.SetActive(false);
+    }
+
+    public void ShowMakeChoiceRoomPanel()
+    {
+        panel_login.SetActive(false);
+        panel_makeRoom.SetActive(true);
+        panel_choiceRoom.SetActive(true);
+        panel_signUp.SetActive(false);
+        panel_SelectChannel.SetActive(false);
         panel_MyStudy.SetActive(false);
         panel_PopUp.SetActive(false);
         panel_HttpLoad.SetActive(false);

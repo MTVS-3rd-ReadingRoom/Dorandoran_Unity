@@ -153,6 +153,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             roomTable.Add("PASSWORD", 1234);
             roomTable.Add("TOPIC", topic);
             roomTable.Add("SERIAL_ROOMNUM", DataManager.instance.serial_Room);
+            roomTable.Add("SCENE_NUMBER", ImageChoiceManager.instance.mapChoice.value + 1);
+
             roomOpt.CustomRoomProperties = roomTable;
             PhotonNetwork.CreateRoom(roomName, roomOpt, TypedLobby.Default);
         }
@@ -177,7 +179,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
         Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
-        PhotonNetwork.LoadLevel(1); // 1번 빌드 셋팅으로 고정 이동
+
+        ExitGames.Client.Photon.Hashtable roomProp =
+            PhotonNetwork.CurrentRoom.CustomProperties;
+        int sceneN = (int)roomProp["SCENE_NUMBER"];
+        PhotonNetwork.LoadLevel(sceneN); // 1번 빌드 셋팅으로 고정 이동
         print("방 참가완료");
     }
 

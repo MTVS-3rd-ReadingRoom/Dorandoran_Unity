@@ -108,8 +108,14 @@ public class SceneNetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel(0);
     }         
 
+    public void OnCursor()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
     public void DisconnectPlayer()
     {
+        OnCursor();
         PhotonNetwork.LeaveRoom();
     }
 

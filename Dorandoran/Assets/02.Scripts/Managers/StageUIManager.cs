@@ -116,7 +116,7 @@ public class StageUIManager : MonoBehaviourPun
 
         for (int i = 0; i < buttons_LeaveRoom.Length; i++)
         {
-            buttons_LeaveRoom[i].onClick.AddListener(()=> { NetworkManager.instance.LeaveRoom(); });
+            buttons_LeaveRoom[i].onClick.AddListener(()=> { SceneNetworkManager.instance.DisconnectPlayer(); });
         }
     }
 

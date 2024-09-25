@@ -14,6 +14,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01.Scenes/fwOF_FreeDemo_OldForest MJ_20240921.unity
     guid: 3804cdf4e2110164fba99cdf6bc518bf
+  - enabled: 1
+    path: Assets/01.Scenes/Korea.unity
+    guid: ec1dac7a72476f54a8b27cc4797e829e
   - enabled: 0
     path: Assets/01.Scenes/fwOF_FreeDemo_OldForest 1.unity
     guid: 5ba232c6ead75674a8c388e0d53b569d
