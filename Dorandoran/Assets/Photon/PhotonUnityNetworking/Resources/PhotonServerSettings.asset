@@ -61,6 +61,14 @@ MonoBehaviour:
   - SendTopic
   - SetPlayerNickName
   - StartDebate
+  - TurnOver
+  - StartNextOrder
+  - Button_TurnOver
+  - NextTunrTrigger
+  - SetSpeakGroup
+  - CheckTurnOver
+  - CheckTurnOver_Discussion
+  - Check_TurnOverDiscussion
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

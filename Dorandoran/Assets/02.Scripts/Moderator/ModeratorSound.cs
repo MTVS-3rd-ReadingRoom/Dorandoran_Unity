@@ -19,6 +19,8 @@ public class ModeratorSound : MonoBehaviourPunCallbacks, IPunObservable
 
     int playerID = 0;
 
+    AudioSource audioSource;
+
     // 마스터 클라이언트
     // 현재 모든 클라이언트 아이디를 보관
     // 스피크 중인 아이디 정보 보관
@@ -36,6 +38,7 @@ public class ModeratorSound : MonoBehaviourPunCallbacks, IPunObservable
         {
             Destroy(gameObject);
         }
+
     }
 
     // Start is called before the first frame update
@@ -45,6 +48,7 @@ public class ModeratorSound : MonoBehaviourPunCallbacks, IPunObservable
         string currentUserId = PhotonNetwork.LocalPlayer.UserId;
 
         recorder = GetComponentInChildren<Photon.Voice.Unity.Recorder>();
+        audioSource = GetComponent<AudioSource>();
         pv = GetComponent<PhotonView>();
     }
 
@@ -84,6 +88,7 @@ public class ModeratorSound : MonoBehaviourPunCallbacks, IPunObservable
         recorder.RecordWhenJoined = true;
 
         recorder.RestartRecording();
+        audioSource.PlayOneShot(audioClip);
         //pv.RPC("UpdateSound", RpcTarget.All, play);
     }
 

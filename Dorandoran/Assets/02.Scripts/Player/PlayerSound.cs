@@ -16,6 +16,7 @@ public class PlayerSound : MonoBehaviour, IPunObservable
     // Start is called before the first frame update
     void Start()
     {
+        print(gameObject.name);
         pv = GetComponent<PhotonView>();
         voiceView = GetComponent<PhotonVoiceView>();
     }
@@ -36,13 +37,13 @@ public class PlayerSound : MonoBehaviour, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if(stream.IsWriting)
-        {
-            stream.SendNext(voiceView.IsRecording);
-        }
-        else if(stream.IsReading)
-        {
-            isTalking = (bool)stream.ReceiveNext();
-        }
+        //if(stream.IsWriting)
+        //{
+        //    stream.SendNext(voiceView.IsRecording);
+        //}
+        //else if(stream.IsReading)
+        //{
+        //    isTalking = (bool)stream.ReceiveNext();
+        //}
     }
 }

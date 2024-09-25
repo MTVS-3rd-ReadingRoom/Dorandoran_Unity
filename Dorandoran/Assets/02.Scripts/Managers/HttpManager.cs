@@ -307,7 +307,7 @@ public class HttpManager : MonoBehaviour
         StartCoroutine(Get(info, MethodInfo.GetCurrentMethod().Name));
     }
 
-    public void PostBookList(string text)
+    public void PostTTS(string text)
     {
         HttpInfo info = new HttpInfo();
         // 서버 URL 설정

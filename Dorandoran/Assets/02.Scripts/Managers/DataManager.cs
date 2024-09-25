@@ -9,6 +9,7 @@ using UnityEngine.Networking;
 using UnityEngine.Video;
 using UnityEngine.XR;
 
+
 [System.Serializable]
 public struct AudioClip_Json
 {
@@ -48,9 +49,10 @@ public class DataManager : MonoBehaviour
     public AudioClip topicClip;
 
     public Coroutine coroutine_Record;
-    private AudioSource voiceRecord;
+    private AudioClip voiceRecord;
 
     public List<BookUI> bookList = null;
+    private string recordMicName;
 
     private void Awake()
     {
@@ -240,23 +242,31 @@ public class DataManager : MonoBehaviour
 
     private IEnumerator Corr_RecordAndPost(string roomID)
     {
-        voiceRecord.clip = Microphone.Start(Microphone.devices[microphoneIndex].ToString(), false, recordTime, 44100);
+        if(Microphone.devices[microphoneIndex].Length == 0)
+        {
+            coroutine_Record = null;
+            yield break;
+        }
+        recordMicName = Microphone.devices[microphoneIndex].ToString();
+        voiceRecord = Microphone.Start(recordMicName, false, recordTime, 44100);
         yield return new WaitForSeconds(recordTime + 1);
 
         coroutine_Record = null;
-        HttpManager.instance.PostVoiceClip_FormData(HttpManager.instance.value, roomID, LoadAudioClip(SaveAudioClip(voiceRecord.clip)));
+        HttpManager.instance.PostVoiceClip_FormData(HttpManager.instance.value, roomID, LoadAudioClip(SaveAudioClip(voiceRecord)));
         //LoadWav(LoadAudioClip(SaveAudioClip(record)));
         //audioClip2 = LoadWav(LoadAudioClip(SaveAudioClip(record)));
     }
 
     public void StopRecord(string roomID)
     {
-        if(coroutine_Record != null)
+        if (coroutine_Record != null && recordMicName != null)
         {
-            coroutine_Record = null;
-            StopCoroutine(coroutine_Record);
-            voiceRecord.Stop();
-            HttpManager.instance.PostVoiceClip_FormData(HttpManager.instance.value, roomID, LoadAudioClip(SaveAudioClip(voiceRecord.clip)));
-        }
+            if (Microphone.IsRecording(recordMicName))
+            {
+                StopCoroutine(coroutine_Record);
+                coroutine_Record = null;
+                Microphone.End(recordMicName);
+                HttpManager.instance.PostVoiceClip_FormData(HttpManager.instance.value, roomID, LoadAudioClip(SaveAudioClip(voiceRecord)));
+            } }
     }
 }

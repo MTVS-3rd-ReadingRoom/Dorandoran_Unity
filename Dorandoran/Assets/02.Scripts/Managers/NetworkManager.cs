@@ -218,7 +218,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         base.OnRoomListUpdate(roomList);
-        print(1);
         foreach (RoomInfo room in roomList)
         {
             // 만일, 갱신된 룸 정보가 제거 리스트에 있다면..
