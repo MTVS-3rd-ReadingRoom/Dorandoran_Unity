@@ -48,7 +48,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             instance = this;
             Screen.SetResolution(1920, 1080, false);
-            DontDestroyOnLoad(gameObject);
+            // DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -252,6 +252,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
             foreach (RoomInfo room in roomList)
             {
+                if (room.MaxPlayers == 0)
+                    return;
                 // cachedRoomList에 있는 모든 방을 만들어서 스크롤뷰에 추가한다.
                 GameObject go = Instantiate(roomPrefab, scrollContent);
                 RoomPanel roomPanel = go.GetComponent<RoomPanel>();

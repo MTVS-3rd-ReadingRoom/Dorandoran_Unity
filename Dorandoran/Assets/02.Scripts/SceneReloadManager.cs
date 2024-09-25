@@ -42,6 +42,8 @@ public class SceneReloadManager : MonoBehaviour
         if(Reload)
         {
             LobbyUIManager.instance.ShowSelectChannelPanel();
+            DataManager.instance.SetBookList(DataManager.instance.bookList);
+            
             Reload = false;
         }
     }
