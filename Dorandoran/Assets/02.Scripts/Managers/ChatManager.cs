@@ -118,7 +118,6 @@ public class ChatManager : MonoBehaviourPun, IOnEventCallback
     // 같은 방에 다른 사용자로부터 이벤트가 왔을 경우 실행되는 함수
     public void OnEvent(EventData photonEvent)
     {
-        print("Recieve");
 
         // 받은 이벤트가 채팅 이벤트라면
         if (photonEvent.Code == chattingEvent)

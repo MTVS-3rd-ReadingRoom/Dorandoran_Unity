@@ -232,7 +232,7 @@ public class StageUIManager : MonoBehaviourPun
 
     public void SetActiveMicUI(bool value)
     {
-        image_MicInactive.SetActive(value);
+        image_MicInactive.SetActive(!value);
     }
 
     #endregion

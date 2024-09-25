@@ -948,6 +948,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 192a20cf6867281429a29c41a4c3741a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  value: 
 --- !u!4 &2111339649
 Transform:
   m_ObjectHideFlags: 0
@@ -1050,6 +1051,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3863353803364020139, guid: cd188e01f68743046beb65de8e9acf8c,
+        type: 3}
+      propertyPath: m_text
+      value: "\uD1A0\uB860 \uD788\uC2A4\uD1A0\uB9AC"
       objectReference: {fileID: 0}
     - target: {fileID: 3898694205035474157, guid: cd188e01f68743046beb65de8e9acf8c,
         type: 3}
