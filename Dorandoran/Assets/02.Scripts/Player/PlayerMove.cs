@@ -67,7 +67,7 @@ public class PlayerMove : PlayerStateBase, IPunObservable
         ///// 소유권을 가진 캐릭터가 앉아있다면 회전 막기
         if (pv.IsMine)
         {
-            if (Input.GetKeyDown(KeyCode.P)) // 값이 바뀌지 않았을 때
+            if (Input.GetKeyDown(KeyCode.P)&& !SceneUIManager.instance.isRunning) // 값이 바뀌지 않았을 때
             {
                 if (chair != null)
                 {
@@ -75,6 +75,8 @@ public class PlayerMove : PlayerStateBase, IPunObservable
                     {
                         if (chair.Sitting(GetComponent<PhotonView>(),DataManager.instance.nickName, PhotonNetwork.LocalPlayer.ActorNumber))
                         {
+                            Cursor.lockState = CursorLockMode.None;
+                            Cursor.visible = true;
                             isReady = true;
                             Sitting();
                             myAnim.SetBool("Sitting", isReady);
@@ -97,7 +99,7 @@ public class PlayerMove : PlayerStateBase, IPunObservable
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.Q) && !isReady)
             {
                 Cursor.visible = !Cursor.visible;
 
@@ -218,9 +220,12 @@ public class PlayerMove : PlayerStateBase, IPunObservable
 
     public void Jump()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && isGround)
+        if (!Cursor.visible && !isReady)
         {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2.0f * -20.0f);
+            if (Input.GetKeyDown(KeyCode.Space) && isGround)
+            {
+                velocity.y = Mathf.Sqrt(jumpHeight * -2.0f * -20.0f);
+            }
         }
     }
 

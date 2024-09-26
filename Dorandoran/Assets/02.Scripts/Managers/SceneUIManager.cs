@@ -30,9 +30,10 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     public static SceneUIManager instance;
 
     public TextMeshProUGUI timeText;
+    public RectTransform timeBar;
     private double startTime;
     public double timeDuration = 120.0f;
-    bool isRunning = false;
+    public bool isRunning = false;
 
     int minute = 0;
     int second = 0;
@@ -77,6 +78,8 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     private int turnOverCount = 0;
     private bool isTurnOver = false;
     private Coroutine nextOrder;
+
+    float timePercent = 0;
 
     private void Awake()
     {
@@ -134,10 +137,8 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public TMP_Text t;
     void Update()
     {
-        t.text = timelineIndex.ToString();
         // 앉아있는 플레이어 체크
         CheckSittingPlayer();
         // 플레이어 찬반 데이터 체크
@@ -151,8 +152,18 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
             double elapsed = PhotonNetwork.Time - startTime;
             double remainingTime = timeDuration - elapsed;
 
-            timeText.text = (int)(remainingTime / 60) + "분 " + (int)(remainingTime % 60) + $"초 / {timeDuration}초 제한시간";
-
+            timeText.text = $"{(int)(remainingTime / 60)}분 {(int)(remainingTime % 60)}초 /{(int)(timeDuration / 60)}분 {(int)(timeDuration % 60)}초";
+            timePercent = (float)(remainingTime / timeDuration);
+            if (timePercent > 0)
+            {
+                timeBar.sizeDelta = new Vector2(400 * timePercent, timeBar.sizeDelta.y);
+            }
+            else
+            {
+                timeBar.sizeDelta = new Vector2(0, timeBar.sizeDelta.y);
+            }
+            timeBar.GetComponent<Image>().color = new Color(1, timePercent, timePercent);
+            timeText.color = new Color(1, timePercent, timePercent);
 
             // 시간이 지났다면
             if (remainingTime < 0)
@@ -356,6 +367,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
                     SetPlayerGroup_All();
                     RPCSetTransmit();
 
+                    print($"{PhotonNetwork.LocalPlayer.ActorNumber} : {speakerIdList[timelineIndex].id}");
                     // 플레이어가 발언자일때
                     if (PhotonNetwork.LocalPlayer.ActorNumber == speakerIdList[timelineIndex].id)
                     {
@@ -389,6 +401,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         }
         else if (!end)
         {
+            print("End");
             panel_Timer.SetActive(false);
             end = true;
             if (PhotonNetwork.IsMasterClient)
