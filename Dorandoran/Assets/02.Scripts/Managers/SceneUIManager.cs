@@ -355,6 +355,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
                 button_TurnOver.GetComponent<Image>().color = new Color(1, 1, 1);
                 button_TurnOver.gameObject.SetActive(true);
                 DebatePlayer();
+                StageUIManager.instance.SetActiveMicUI(true);
             }
             else
             {
@@ -516,10 +517,12 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     {
         for (int i = 0; i < oppositionSide.Count; i++)
         {
+            print("oppositionSide : " + oppositionSide[i].name);
             RPCSetSpeakGroup(oppositionSide[i].id, 1);
         }
         for (int i = 0; i < propositionSide.Count; i++)
         {
+            print("propositionSide : " + propositionSide[i].name);
             RPCSetSpeakGroup(propositionSide[i].id, 2);
         }
     }
