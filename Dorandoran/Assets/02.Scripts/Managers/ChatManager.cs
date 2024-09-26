@@ -113,6 +113,8 @@ public class ChatManager : MonoBehaviourPun, IOnEventCallback
 
             string recieveMessage = $"\n[{sendContent[3].ToString()}]{sendContent[1].ToString()} : {sendContent[2].ToString()}";
             AddAlignedText(recieveMessage, OwnerText.Mine);
+
+            input_chat.text = "";
         }
     }
 
@@ -127,10 +129,10 @@ public class ChatManager : MonoBehaviourPun, IOnEventCallback
             object[] receiveObjects = (object[])photonEvent.CustomData;
             string recieveMessage = $"\n[{receiveObjects[3].ToString()}]{receiveObjects[1].ToString()} : {receiveObjects[2].ToString()}";
 
+            // °°Àº ÆÀÀÌ ¾Æ´Ò °æ¿ì
             if (!receiveObjects[0].Equals((int)curDebatePosition))
                 return;
             AddAlignedText(recieveMessage, OwnerText.Other);
-            input_chat.text = "";
 
             StopAllCoroutines();
             StartCoroutine(AlphaReturn(2.0f));

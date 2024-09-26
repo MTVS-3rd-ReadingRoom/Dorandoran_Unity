@@ -33,7 +33,8 @@ public class PlayerMove : PlayerStateBase, IPunObservable
     Vector3 myPrevPos;
     float jumpHeight;
     Chair chair;
-    bool Cu;
+
+    bool talking;
 
     private void Awake()
     {
@@ -48,6 +49,7 @@ public class PlayerMove : PlayerStateBase, IPunObservable
         recorder = GetComponentInChildren<PhotonVoice.Recorder>();
         isReady = false;
         preSitting = false;
+        talking = false;
 
         jumpHeight = 0.8f;
 
@@ -141,6 +143,7 @@ public class PlayerMove : PlayerStateBase, IPunObservable
     {
         return Physics.Raycast(transform.position, Vector3.down, 0.3f, groundLayer);
     }
+
     void Move()
     {
         // 소유권을 가진 캐릭터라면
@@ -185,7 +188,8 @@ public class PlayerMove : PlayerStateBase, IPunObservable
                 }
 
             }
-
+            talking = SceneUIManager.instance.myTurn;
+            myAnim.SetBool("Talking", talking);
         }
         else
         {
@@ -215,6 +219,7 @@ public class PlayerMove : PlayerStateBase, IPunObservable
             myPrevPos = transform.position;
             myAnim.SetFloat("Horizontal", newX);
             myAnim.SetFloat("Vertical", newZ);
+            myAnim.SetBool("Talking", talking);
         }
     }
 
@@ -272,6 +277,7 @@ public class PlayerMove : PlayerStateBase, IPunObservable
             stream.SendNext(transform.position);
             stream.SendNext(transform.rotation);
             stream.SendNext(isReady);
+            stream.SendNext(talking);
         }
         // 그렇지 않고, 만일 데이터를 서버로부터 읽어야하는 상태라면...
         else if (stream.IsReading)
@@ -279,6 +285,7 @@ public class PlayerMove : PlayerStateBase, IPunObservable
             myPos = (Vector3)stream.ReceiveNext();
             myRot = (Quaternion)stream.ReceiveNext();
             isReady = (bool)stream.ReceiveNext();
+            talking = (bool)stream.ReceiveNext();
         }
     }
 

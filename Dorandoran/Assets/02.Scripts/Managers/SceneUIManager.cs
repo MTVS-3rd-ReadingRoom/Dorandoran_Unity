@@ -8,6 +8,7 @@ using Photon.Voice.Unity;
 using Photon.Voice.PUN;
 using Photon.Pun.Demo.PunBasics;
 using DG.Tweening.Core.Easing;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 
 public class SceneUIManager : MonoBehaviourPunCallbacks
@@ -81,6 +82,8 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
 
     float timePercent = 0;
 
+    public bool myTurn;
+
     private void Awake()
     {
         if (instance == null)
@@ -103,6 +106,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         timelineIndex = 0;
         playerIndex = 0;
         checkSittingPlayer = false;
+        myTurn = false;
 
         sceneNetworkManager = GameObject.Find("SceneNetworkManager").GetComponentInChildren<SceneNetworkManager>();
         gameManager = GameObject.Find("GameManager").GetComponentInChildren<GameManager>();
@@ -311,7 +315,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         }
         NextTurn();
     }
-
+       
     public void NextTurn() // 다음에 턴
     {
         print("NextTurn : " + timelineIndex);
@@ -375,12 +379,14 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
                         DataManager.instance.RecordMicrophone(DataManager.instance.serial_Room.ToString());
                         button_Next.gameObject.SetActive(true);
                         StageUIManager.instance.SetActiveMicUI(true);
+                        myTurn = true;
                     }
                     // 플레이어가 청자일때
                     else
                     {
                         button_Next.gameObject.SetActive(false);
                         StageUIManager.instance.SetActiveMicUI(false);
+                        myTurn = false;
                     }
                 }
 
@@ -494,10 +500,10 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void SetSpeakGroup(byte groupID)
+    public void SetSpeakGroup(int groupID)
     {
-        recorder.InterestGroup = groupID;
-        
+        // recorder.InterestGroup = groupID;
+        recorder.TargetPlayers = new int[] { groupID };
     }
     public void DebatePlayer()
     {
@@ -527,7 +533,7 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public void RPCSetSpeakGroup(int playerActor, byte GroupID)
+    public void RPCSetSpeakGroup(int playerActor, int GroupID)
     {
         if (PhotonNetwork.IsMasterClient)
         {
@@ -596,4 +602,6 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
             }
         }
     }
+
+
 }
