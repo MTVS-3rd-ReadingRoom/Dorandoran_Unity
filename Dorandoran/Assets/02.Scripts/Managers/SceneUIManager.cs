@@ -406,7 +406,6 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
             end = true;
             if (PhotonNetwork.IsMasterClient)
             {
-                ModeratorSound.instance.SpeakPlayer(announcerVoices[announcerVoices.Count - 1]);
                 HttpManager.instance.PostSummary(DataManager.instance.serial_Room.ToString());
             }
             SetPlayerGroup_All();
