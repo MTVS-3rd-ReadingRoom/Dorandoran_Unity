@@ -56,6 +56,17 @@ public class SceneNetworkManager : MonoBehaviourPunCallbacks
         SetPlayerNickNameRPC();
     }
 
+    public override void OnJoinedRoom()
+    {
+        base.OnJoinedRoom();
+        JoinRoom();
+    }
+
+    public override void OnCreatedRoom()
+    {
+        base.OnCreatedRoom();
+        JoinRoom();
+    }
 
     public void JoinRoom()
     {

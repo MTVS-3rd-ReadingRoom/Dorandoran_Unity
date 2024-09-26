@@ -139,7 +139,7 @@ public class LobbyUIManager : MonoBehaviour
         button_CreateRoom.onClick.AddListener(() => { CreateRoom(); });
         for (int i = 0; i < buttons_MakeRoomChannel.Length; i++)
         {
-            buttons_MakeRoomChannel[i].onClick.AddListener(() => { ShowMakeChoiceRoomPanel(); });
+            buttons_MakeRoomChannel[i].onClick.AddListener(() => { ShowMakeChoiceRoomPanel(); ImageChoiceManager.instance.SettingImageData(); });
         }
         for (int i = 0; i < buttons_ChoiceRoomChannel.Length; i++)
         {

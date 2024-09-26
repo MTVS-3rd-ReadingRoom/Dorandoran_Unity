@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static ImageChoiceManager;
 
 public class ImageChoiceManager : MonoBehaviour
 {
@@ -15,18 +16,10 @@ public class ImageChoiceManager : MonoBehaviour
         public Texture2D image;
     }
 
-    [Serializable]
-    public struct Map
-    {
-        public string name;
-        public Texture2D image;
-    }
-
     #region 이미지 정보
     [Header("이미지 정보")]
-    //[SerializeField]
-    public ImageData[] BookData;
-    public ImageData[] MapData;
+    public List<ImageData> BookData;
+    public List<ImageData> MapData;
     #endregion
 
 
@@ -59,16 +52,40 @@ public class ImageChoiceManager : MonoBehaviour
     {
         bookChoice.onValueChanged.AddListener(delegate { SetbookChoiceImage(); });
         mapChoice.onValueChanged.AddListener(delegate { SetmapChoiceImage(); });
+
+        SetbookChoiceImage();
+        SetmapChoiceImage();
     }
 
+    public void CheckBookName()
+    {
+
+        
+    }
     // Update is called once per frame
     void Update()
     {
         
     }
+
+    public void SettingImageData()
+    {
+        SetbookChoiceImage();
+        SetmapChoiceImage();
+    }
+
     public Texture2D GetbookChoiceImage()
     {
-        return BookData[bookChoice.value].image;
+        foreach (ImageData imagedata in BookData)
+        {
+            //// 선택한 이름과 책과 같으면
+            if (bookChoice.options[bookChoice.value].text == imagedata.name)
+            {
+                return imagedata.image;
+            }
+        }
+
+        return null;
     }
 
     public Texture2D GetmapChoiceImage()
