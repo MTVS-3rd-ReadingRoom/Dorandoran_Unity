@@ -52,6 +52,7 @@ public class DataManager : MonoBehaviour
     private AudioClip voiceRecord;
 
     public List<BookUI> bookList = null;
+    public List<History> histories = new List<History>();
     private string recordMicName;
 
     private void Awake()
@@ -219,6 +220,11 @@ public class DataManager : MonoBehaviour
         {
             NetworkManager.instance.SetBookList(bookList);
         }
+    }
+
+    public void SetHistoryList(List<History> histories)
+    {
+        this.histories = histories;
     }
 
     public void PlayAudio(AudioClip audioClip)

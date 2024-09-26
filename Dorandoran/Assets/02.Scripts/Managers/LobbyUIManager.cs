@@ -81,8 +81,13 @@ public class LobbyUIManager : MonoBehaviour
     #endregion
 
     public GameObject panel_MyBook;
+    
+    public Transform historyParent;
+    public GameObject prefab_HistoryUI;
 
     public Coroutine getTopic;
+
+    public List<GameObject> historyUI = new List<GameObject>();
 
     private void Awake()
     {
@@ -391,6 +396,7 @@ public class LobbyUIManager : MonoBehaviour
         panel_SceneLoad.SetActive(false);
 
         inactiveStack.Push(() => { ShowSelectChannelPanel(); });
+        HttpManager.instance.GetHistory();
     }
 
     public void ShowMyBook()
@@ -446,5 +452,25 @@ public class LobbyUIManager : MonoBehaviour
     }
 
     #endregion
+
+    public void ResetHistoryUI()
+    {
+        GameObject[] temp = historyUI.ToArray();
+        for (int i = 0; i < temp.Length; i++)
+        {
+            Destroy(temp[i]);
+        }
+
+        historyUI = new List<GameObject>();
+    }
+
+    public void AddHistoryUI(History history)
+    {
+        GameObject temp = Instantiate(prefab_HistoryUI, historyParent);
+        historyUI.Add(temp);
+        BookHistory history_temp = temp.GetComponent<BookHistory>();
+        history_temp.SetHistory(history);
+        temp.transform.SetAsFirstSibling();
+    }
 
 }

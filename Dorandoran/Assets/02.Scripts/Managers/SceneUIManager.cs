@@ -4,10 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Photon.Voice.Unity;
 using Photon.Voice.PUN;
-using Photon.Pun.Demo.PunBasics;
-using DG.Tweening.Core.Easing;
 
 
 public class SceneUIManager : MonoBehaviourPunCallbacks
@@ -111,10 +108,10 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         times = new float[]
             {
                 60,
-                10, 120, 120,
-                10, 120, 120,
-                10, 120, 120,
-                10, 120, 120
+                180, 120, 120,
+                180, 120, 120,
+                180, 120, 120,
+                180, 120, 120
             };
         speakerIdList = new Chair[]
             {
@@ -136,7 +133,8 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
             button_Start.gameObject.SetActive(false);
         }
     }
-
+    private Color timerColor;
+    private string colorString;
     void Update()
     {
         // 앉아있는 플레이어 체크
@@ -151,8 +149,9 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         {
             double elapsed = PhotonNetwork.Time - startTime;
             double remainingTime = timeDuration - elapsed;
-
-            timeText.text = $"{(int)(remainingTime / 60)}분 {(int)(remainingTime % 60)}초 /{(int)(timeDuration / 60)}분 {(int)(timeDuration % 60)}초";
+            timerColor = new Color(1, timePercent, timePercent);
+            colorString = ColorUtility.ToHtmlStringRGB(timerColor);
+            timeText.text = $"<color=#{colorString}>{(int)(remainingTime / 60)}분 {(int)(remainingTime % 60)}초</color> /{(int)(timeDuration / 60)}분 {(int)(timeDuration % 60)}초";
             timePercent = (float)(remainingTime / timeDuration);
             if (timePercent > 0)
             {
@@ -163,7 +162,6 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
                 timeBar.sizeDelta = new Vector2(0, timeBar.sizeDelta.y);
             }
             timeBar.GetComponent<Image>().color = new Color(1, timePercent, timePercent);
-            timeText.color = new Color(1, timePercent, timePercent);
 
             // 시간이 지났다면
             if (remainingTime < 0)
@@ -290,9 +288,28 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         }
 
 
+        
+        for (int i = 0; i < propositionSide.Count; i++)
+        {
+            if (propositionSide[i].id == PhotonNetwork.LocalPlayer.ActorNumber)
+            {
+                PunVoiceClient.Instance.Client.ChangeAudioGroups(null, new byte[] { (byte)1 });
+                break;
+            }
+        }
+        for (int i = 0; i < oppositionSide.Count; i++)
+        {
+            if (oppositionSide[i].id == PhotonNetwork.LocalPlayer.ActorNumber)
+            {
+                PunVoiceClient.Instance.Client.ChangeAudioGroups(null, new byte[] { (byte)2 });
+                break;
+            }
+        }
+
         NextTunrTrigger();
 
     }
+
 
     IEnumerator Coroutine_NextOrder()
     {
@@ -515,15 +532,13 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
 
     public void SetPlyaerSpeak_Group()
     {
-        for (int i = 0; i < oppositionSide.Count; i++)
-        {
-            print("oppositionSide : " + oppositionSide[i].name);
-            RPCSetSpeakGroup(oppositionSide[i].id, 1);
-        }
         for (int i = 0; i < propositionSide.Count; i++)
         {
-            print("propositionSide : " + propositionSide[i].name);
-            RPCSetSpeakGroup(propositionSide[i].id, 2);
+            RPCSetSpeakGroup(propositionSide[i].id, 1);
+        }
+        for (int i = 0; i < oppositionSide.Count; i++)
+        {
+            RPCSetSpeakGroup(oppositionSide[i].id,  2);
         }
     }
 
