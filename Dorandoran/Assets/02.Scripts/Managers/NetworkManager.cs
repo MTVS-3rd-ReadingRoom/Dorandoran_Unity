@@ -9,6 +9,9 @@ using ExitGames.Client.Photon;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Photon.Pun.UtilityScripts;
+using Unity.VisualScripting;
+using UnityEngine.Purchasing.MiniJSON;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
@@ -28,8 +31,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public Dropdown filterDropDown;
     public Dropdown bookDropDown;
     public Dropdown mapDropDown;
-    public Dropdown roomInputDropDown;
-
+    //public Dropdown roomInputDropDown;
+    public ToggleGroup toggleGroup;
+    Toggle selectToggle;
     int roomInputN = 0;
     int roomIndex = 0;
     string roomName;
@@ -41,7 +45,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     List<RoomInfo> cashedRoomList = new List<RoomInfo>();
 
     int playerID = -1;
-
+    int inputPlayerN = 2;
     void Awake()
     {
         if(instance == null)
@@ -54,6 +58,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             Destroy(gameObject);
         }
+    }
+
+    public void Start()
+    {
+        ToggleSetting();
     }
 
     public void StartLogin()
@@ -69,6 +78,26 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             PhotonNetwork.ConnectUsingSettings();
         }
     }
+    void OnToggleValueChanged(Toggle changedToggle, bool isOn)
+    {
+        if (isOn)
+        {
+            selectToggle = changedToggle;
+            if(selectToggle.name == "Duo_SelectToggle")
+                inputPlayerN = 2;
+            else
+                inputPlayerN = 4;
+        }
+    }
+
+    public void ToggleSetting()
+    {
+        foreach (Toggle toggle in toggleGroup.GetComponentsInChildren<Toggle>())
+        {
+            toggle.onValueChanged.AddListener((isOn) => OnToggleValueChanged(toggle, isOn));
+        }
+    }
+
 
     public override void OnConnected()
     {
@@ -135,7 +164,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void CreateRoom(string topic)
     {
         string roomName = roomInput.text;
-        int maxPlayer = (roomInputDropDown.value + 1) * 2; // (2명(index: 0), 4명(index: 1))
+        int maxPlayer = inputPlayerN; // (2명(index: 0), 4명(index: 1))
 
         if (roomName.Length > 0 && maxPlayer >= 1)
         {
@@ -153,6 +182,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             roomTable.Add("PASSWORD", 1234);
             roomTable.Add("TOPIC", topic);
             roomTable.Add("SERIAL_ROOMNUM", DataManager.instance.serial_Room);
+            roomTable.Add("SCENE_NUMBER", ImageChoiceManager.instance.mapChoice.value + 1);
+
             roomOpt.CustomRoomProperties = roomTable;
             PhotonNetwork.CreateRoom(roomName, roomOpt, TypedLobby.Default);
         }
@@ -177,7 +208,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
         Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
-        PhotonNetwork.LoadLevel(1); // 1번 빌드 셋팅으로 고정 이동
+
+        ExitGames.Client.Photon.Hashtable roomProp =
+            PhotonNetwork.CurrentRoom.CustomProperties;
+        int sceneN = (int)roomProp["SCENE_NUMBER"];
+        PhotonNetwork.LoadLevel(sceneN); // 1번 빌드 셋팅으로 고정 이동
         print("방 참가완료");
     }
 
