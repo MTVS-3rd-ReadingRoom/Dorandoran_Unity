@@ -176,13 +176,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
             // 룸의 커스텀 정보를 추가한다.
             // 키 값 등록하기
-            roomOpt.CustomRoomPropertiesForLobby = new string[] { "MASTER_NAME", "PASSWORD", "TOPIC", "SERIAL_ROOMNUM" };
+            roomOpt.CustomRoomPropertiesForLobby = new string[] { "MASTER_NAME", "PASSWORD", "TOPIC", "SERIAL_ROOMNUM", "SCEME_NUMBER", "BOOK_NAME" };
             Hashtable roomTable = new Hashtable();
             roomTable.Add("MASTER_NAME", PhotonNetwork.NickName);
             roomTable.Add("PASSWORD", 1234);
             roomTable.Add("TOPIC", topic);
             roomTable.Add("SERIAL_ROOMNUM", DataManager.instance.serial_Room);
             roomTable.Add("SCENE_NUMBER", ImageChoiceManager.instance.mapChoice.value + 1);
+            roomTable.Add("BOOK_NAME", ImageChoiceManager.instance.GetbookChoiceImage().name);
 
             roomOpt.CustomRoomProperties = roomTable;
             PhotonNetwork.CreateRoom(roomName, roomOpt, TypedLobby.Default);

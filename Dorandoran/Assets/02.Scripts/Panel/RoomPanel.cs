@@ -4,11 +4,13 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using Photon.Realtime;
+using static ImageChoiceManager;
 
 public class RoomPanel : MonoBehaviour
 {
-    public TMP_Text[] roomTexts = new TMP_Text[3];
+    public TMP_Text[] roomTexts = new TMP_Text[5];
     public Button btn_join;
+    public RawImage bookImage;
 
     public void SetRoomInfo(RoomInfo room)
     {
@@ -17,5 +19,31 @@ public class RoomPanel : MonoBehaviour
         print(room.CustomProperties["MASTER_NAME"] == null);
         string masterName = room.CustomProperties["MASTER_NAME"].ToString();
         roomTexts[2].text = masterName;
+        print(room.CustomProperties["BOOK_NAME"] == null);
+        string imageData = (string)room.CustomProperties["BOOK_NAME"];
+        roomTexts[3].text = imageData;
+        SetBookImage(imageData);
+        roomTexts[4].text = GetBookAuthor(imageData);
+
     }
+
+    public void SetBookImage(string imageName)
+    {
+        foreach (ImageData imagedata in ImageChoiceManager.instance.BookData)
+        {
+            if (imagedata.name == imageName)
+                 bookImage.texture = imagedata.image;
+        }
+    }
+
+    public string GetBookAuthor(string imageName)
+    {
+        foreach (BookUI bookUI in DataManager.instance.bookList)
+        {
+            if (bookUI.name == imageName)
+                return bookUI.author;
+        }
+        return "";
+    }
+
 }
