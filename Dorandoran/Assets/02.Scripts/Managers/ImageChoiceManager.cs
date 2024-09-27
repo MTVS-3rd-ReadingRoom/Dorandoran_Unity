@@ -14,6 +14,7 @@ public class ImageChoiceManager : MonoBehaviour
     {
         public string name;
         public Sprite image;
+        public string info;
     }
 
     #region 이미지 정보

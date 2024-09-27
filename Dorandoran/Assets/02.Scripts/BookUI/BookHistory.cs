@@ -9,6 +9,8 @@ public class BookHistory : MonoBehaviour
     public Button button;
 
     public Sprite image_Book;
+    public string bookInfo;
+
     public TMP_Text text_BookName;
     public TMP_Text text_BookAuthor;
     public TMP_Text text_BookTopic;
@@ -19,6 +21,7 @@ public class BookHistory : MonoBehaviour
     private void Start()
     {
         button = GetComponent<Button>();
+        button.onClick.AddListener(() => { LobbyUIManager.instance.ShowMyBook(bookInfo, history.bookAuthor, history.category, history.topic, history.summary, $"{history.createdAtDate} - {history.createdAtTime}"); });
     }
 
     public void SetHistory(History history)
@@ -29,6 +32,7 @@ public class BookHistory : MonoBehaviour
             if(history.bookName == item.name)
             {
                 image_Book = item.image;
+                bookInfo = item.info;
             }
         }
         text_BookName.text = history.bookName;

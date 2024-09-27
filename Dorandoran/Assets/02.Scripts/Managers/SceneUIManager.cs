@@ -282,10 +282,9 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
 
         // 방 시리얼 번호 셋팅 후 백엔드에게 전달
         DataManager.instance.serial_Room = (int)PhotonNetwork.CurrentRoom.CustomProperties["SERIAL_ROOMNUM"];
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            HttpManager.instance.PostDedateRoom_User(DataManager.instance.serial_Room);
-        }
+    
+        HttpManager.instance.PostDedateRoom_User(DataManager.instance.serial_Room);
+        
 
 
         
