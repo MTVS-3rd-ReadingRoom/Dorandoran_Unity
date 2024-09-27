@@ -54,8 +54,6 @@ public class ImageChoiceManager : MonoBehaviour
         bookChoice.onValueChanged.AddListener(delegate { SetbookChoiceImage(); });
         mapChoice.onValueChanged.AddListener(delegate { SetmapChoiceImage(); });
 
-        SetbookChoiceImage();
-        SetmapChoiceImage();
     }
 
     public void CheckBookName()
@@ -96,6 +94,9 @@ public class ImageChoiceManager : MonoBehaviour
 
     public void SetbookChoiceImage()
     {
+        //Sprite sprite = GetbookChoiceImage();
+        //if (!sprite)
+        //    return;
         bookImage.texture = GetbookChoiceImage().texture;
     }
 

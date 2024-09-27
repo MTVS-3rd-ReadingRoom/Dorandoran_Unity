@@ -493,6 +493,7 @@ MonoBehaviour:
   microphoneIndex: 0
   topicClip: {fileID: 0}
   bookList: []
+  histories: []
 --- !u!4 &55152087
 Transform:
   m_ObjectHideFlags: 0
@@ -1155,18 +1156,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BookData:
   - name: "\uBC31\uC124\uACF5\uC8FC"
-    image: {fileID: 2800000, guid: b29b9c30e158e0b4381df4df3022c68a, type: 3}
+    image: {fileID: 21300000, guid: b29b9c30e158e0b4381df4df3022c68a, type: 3}
+    info: 
   - name: "\uC6B4\uC218 \uC88B\uC740 \uB0A0"
-    image: {fileID: 2800000, guid: 3c114a18c3a82504ea6f63d28f3334ab, type: 3}
+    image: {fileID: 21300000, guid: 3c114a18c3a82504ea6f63d28f3334ab, type: 3}
+    info: 
   - name: "\uD765\uBD80\uC640 \uB180\uBD80"
-    image: {fileID: 2800000, guid: 2b586cac7e7745245a0be5926c3be733, type: 3}
+    image: {fileID: 21300000, guid: 2b586cac7e7745245a0be5926c3be733, type: 3}
+    info: 
   MapData:
   - name: "\uBE44\uBC00\uC758 \uC232"
-    image: {fileID: 2800000, guid: 24982de587bc1174f876c7587208eabf, type: 3}
+    image: {fileID: 21300000, guid: 24982de587bc1174f876c7587208eabf, type: 3}
+    info: 
   - name: "\uD55C\uC625\uB9C8\uC744"
-    image: {fileID: 2800000, guid: 500f1b8c5bba27b45a1b677cc2f07426, type: 3}
+    image: {fileID: 21300000, guid: 500f1b8c5bba27b45a1b677cc2f07426, type: 3}
+    info: 
   - name: "\uD55C\uC625\uB9C8\uC744"
-    image: {fileID: 2800000, guid: 500f1b8c5bba27b45a1b677cc2f07426, type: 3}
+    image: {fileID: 21300000, guid: 500f1b8c5bba27b45a1b677cc2f07426, type: 3}
+    info: 
   bookChoice: {fileID: 1057645960}
   mapChoice: {fileID: 311987763}
   bookImage: {fileID: 292095776}
@@ -6292,7 +6299,16 @@ MonoBehaviour:
   - {fileID: 7680377129220014250}
   - {fileID: 1231126821431618074}
   - {fileID: 283237146633827373}
+  text_BookInfo: {fileID: 0}
+  text_BookAuthor: {fileID: 0}
+  text_BookCatergory: {fileID: 0}
+  text_BookTopic: {fileID: 0}
+  text_BookDebateData: {fileID: 0}
+  text_HistoryDate: {fileID: 0}
   panel_MyBook: {fileID: 5593940403179696375}
+  historyParent: {fileID: 0}
+  prefab_HistoryUI: {fileID: 0}
+  historyUI: []
 --- !u!222 &287425331045414434
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13015,7 +13031,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2991383572671605993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19962,20 +19978,40 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7747358912132528173}
     m_Modifications:
+    - target: {fileID: 1011657817382396923, guid: 7b2ec024982a9a146a60579e98a0483a,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1011657817382396923, guid: 7b2ec024982a9a146a60579e98a0483a,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1011657817382396923, guid: 7b2ec024982a9a146a60579e98a0483a,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 1449382556230023574, guid: 7b2ec024982a9a146a60579e98a0483a,
         type: 3}
       propertyPath: m_Name
       value: Panel_JoinRoomList
       objectReference: {fileID: 0}
-    - target: {fileID: 3099767939529028973, guid: 7b2ec024982a9a146a60579e98a0483a,
+    - target: {fileID: 1449382556230023574, guid: 7b2ec024982a9a146a60579e98a0483a,
         type: 3}
-      propertyPath: m_AnchorMax.x
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3099767939529028973, guid: 7b2ec024982a9a146a60579e98a0483a,
         type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3099767939529028973, guid: 7b2ec024982a9a146a60579e98a0483a,
+        type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6297491053986607411, guid: 7b2ec024982a9a146a60579e98a0483a,
         type: 3}
@@ -20080,7 +20116,7 @@ PrefabInstance:
     - target: {fileID: 6999970383695943439, guid: 7b2ec024982a9a146a60579e98a0483a,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: -342.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -32,7 +32,7 @@ public class RoomPanel : MonoBehaviour
         foreach (ImageData imagedata in ImageChoiceManager.instance.BookData)
         {
             if (imagedata.name == imageName)
-                 bookImage.texture = imagedata.image;
+                bookImage.texture = imagedata.image.texture;
         }
     }
 
