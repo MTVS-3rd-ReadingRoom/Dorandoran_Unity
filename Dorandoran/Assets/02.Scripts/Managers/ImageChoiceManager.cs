@@ -13,7 +13,8 @@ public class ImageChoiceManager : MonoBehaviour
     public struct ImageData
     {
         public string name;
-        public Texture2D image;
+        public Sprite image;
+        public string info;
     }
 
     #region 이미지 정보
@@ -74,7 +75,7 @@ public class ImageChoiceManager : MonoBehaviour
         SetmapChoiceImage();
     }
 
-    public Texture2D GetbookChoiceImage()
+    public Sprite GetbookChoiceImage()
     {
         foreach (ImageData imagedata in BookData)
         {
@@ -88,19 +89,19 @@ public class ImageChoiceManager : MonoBehaviour
         return null;
     }
 
-    public Texture2D GetmapChoiceImage()
+    public Sprite GetmapChoiceImage()
     {
         return MapData[mapChoice.value].image;
     }
 
     public void SetbookChoiceImage()
     {
-        bookImage.texture = GetbookChoiceImage();
+        bookImage.texture = GetbookChoiceImage().texture;
     }
 
     public void SetmapChoiceImage()
     {
-        mapImage.texture = GetmapChoiceImage();
+        mapImage.texture = GetmapChoiceImage().texture;
     }
 
 

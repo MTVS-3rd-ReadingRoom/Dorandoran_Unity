@@ -80,9 +80,23 @@ public class LobbyUIManager : MonoBehaviour
     public Slider[] slider_Sound;
     #endregion
 
+    [Header("토론 요약")]
+    public TMP_Text text_BookInfo;
+    public TMP_Text text_BookAuthor;
+    public TMP_Text text_BookCatergory;
+    public TMP_Text text_BookTopic;
+    public TMP_Text text_BookDebateData;
+    public TMP_Text text_HistoryDate;
+
+    [Space(10)]
     public GameObject panel_MyBook;
+    
+    public Transform historyParent;
+    public GameObject prefab_HistoryUI;
 
     public Coroutine getTopic;
+
+    public List<GameObject> historyUI = new List<GameObject>();
 
     private void Awake()
     {
@@ -157,11 +171,6 @@ public class LobbyUIManager : MonoBehaviour
         for (int i = 0; i < buttons_Inactive.Length; i++)
         {
             buttons_Inactive[i].onClick.AddListener(() => { InactiveUI(); });
-        }
-
-        for (int i = 0; i < buttons_MyBook.Count; i++)
-        {
-            buttons_MyBook[i].onClick.AddListener(() => { ShowMyBook(); });
         }
 
         button_Option.onClick.AddListener(() => { ActiveSelectMicrophoneUI(); panel_Option.SetActive(true); inactiveStack.Push(() => { panel_Option.SetActive(false); }); });
@@ -391,10 +400,17 @@ public class LobbyUIManager : MonoBehaviour
         panel_SceneLoad.SetActive(false);
 
         inactiveStack.Push(() => { ShowSelectChannelPanel(); });
+        HttpManager.instance.GetHistory();
     }
 
-    public void ShowMyBook()
+    public void ShowMyBook(string bookInfo, string bookAuthor, string category, string topic, string debateData, string historyDate)
     {
+        text_BookInfo.text = bookInfo;
+        text_BookAuthor.text = bookAuthor;
+        text_BookCatergory.text = category;
+        text_BookTopic.text = topic;
+        text_BookDebateData.text = debateData;
+        text_HistoryDate.text = historyDate;
         panel_MyBook.SetActive(true);
         inactiveStack.Push(() => { panel_MyBook.SetActive(false); });
     }
@@ -446,5 +462,25 @@ public class LobbyUIManager : MonoBehaviour
     }
 
     #endregion
+
+    public void ResetHistoryUI()
+    {
+        GameObject[] temp = historyUI.ToArray();
+        for (int i = 0; i < temp.Length; i++)
+        {
+            Destroy(temp[i]);
+        }
+
+        historyUI = new List<GameObject>();
+    }
+
+    public void AddHistoryUI(History history)
+    {
+        GameObject temp = Instantiate(prefab_HistoryUI, historyParent);
+        historyUI.Add(temp);
+        BookHistory history_temp = temp.GetComponent<BookHistory>();
+        history_temp.SetHistory(history);
+        temp.transform.SetAsFirstSibling();
+    }
 
 }

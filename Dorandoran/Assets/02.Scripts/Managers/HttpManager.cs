@@ -5,6 +5,7 @@ using System;
 using UnityEngine.Networking;
 using System.Reflection;
 using Newtonsoft.Json;
+using JetBrains.Annotations;
 
 [System.Serializable]
 public struct Error
@@ -55,6 +56,26 @@ public struct BookUI
 public struct BookList
 {
     public List<BookUI> books; 
+}
+
+
+[System.Serializable]
+public struct History
+{
+    public int debateRoomNo;
+    public string bookName;
+    public string bookAuthor;
+    public string category;
+    public string topic;
+    public string summary;
+    public string createdAtDate;
+    public string createdAtTime;
+}
+
+[System.Serializable]
+public struct HistoryList
+{
+    public List<History> histories;
 }
 
 public class HttpInfo
@@ -307,20 +328,27 @@ public class HttpManager : MonoBehaviour
         StartCoroutine(Get(info, MethodInfo.GetCurrentMethod().Name));
     }
 
-    public void PostTTS(string text)
+    public void GetHistory()
     {
         HttpInfo info = new HttpInfo();
-        // 서버 URL 설정
-        info.url = url + "/api/tts/basic";
+        info.url = url + "/api/summary";
         info.onComplete = (UnityWebRequest webRequest) =>
         {
             print($"Success : {MethodInfo.GetCurrentMethod()}");
-            DataManager.instance.SetBookList(JsonConvert.DeserializeObject<List<BookUI>>(webRequest.downloadHandler.text));
+            List<History> histories = JsonConvert.DeserializeObject<List<History>>(webRequest.downloadHandler.text);
+            DataManager.instance.SetHistoryList(histories);
+            if(LobbyUIManager.instance != null)
+            {
+                LobbyUIManager.instance.ResetHistoryUI();
+                for (int i = 0; i < histories.Count; i++)
+                {
+                    LobbyUIManager.instance.AddHistoryUI(histories[i]);
+                }
+            }
         };
 
-        StartCoroutine(Get(info, MethodInfo.GetCurrentMethod().Name));
+        StartCoroutine(Get_Authorization(info, MethodInfo.GetCurrentMethod().Name));
     }
-
 
     //public UnityWebRequest test()
     //{
@@ -361,6 +389,25 @@ public class HttpManager : MonoBehaviour
             DoneRequest(webRequest, info, method);
         }
     }
+
+
+    public IEnumerator Get_Authorization(HttpInfo info, string method)
+    {
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(info.url))
+        {
+            if (LobbyUIManager.instance != null)
+            {
+                LobbyUIManager.instance.ShowHttpLoadingImage();
+            }
+            webRequest.SetRequestHeader(key, value);
+            // 서버에 요청 보내기
+            yield return webRequest.SendWebRequest();
+
+            // 서버에게 응답이 왔다.
+            DoneRequest(webRequest, info, method);
+        }
+    }
+
 
     public IEnumerator UploadFileByFormData(HttpInfo info, List<IMultipartFormSection> formData, string method)
     {
