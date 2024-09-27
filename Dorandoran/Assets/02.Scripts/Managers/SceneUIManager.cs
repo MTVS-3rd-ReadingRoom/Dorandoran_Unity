@@ -292,26 +292,6 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         DataManager.instance.serial_Room = (int)PhotonNetwork.CurrentRoom.CustomProperties["SERIAL_ROOMNUM"];
     
         HttpManager.instance.PostDedateRoom_User(DataManager.instance.serial_Room);
-        
-
-
-        
-        for (int i = 0; i < propositionSide.Count; i++)
-        {
-            if (propositionSide[i].id == PhotonNetwork.LocalPlayer.ActorNumber)
-            {
-                PunVoiceClient.Instance.Client.ChangeAudioGroups(null, new byte[] { (byte)1 });
-                break;
-            }
-        }
-        for (int i = 0; i < oppositionSide.Count; i++)
-        {
-            if (oppositionSide[i].id == PhotonNetwork.LocalPlayer.ActorNumber)
-            {
-                PunVoiceClient.Instance.Client.ChangeAudioGroups(null, new byte[] { (byte)2 });
-                break;
-            }
-        }
 
         NextTunrTrigger();
 
@@ -324,6 +304,9 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         button_Start.gameObject.SetActive(false);
         button_TurnOver.gameObject.SetActive(false);
         startTime = 0;
+
+        AllMuteTransmit();
+        myTurn = false;
         if (timelineIndex != 0)
         {
             CinemachineManager.instance.AddInstructions();
@@ -380,12 +363,30 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
                 button_TurnOver.gameObject.SetActive(true);
                 DebatePlayer();
                 StageUIManager.instance.SetActiveMicUI(true);
+
+                for (int i = 0; i < propositionSide.Count; i++)
+                {
+                    if (propositionSide[i].id == PhotonNetwork.LocalPlayer.ActorNumber)
+                    {
+                        PunVoiceClient.Instance.Client.ChangeAudioGroups(new byte[] { (byte)0 }, new byte[] { (byte)1 });
+                        break;
+                    }
+                }
+                for (int i = 0; i < oppositionSide.Count; i++)
+                {
+                    if (oppositionSide[i].id == PhotonNetwork.LocalPlayer.ActorNumber)
+                    {
+                        PunVoiceClient.Instance.Client.ChangeAudioGroups(new byte[] { (byte)0 }, new byte[] { (byte)2 });
+                        break;
+                    }
+                }
             }
             else
             {
                 button_TurnOver.gameObject.SetActive(false);
                 m_eCurCharacterTurn = CharacterTurn.CharacterPlayerTurn;
                 AllMuteTransmit();
+                PunVoiceClient.Instance.Client.ChangeAudioGroups(null, new byte[] { (byte)0 });
                 if (speakerIdList[timelineIndex] != announcer_Chair && speakerIdList[timelineIndex] != null)
                 {
                     // 발언자가 있을때 보이스 설정
@@ -520,10 +521,9 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void SetSpeakGroup(int groupID)
+    public void SetSpeakGroup(byte groupID)
     {
-        // recorder.InterestGroup = groupID;
-        recorder.TargetPlayers = new int[] { groupID };
+        recorder.InterestGroup = groupID;
     }
     public void DebatePlayer()
     {
@@ -551,10 +551,11 @@ public class SceneUIManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public void RPCSetSpeakGroup(int playerActor, int GroupID)
+    public void RPCSetSpeakGroup(int playerActor, byte GroupID)
     {
         if (PhotonNetwork.IsMasterClient)
         {
+            print(playerActor + " l " + GroupID);
             photonView.RPC("SetSpeakGroup", PhotonNetwork.CurrentRoom.GetPlayer(playerActor), GroupID);
         }
     }

@@ -408,11 +408,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 224ede85bb659f6498a5c61163337479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  image_Book: {fileID: 0}
-  text_BookName: {fileID: 0}
-  text_BookAuthor: {fileID: 0}
-  text_BookTopic: {fileID: 0}
-  text_BookData: {fileID: 0}
+  button: {fileID: 0}
+  image_Book: {fileID: 5713373358296509473}
+  bookInfo: 
+  text_BookName: {fileID: 2878591406638559182}
+  text_BookAuthor: {fileID: 1428575487448592202}
+  text_BookTopic: {fileID: 4794602513135950404}
+  text_BookData: {fileID: 3660186836695848507}
+  history:
+    debateRoomNo: 0
+    bookName: 
+    bookAuthor: 
+    category: 
+    topic: 
+    summary: 
+    createdAtDate: 
+    createdAtTime: 
 --- !u!1 &3766277586739433727
 GameObject:
   m_ObjectHideFlags: 0

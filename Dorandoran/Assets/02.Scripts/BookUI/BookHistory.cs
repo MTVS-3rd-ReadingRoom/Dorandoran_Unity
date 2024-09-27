@@ -8,7 +8,7 @@ public class BookHistory : MonoBehaviour
 {
     public Button button;
 
-    public Sprite image_Book;
+    public Image image_Book;
     public string bookInfo;
 
     public TMP_Text text_BookName;
@@ -31,7 +31,7 @@ public class BookHistory : MonoBehaviour
         {
             if(history.bookName == item.name)
             {
-                image_Book = item.image;
+                image_Book.sprite = item.image;
                 bookInfo = item.info;
             }
         }

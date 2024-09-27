@@ -372,6 +372,8 @@ public class LobbyUIManager : MonoBehaviour
         panel_PopUp.SetActive(false);
         panel_HttpLoad.SetActive(false);
         panel_SceneLoad.SetActive(false);
+
+        inactiveStack.Push(() => { ShowSelectChannelPanel(); });
     }
 
     public void ShowSignUpPanel()
@@ -398,6 +400,7 @@ public class LobbyUIManager : MonoBehaviour
         panel_PopUp.SetActive(false);
         panel_HttpLoad.SetActive(false);
         panel_SceneLoad.SetActive(false);
+        panel_MyBook.SetActive(false);
 
         inactiveStack.Push(() => { ShowSelectChannelPanel(); });
         HttpManager.instance.GetHistory();
@@ -480,7 +483,7 @@ public class LobbyUIManager : MonoBehaviour
         historyUI.Add(temp);
         BookHistory history_temp = temp.GetComponent<BookHistory>();
         history_temp.SetHistory(history);
-        temp.transform.SetAsFirstSibling();
+        history_temp.transform.SetAsFirstSibling();
     }
 
 }
