@@ -182,7 +182,15 @@ public class HttpManager : MonoBehaviour
         {
             RoomNum roomNum = JsonUtility.FromJson<RoomNum>(webRequest.downloadHandler.text);
             DataManager.instance.serial_Room = roomNum.roomId;
-            PostTopic_Text(roomNum.roomId.ToString());
+
+            // 시연 용
+            Topic temp = new Topic();
+            temp.topic = "백설공주는 예쁘면 허락 없이 다른 사람의 물건을 사용하는 것이 괜찮다는 메시지를 전달하는가?";
+            temp.content = "찬성 측에서는 백설공주가 숲 속에서 길을 잃고 생존을 위해 음식과 잠자리를 찾은 것은 불가피한 선택이라고 주장할 수 있습니다. ||| 반대 측에서는 다른 사람의 집에 무단으로 들어가고 그들의 물건을 사용한 백설공주의 행동이 잘못되었다고 주장할 수 있습니다.";
+            DataManager.instance.SetTopic_Text(temp);
+            // 시연 용
+
+            //PostTopic_Text(roomNum.roomId.ToString());
             print($"Success : {MethodInfo.GetCurrentMethod()} - {webRequest.downloadHandler.text}");
         };
 
